@@ -5,9 +5,9 @@ if("${CONFIG}" STREQUAL "" OR "${CONFIG}" STREQUAL "Debug")
   file(REMOVE_RECURSE
   "CMakeFiles/QtScrcpy_autogen.dir/AutogenUsed.txt"
   "CMakeFiles/QtScrcpy_autogen.dir/ParseCache.txt"
-  "QtScrcpyCore/CMakeFiles/QtScrcpyCore_autogen.dir/AutogenUsed.txt"
-  "QtScrcpyCore/CMakeFiles/QtScrcpyCore_autogen.dir/ParseCache.txt"
-  "QtScrcpyCore/QtScrcpyCore_autogen"
   "QtScrcpy_autogen"
+  "core/CMakeFiles/core_autogen.dir/AutogenUsed.txt"
+  "core/CMakeFiles/core_autogen.dir/ParseCache.txt"
+  "core/core_autogen"
   )
 endif()

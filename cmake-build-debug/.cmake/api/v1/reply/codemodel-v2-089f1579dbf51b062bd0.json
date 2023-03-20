@@ -1,0 +1,106 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.19"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "core",
+					"jsonFile" : "directory-core-Debug-eac7e466be7743a8be0a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.19"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "core",
+					"targetIndexes" : 
+					[
+						2,
+						3
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "QtScrcpy",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "QtScrcpy::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QtScrcpy-Debug-a2035d773f7750c078e0.json",
+					"name" : "QtScrcpy",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "QtScrcpy_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QtScrcpy_autogen-Debug-1a6ae78d3735f4d13100.json",
+					"name" : "QtScrcpy_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "core::@57760688d1f824db5d9c",
+					"jsonFile" : "target-core-Debug-f2b5b89ed30cbf1b820c.json",
+					"name" : "core",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "core_autogen::@57760688d1f824db5d9c",
+					"jsonFile" : "target-core_autogen-Debug-7c52348f1e2521e4b59f.json",
+					"name" : "core_autogen",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug",
+		"source" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

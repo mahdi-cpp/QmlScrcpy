@@ -4,7 +4,7 @@
 #include <QPointer>
 #include <QWidget>
 
-#include "../QtScrcpyCore/include/QtScrcpyCore.h"
+#include "../core/include/QtScrcpyCore.h"
 
 namespace Ui
 {

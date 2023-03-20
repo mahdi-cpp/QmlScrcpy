@@ -210,7 +210,7 @@
 		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/uibase",
 		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/ui",
 		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/render",
-		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/QtScrcpyCore/include",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/include",
 		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include",
 		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtX11Extras",
 		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtGui",

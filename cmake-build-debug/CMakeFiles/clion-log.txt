@@ -7,7 +7,7 @@
 -- [QtScrcpy] Qt version is: 5.10
 -- multi config:QC_IS_MUTIL_CONFIG
 -- [QtScrcpy] QSC_CPU_ARCH:x64
--- [QtScrcpyCore] QSC_DEPLOY_PATH: /opt/challenge/QtScrcpy-2.1.2/QtScrcpy/../output/x64/Debug/$<0:>
+-- [core] QSC_DEPLOY_PATH: /opt/challenge/QtScrcpy-2.1.2/QtScrcpy/../output/x64/Debug/$<0:>
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug

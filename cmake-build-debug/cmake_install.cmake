@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/QtScrcpyCore/cmake_install.cmake")
+  include("/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/core/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)

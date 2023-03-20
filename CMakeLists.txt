@@ -1,8 +1,6 @@
 # For VS2019 and Xcode 12+ support.
 cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
 
-#
-
 # Global config
 #
 
@@ -146,7 +144,7 @@ set(QC_MAIN_SOURCES
         )
 
 
-# 翻译相关（使用shell脚本替代cmake处理翻译）
+# Translation related (use shell script instead of cmake to handle translation)
 # add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/res/i18n)
 
 # all sources
@@ -179,10 +177,15 @@ target_include_directories(${PROJECT_NAME} PRIVATE render)
 get_property(QC_IS_MUTIL_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 message(STATUS "multi config:" QC_IS_MUTIL_CONFIG)
 
-# $<0:> 使用生成器表达式为每个config设置RUNTIME_OUTPUT_DIRECTORY，这样multi config就不会自动追加CMAKE_BUILD_TYPE子目录了
-# 1. multi config介绍 https://cmake.org/cmake/help/latest/prop_gbl/GENERATOR_IS_MULTI_CONFIG.html
-# 2. multi config在不用表达式生成器时自动追加子目录说明 https://cmake.org/cmake/help/latest/prop_tgt/RUNTIME_OUTPUT_DIRECTORY.html
-# 3. 使用表达式生成器禁止multi config自动追加子目录解决方案 https://stackoverflow.com/questions/7747857/in-cmake-how-do-i-work-around-the-debug-and-release-directories-visual-studio-2
+# $<0:> Use a generator expression to set RUNTIME_OUTPUT_DIRECTORY for each config, so that multi config will not automatically append the CMAKE_BUILD_TYPE subdirectory
+# 1. multi config introduce https://cmake.org/cmake/help/latest/prop_gbl/GENERATOR_IS_MULTI_CONFIG.html
+
+# 2. multi config Automatically append subdirectory descriptions when not using the expression builder
+# https://cmake.org/cmake/help/latest/prop_tgt/RUNTIME_OUTPUT_DIRECTORY.html
+
+# 3. Use the expression builder to prohibit multi config from automatically appending subdirectory solutions
+# https://stackoverflow.com/questions/7747857/in-cmake-how-do-i-work-around-the-debug-and-release-directories-visual-studio-2
+
 set_target_properties(${PROJECT_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../output/${QC_CPU_ARCH}/${CMAKE_BUILD_TYPE}/$<0:>"
         )
@@ -192,10 +195,10 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     get_target_property(QSC_BIN_OUTPUT_PATH ${PROJECT_NAME} RUNTIME_OUTPUT_DIRECTORY)
     set(QSC_DEPLOY_PATH ${QSC_BIN_OUTPUT_PATH})
 
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/sndcpy/sndcpy.sh" "${QSC_BIN_OUTPUT_PATH}"
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/sndcpy/sndcpy.apk" "${QSC_BIN_OUTPUT_PATH}"
-            )
+#    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+#            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/sndcpy/sndcpy.sh" "${QSC_BIN_OUTPUT_PATH}"
+#            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/sndcpy/sndcpy.apk" "${QSC_BIN_OUTPUT_PATH}"
+#            )
 
     set(THREADS_PREFER_PTHREAD_FLAG ON)
     find_package(Threads REQUIRED)
@@ -216,12 +219,12 @@ endif ()
 # common deps
 #
 
-add_subdirectory(QtScrcpyCore)
+add_subdirectory(core)
 
 # Qt
 target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Network
         Qt${QT_VERSION_MAJOR}::Multimedia
-        QtScrcpyCore
+        core
         )

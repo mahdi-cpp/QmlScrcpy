@@ -10,8 +10,8 @@
 #include <QTimer>
 
 
-#include "adbprocess.h"
-#include "../QtScrcpyCore/include/QtScrcpyCore.h"
+#include "core/include/adbprocess.h"
+#include "../core//include/QtScrcpyCore.h"
 #include "audio/audiooutput.h"
 
 namespace Ui

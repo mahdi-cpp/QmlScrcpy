@@ -1,0 +1,412 @@
+{
+	"BUILD_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/core/core_autogen",
+	"CMAKE_BINARY_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/core",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core",
+	"CMAKE_EXECUTABLE" : "/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/CMakeLists.txt",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5Config.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5Config.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5ModuleLocation.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Network/Qt5NetworkConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Network/Qt5NetworkConfig.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5WebSockets/Qt5WebSocketsConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5WebSockets/Qt5WebSocketsConfig.cmake"
+	],
+	"CMAKE_SOURCE_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
+	"HEADERS" : 
+	[
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/include/QtScrcpyCore.h",
+			"MU",
+			"6YEA5652QU/moc_QtScrcpyCore.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/include/QtScrcpyCoreDef.h",
+			"MU",
+			"6YEA5652QU/moc_QtScrcpyCoreDef.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/include/adbprocess.h",
+			"MU",
+			"6YEA5652QU/moc_adbprocess.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/adb/adbprocessimpl.h",
+			"MU",
+			"QBQSNTONFS/moc_adbprocessimpl.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/common/qscrcpyevent.h",
+			"MU",
+			"2PZEZPHIBF/moc_qscrcpyevent.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/android/input.h",
+			"MU",
+			"5XQ2NA3WYH/moc_input.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/android/keycodes.h",
+			"MU",
+			"5XQ2NA3WYH/moc_keycodes.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/compat.h",
+			"MU",
+			"R27GN3UPJU/moc_compat.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/bufferutil.h",
+			"MU",
+			"VGKDREYSTA/moc_bufferutil.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/controller.h",
+			"MU",
+			"VGKDREYSTA/moc_controller.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert/controlmsg.h",
+			"MU",
+			"FIT7WCBYQG/moc_controlmsg.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert/inputconvertbase.h",
+			"MU",
+			"FIT7WCBYQG/moc_inputconvertbase.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert/inputconvertgame.h",
+			"MU",
+			"FIT7WCBYQG/moc_inputconvertgame.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert/inputconvertnormal.h",
+			"MU",
+			"FIT7WCBYQG/moc_inputconvertnormal.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert/keymap/keymap.h",
+			"MU",
+			"F2Z3URE5CP/moc_keymap.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/receiver/devicemsg.h",
+			"MU",
+			"E5IYPM23Q7/moc_devicemsg.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/receiver/receiver.h",
+			"MU",
+			"E5IYPM23Q7/moc_receiver.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/decoder/avframeconvert.h",
+			"MU",
+			"TZCQTYOKL3/moc_avframeconvert.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/decoder/decoder.h",
+			"MU",
+			"TZCQTYOKL3/moc_decoder.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/decoder/fpscounter.h",
+			"MU",
+			"TZCQTYOKL3/moc_fpscounter.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/decoder/videobuffer.h",
+			"MU",
+			"TZCQTYOKL3/moc_videobuffer.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/demuxer/demuxer.h",
+			"MU",
+			"XS5GD45QW7/moc_demuxer.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/device.h",
+			"MU",
+			"R27GN3UPJU/moc_device.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/filehandler/filehandler.h",
+			"MU",
+			"KQXXML3GD5/moc_filehandler.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/recorder/recorder.h",
+			"MU",
+			"V6TAWOZAWB/moc_recorder.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/server/server.h",
+			"MU",
+			"B4U5HBF4HE/moc_server.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/server/tcpserver.h",
+			"MU",
+			"B4U5HBF4HE/moc_tcpserver.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/server/videosocket.h",
+			"MU",
+			"B4U5HBF4HE/moc_videosocket.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/websocket/echoserver.h",
+			"MU",
+			"EEEFOCPC3N/moc_echoserver.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/devicemanage/devicemanage.h",
+			"MU",
+			"XA5EKVFPEJ/moc_devicemanage.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/core/core_autogen/include",
+	"MOC_COMPILATION_FILE" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/core/core_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NETWORK_LIB",
+		"QT_WEBSOCKETS_LIB",
+		"QT_WIDGETS_LIB"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/core",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/include",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/adb",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/common",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/filehandler",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/android",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/decoder",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/receiver",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert/keymap",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/server",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/websocket",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/demuxer",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/ui",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/recorder",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/devicemanage",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtGui",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtCore",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtNetwork",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtWebSockets",
+		"/usr/include",
+		"/usr/include/c++/9",
+		"/usr/include/x86_64-linux-gnu/c++/9",
+		"/usr/include/c++/9/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/9/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/core/core_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 6,
+	"PARSE_CACHE_FILE" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/core/CMakeFiles/core_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 10,
+	"SETTINGS_FILE" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/core/CMakeFiles/core_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/adb/adbprocess.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/adb/adbprocessimpl.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/bufferutil.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/controller.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert/controlmsg.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert/inputconvertbase.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert/inputconvertgame.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert/inputconvertnormal.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/inputconvert/keymap/keymap.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/receiver/devicemsg.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/controller/receiver/receiver.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/decoder/avframeconvert.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/decoder/decoder.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/decoder/fpscounter.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/decoder/videobuffer.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/demuxer/demuxer.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/device.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/filehandler/filehandler.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/recorder/recorder.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/server/server.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/server/tcpserver.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/server/videosocket.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/device/websocket/echoserver.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/src/devicemanage/devicemanage.cpp",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

@@ -1,0 +1,672 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "/opt/challenge/QtScrcpy-2.1.2/output/x64/Debug/QtScrcpy"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"target_link_libraries",
+			"add_compile_options",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 163,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 206,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 225,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 47,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 50,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 169,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 170,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 171,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 172,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 173,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wextra"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-pedantic"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Werror"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wno-nested-anon-types"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wno-c++17-extensions"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-Wno-overloaded-virtual"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-fPIC"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-pthread"
+				},
+				{
+					"fragment" : "-std=gnu++11"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "QT_CORE_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_GUI_LIB"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "QT_MULTIMEDIA_LIB"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "QT_NETWORK_LIB"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "QT_WIDGETS_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_X11EXTRAS_LIB"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"path" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug"
+				},
+				{
+					"path" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy"
+				},
+				{
+					"backtrace" : 0,
+					"path" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/QtScrcpy_autogen/include"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/fontawesome"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/util"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/uibase"
+				},
+				{
+					"backtrace" : 9,
+					"path" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/ui"
+				},
+				{
+					"backtrace" : 10,
+					"path" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/render"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/core/include"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtX11Extras"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtGui"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtCore"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/./mkspecs/linux-g++"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtNetwork"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtMultimedia"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					2
+				],
+				"standard" : "11"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				2,
+				4,
+				6,
+				8,
+				11,
+				13,
+				17,
+				19,
+				21,
+				23,
+				24,
+				27,
+				29,
+				33
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 3,
+			"id" : "core::@57760688d1f824db5d9c"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "QtScrcpy_autogen::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "QtScrcpy::@6890427a1f51a3e7e1df",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/libQt5X11Extras.so.5.10.1",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-lxcb",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/libQt5Multimedia.so.5.10.1",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/opt/challenge/QtScrcpy-2.1.2/output/x64/Debug/libcore.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-pthread",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/libQt5Widgets.so.5.10.1",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/libQt5Gui.so.5.10.1",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/libQt5WebSockets.so.5.10.1",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/libQt5Network.so.5.10.1",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/libQt5Core.so.5.10.1",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lavformat",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lavcodec",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lavutil",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lswscale",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lz",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "QtScrcpy",
+	"nameOnDisk" : "QtScrcpy",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				24,
+				33
+			]
+		},
+		{
+			"name" : "fontawesome",
+			"sourceIndexes" : 
+			[
+				1,
+				2
+			]
+		},
+		{
+			"name" : "uibase",
+			"sourceIndexes" : 
+			[
+				3,
+				4,
+				5,
+				6
+			]
+		},
+		{
+			"name" : "ui",
+			"sourceIndexes" : 
+			[
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17
+			]
+		},
+		{
+			"name" : "util",
+			"sourceIndexes" : 
+			[
+				18,
+				19,
+				20,
+				21,
+				22,
+				23
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				25
+			]
+		},
+		{
+			"name" : "groupcontroller",
+			"sourceIndexes" : 
+			[
+				26,
+				27
+			]
+		},
+		{
+			"name" : "audio",
+			"sourceIndexes" : 
+			[
+				28,
+				29
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				30,
+				31,
+				32
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				34
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/QtScrcpy_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "fontawesome/iconhelper.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "fontawesome/iconhelper.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "uibase/keepratiowidget.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "uibase/keepratiowidget.cpp",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "uibase/magneticwidget.h",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "uibase/magneticwidget.cpp",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "ui/toolform.h",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "ui/toolform.cpp",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"path" : "ui/toolform.ui",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"path" : "ui/videoform.h",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "ui/videoform.cpp",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"path" : "ui/videoform.ui",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "ui/dialog.cpp",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"path" : "ui/dialog.h",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"path" : "ui/dialog.ui",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"path" : "render/qyuvopenglwidget.h",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "render/qyuvopenglwidget.cpp",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 1,
+			"path" : "util/config.h",
+			"sourceGroupIndex" : 4
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "util/config.cpp",
+			"sourceGroupIndex" : 4
+		},
+		{
+			"backtrace" : 1,
+			"path" : "util/mousetap/mousetap.h",
+			"sourceGroupIndex" : 4
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "util/mousetap/mousetap.cpp",
+			"sourceGroupIndex" : 4
+		},
+		{
+			"backtrace" : 1,
+			"path" : "util/mousetap/xmousetap.h",
+			"sourceGroupIndex" : 4
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "util/mousetap/xmousetap.cpp",
+			"sourceGroupIndex" : 4
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "main.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "res/res.qrc",
+			"sourceGroupIndex" : 5
+		},
+		{
+			"backtrace" : 1,
+			"path" : "groupcontroller/groupcontroller.h",
+			"sourceGroupIndex" : 6
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "groupcontroller/groupcontroller.cpp",
+			"sourceGroupIndex" : 6
+		},
+		{
+			"backtrace" : 1,
+			"path" : "audio/audiooutput.h",
+			"sourceGroupIndex" : 7
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "audio/audiooutput.cpp",
+			"sourceGroupIndex" : 7
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/QtScrcpy_autogen/include/ui_dialog.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/QtScrcpy_autogen/include/ui_toolform.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/QtScrcpy_autogen/include/ui_videoform.h",
+			"sourceGroupIndex" : 8
+		},
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/QtScrcpy_autogen/PNK5WDWK6L/qrc_res.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/QtScrcpy_autogen/PNK5WDWK6L/qrc_res.cpp.rule",
+			"sourceGroupIndex" : 9
+		}
+	],
+	"type" : "EXECUTABLE"
+}

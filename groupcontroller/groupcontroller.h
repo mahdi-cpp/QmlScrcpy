@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QVector>
 
-#include "QtScrcpyCore.h"
+#include "core/include/QtScrcpyCore.h"
 
 class GroupController : public QObject, public qsc::DeviceObserver
 {
