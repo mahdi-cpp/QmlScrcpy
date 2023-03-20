@@ -25,6 +25,7 @@ DeviceManage::~DeviceManage() {
     Demuxer::deInit();
 }
 
+
 QPointer<IDevice> DeviceManage::getDevice(const QString &serial)
 {
     if (!m_devices.contains(serial)) {
