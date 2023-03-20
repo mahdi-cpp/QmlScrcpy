@@ -36,6 +36,7 @@ const QString &AdbProcessImpl::getAdbPath() {
 }
 
 void AdbProcessImpl::initSignals() {
+
     // aboutToQuit not exit event loop, so deletelater is ok
     //connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &AdbProcessImpl::deleteLater);
 
@@ -44,7 +45,7 @@ void AdbProcessImpl::initSignals() {
                 if (NormalExit == exitStatus && 0 == exitCode) {
                     emit adbProcessImplResult(qsc::AdbProcess::AER_SUCCESS_EXEC);
                 } else {
-                    //P7C0218510000537        unauthorized ,手机端此时弹出调试认证，要允许调试
+                    //P7C0218510000537        unauthorized , At this time, the debugging authentication pops up on the mobile phone, and the debugging should be allowed
                     emit adbProcessImplResult(qsc::AdbProcess::AER_ERROR_EXEC);
                 }
                 qDebug() << "adb return " << exitCode << "exit status " << exitStatus;
