@@ -9,10 +9,8 @@
 #include <QListWidget>
 #include <QTimer>
 
-
 #include "core/include/adbprocess.h"
 #include "../core//include/QtScrcpyCore.h"
-
 
 namespace Ui
 {
@@ -60,6 +58,8 @@ private slots:
     void on_updateNameBtn_clicked();
     void on_useSingleModeCheck_clicked();
     void on_serialBox_currentIndexChanged(const QString &arg1);
+
+    void on_mahdiBtn_clicked();
 
 //    void on_startAudioBtn_clicked();
 //

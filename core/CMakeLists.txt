@@ -24,10 +24,6 @@ endif ()
 
 message("-- [core] QSC_DEPLOY_PATH: ${QSC_DEPLOY_PATH}")
 
-#
-# Sources
-#
-
 # adb
 set(QSC_ADB_SOURCES
         src/adb/adbprocessimpl.h
@@ -93,8 +89,8 @@ set(QSC_DEVICE_SOURCES
         src/device/server/tcpserver.cpp
         src/device/server/videosocket.h
         src/device/server/videosocket.cpp
-        src/device/websocket/echoserver.cpp
-        src/device/websocket/echoserver.h
+        src/device/websocket/websocket.cpp
+        src/device/websocket/websocket.h
         src/device/demuxer/demuxer.h
         src/device/demuxer/demuxer.cpp
         )

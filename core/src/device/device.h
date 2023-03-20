@@ -15,7 +15,7 @@ class QWheelEvent;
 class QKeyEvent;
 class Recorder;
 class Server;
-class EchoServer;
+class WebSocket;
 class VideoBuffer;
 class Decoder;
 class FileHandler;
@@ -84,7 +84,7 @@ private:
     // server relevant
     QPointer<Server> m_server;
     bool m_serverStartSuccess = false;
-    QPointer<EchoServer> m_echo_server;
+    QPointer<WebSocket> m_echo_server;
     QPointer<Decoder> m_decoder;
     QPointer<Controller> m_controller;
     QPointer<FileHandler> m_fileHandler;

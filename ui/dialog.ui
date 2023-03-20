@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1293</width>
-    <height>454</height>
+    <height>475</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -965,6 +965,13 @@
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="mahdiBtn">
+           <property name="text">
+            <string>Mahdi</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QWidget" name="usbWidget3" native="true">
            <layout class="QHBoxLayout" name="horizontalLayout_12">
             <property name="leftMargin">
@@ -979,45 +986,6 @@
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QPushButton" name="installSndcpyBtn">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>install sndcpy</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="startAudioBtn">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>start audio</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="stopAudioBtn">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>stop audio</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
          </item>

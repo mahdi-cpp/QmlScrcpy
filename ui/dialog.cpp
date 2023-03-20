@@ -14,8 +14,7 @@
 
 QString s_keyMapPath = "";
 
-const QString &getKeyMapPath()
-{
+const QString &getKeyMapPath() {
     if (s_keyMapPath.isEmpty()) {
         s_keyMapPath = QString::fromLocal8Bit(qgetenv("QTSCRCPY_KEYMAP_PATH"));
         QFileInfo fileInfo(s_keyMapPath);
@@ -26,8 +25,7 @@ const QString &getKeyMapPath()
     return s_keyMapPath;
 }
 
-Dialog::Dialog(QWidget *parent) : QWidget(parent), ui(new Ui::Widget)
-{
+Dialog::Dialog(QWidget *parent) : QWidget(parent), ui(new Ui::Widget) {
     ui->setupUi(this);
     initUI();
 
@@ -47,54 +45,54 @@ Dialog::Dialog(QWidget *parent) : QWidget(parent), ui(new Ui::Widget)
         QStringList args = m_adb.arguments();
 
         switch (processResult) {
-        case qsc::AdbProcess::AER_ERROR_START:
-            break;
-        case qsc::AdbProcess::AER_SUCCESS_START:
-            log = "adb run";
-            newLine = false;
-            break;
-        case qsc::AdbProcess::AER_ERROR_EXEC:
-            //log = m_adb.getErrorOut();
-            if (args.contains("ifconfig") && args.contains("wlan0")) {
-                getIPbyIp();
-            }
-            break;
-        case qsc::AdbProcess::AER_ERROR_MISSING_BINARY:
-            log = "adb not found";
-            break;
-        case qsc::AdbProcess::AER_SUCCESS_EXEC:
-            //log = m_adb.getStdOut();
-            if (args.contains("devices")) {
-                QStringList devices = m_adb.getDevicesSerialFromStdOut();
-                ui->serialBox->clear();
-                ui->connectedPhoneList->clear();
-                for (auto &item : devices) {
-                    ui->serialBox->addItem(item);
-                    ui->connectedPhoneList->addItem(Config::getInstance().getNickName(item) + "-" + item);
+            case qsc::AdbProcess::AER_ERROR_START:
+                break;
+            case qsc::AdbProcess::AER_SUCCESS_START:
+                log = "adb run";
+                newLine = false;
+                break;
+            case qsc::AdbProcess::AER_ERROR_EXEC:
+                //log = m_adb.getErrorOut();
+                if (args.contains("ifconfig") && args.contains("wlan0")) {
+                    getIPbyIp();
                 }
-            } else if (args.contains("show") && args.contains("wlan0")) {
-                QString ip = m_adb.getDeviceIPFromStdOut();
-                if (ip.isEmpty()) {
-                    log = "ip not find, connect to wifi?";
-                    break;
+                break;
+            case qsc::AdbProcess::AER_ERROR_MISSING_BINARY:
+                log = "adb not found";
+                break;
+            case qsc::AdbProcess::AER_SUCCESS_EXEC:
+                //log = m_adb.getStdOut();
+                if (args.contains("devices")) {
+                    QStringList devices = m_adb.getDevicesSerialFromStdOut();
+                    ui->serialBox->clear();
+                    ui->connectedPhoneList->clear();
+                    for (auto &item: devices) {
+                        ui->serialBox->addItem(item);
+                        ui->connectedPhoneList->addItem(Config::getInstance().getNickName(item) + "-" + item);
+                    }
+                } else if (args.contains("show") && args.contains("wlan0")) {
+                    QString ip = m_adb.getDeviceIPFromStdOut();
+                    if (ip.isEmpty()) {
+                        log = "ip not find, connect to wifi?";
+                        break;
+                    }
+                    ui->deviceIpEdt->setText(ip);
+                } else if (args.contains("ifconfig") && args.contains("wlan0")) {
+                    QString ip = m_adb.getDeviceIPFromStdOut();
+                    if (ip.isEmpty()) {
+                        log = "ip not find, connect to wifi?";
+                        break;
+                    }
+                    ui->deviceIpEdt->setText(ip);
+                } else if (args.contains("ip -o a")) {
+                    QString ip = m_adb.getDeviceIPByIpFromStdOut();
+                    if (ip.isEmpty()) {
+                        log = "ip not find, connect to wifi?";
+                        break;
+                    }
+                    ui->deviceIpEdt->setText(ip);
                 }
-                ui->deviceIpEdt->setText(ip);
-            } else if (args.contains("ifconfig") && args.contains("wlan0")) {
-                QString ip = m_adb.getDeviceIPFromStdOut();
-                if (ip.isEmpty()) {
-                    log = "ip not find, connect to wifi?";
-                    break;
-                }
-                ui->deviceIpEdt->setText(ip);
-            } else if (args.contains("ip -o a")) {
-                QString ip = m_adb.getDeviceIPByIpFromStdOut();
-                if (ip.isEmpty()) {
-                    log = "ip not find, connect to wifi?";
-                    break;
-                }
-                ui->deviceIpEdt->setText(ip);
-            }
-            break;
+                break;
         }
         if (!log.isEmpty()) {
             outLog(log, newLine);
@@ -120,19 +118,18 @@ Dialog::Dialog(QWidget *parent) : QWidget(parent), ui(new Ui::Widget)
     connect(m_hideIcon, &QSystemTrayIcon::activated, this, &Dialog::slotActivated);
 
     connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceConnected, this, &Dialog::onDeviceConnected);
-    connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceDisconnected, this, &Dialog::onDeviceDisconnected);
+    connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceDisconnected, this,
+            &Dialog::onDeviceDisconnected);
 }
 
-Dialog::~Dialog()
-{
+Dialog::~Dialog() {
     qDebug() << "~Dialog()";
     updateBootConfig(false);
     qsc::IDeviceManage::getInstance().disconnectAllDevice();
     delete ui;
 }
 
-void Dialog::initUI()
-{
+void Dialog::initUI() {
     setAttribute(Qt::WA_DeleteOnClose);
     //setWindowFlags(windowFlags() | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint | Qt::CustomizeWindowHint);
 
@@ -158,8 +155,7 @@ void Dialog::initUI()
     ui->lockOrientationBox->setCurrentIndex(0);
 }
 
-void Dialog::updateBootConfig(bool toView)
-{
+void Dialog::updateBootConfig(bool toView) {
     if (toView) {
         UserBootConfig config = Config::getInstance().getUserBootConfig();
 
@@ -209,8 +205,7 @@ void Dialog::updateBootConfig(bool toView)
     }
 }
 
-void Dialog::execAdbCmd()
-{
+void Dialog::execAdbCmd() {
     if (checkAdbRun()) {
         return;
     }
@@ -223,8 +218,7 @@ void Dialog::execAdbCmd()
 #endif
 }
 
-void Dialog::delayMs(int ms)
-{
+void Dialog::delayMs(int ms) {
     QTime dieTime = QTime::currentTime().addMSecs(ms);
 
     while (QTime::currentTime() < dieTime) {
@@ -232,8 +226,7 @@ void Dialog::delayMs(int ms)
     }
 }
 
-QString Dialog::getGameScript(const QString &fileName)
-{
+QString Dialog::getGameScript(const QString &fileName) {
     if (fileName.isEmpty()) {
         return "";
     }
@@ -249,18 +242,16 @@ QString Dialog::getGameScript(const QString &fileName)
     return ret;
 }
 
-void Dialog::slotActivated(QSystemTrayIcon::ActivationReason reason)
-{
+void Dialog::slotActivated(QSystemTrayIcon::ActivationReason reason) {
     switch (reason) {
-    case QSystemTrayIcon::Trigger:
-        break;
-    default:
-        break;
+        case QSystemTrayIcon::Trigger:
+            break;
+        default:
+            break;
     }
 }
 
-void Dialog::closeEvent(QCloseEvent *event)
-{
+void Dialog::closeEvent(QCloseEvent *event) {
     this->hide();
     m_hideIcon->showMessage(tr("Notice"),
                             tr("Hidden here!"),
@@ -269,8 +260,7 @@ void Dialog::closeEvent(QCloseEvent *event)
     event->ignore();
 }
 
-void Dialog::on_updateDevice_clicked()
-{
+void Dialog::on_updateDevice_clicked() {
     if (checkAdbRun()) {
         return;
     }
@@ -278,8 +268,7 @@ void Dialog::on_updateDevice_clicked()
     m_adb.execute("", QStringList() << "devices");
 }
 
-void Dialog::on_startServerBtn_clicked()
-{
+void Dialog::on_startServerBtn_clicked() {
     outLog("start server...", false);
 
     // this is ok that "original" toUshort is 0
@@ -311,15 +300,13 @@ void Dialog::on_startServerBtn_clicked()
     qsc::IDeviceManage::getInstance().connectDevice(params);
 }
 
-void Dialog::on_stopServerBtn_clicked()
-{
+void Dialog::on_stopServerBtn_clicked() {
     if (qsc::IDeviceManage::getInstance().disconnectDevice(ui->serialBox->currentText().trimmed())) {
         outLog("stop server");
     }
 }
 
-void Dialog::on_wirelessConnectBtn_clicked()
-{
+void Dialog::on_wirelessConnectBtn_clicked() {
     if (checkAdbRun()) {
         return;
     }
@@ -342,8 +329,7 @@ void Dialog::on_wirelessConnectBtn_clicked()
     m_adb.execute("", adbArgs);
 }
 
-void Dialog::on_startAdbdBtn_clicked()
-{
+void Dialog::on_startAdbdBtn_clicked() {
     if (checkAdbRun()) {
         return;
     }
@@ -355,8 +341,7 @@ void Dialog::on_startAdbdBtn_clicked()
     m_adb.execute(ui->serialBox->currentText().trimmed(), adbArgs);
 }
 
-void Dialog::outLog(const QString &log, bool newLine)
-{
+void Dialog::outLog(const QString &log, bool newLine) {
     // avoid sub thread update ui
     QString backLog = log;
     QTimer::singleShot(0, this, [this, backLog, newLine]() {
@@ -367,8 +352,7 @@ void Dialog::outLog(const QString &log, bool newLine)
     });
 }
 
-bool Dialog::filterLog(const QString &log)
-{
+bool Dialog::filterLog(const QString &log) {
     if (log.contains("app_proces")) {
         return true;
     }
@@ -378,16 +362,14 @@ bool Dialog::filterLog(const QString &log)
     return false;
 }
 
-bool Dialog::checkAdbRun()
-{
+bool Dialog::checkAdbRun() {
     if (m_adb.isRuning()) {
         outLog("wait for the end of the current command to run");
     }
     return m_adb.isRuning();
 }
 
-void Dialog::on_getIPBtn_clicked()
-{
+void Dialog::on_getIPBtn_clicked() {
     if (checkAdbRun()) {
         return;
     }
@@ -413,8 +395,7 @@ void Dialog::on_getIPBtn_clicked()
     m_adb.execute(ui->serialBox->currentText().trimmed(), adbArgs);
 }
 
-void Dialog::getIPbyIp()
-{
+void Dialog::getIPbyIp() {
     if (checkAdbRun()) {
         return;
     }
@@ -426,8 +407,7 @@ void Dialog::getIPbyIp()
     m_adb.execute(ui->serialBox->currentText().trimmed(), adbArgs);
 }
 
-void Dialog::onDeviceConnected(bool success, const QString &serial, const QString &deviceName, const QSize &size)
-{
+void Dialog::onDeviceConnected(bool success, const QString &serial, const QString &deviceName, const QSize &size) {
     Q_UNUSED(deviceName);
     if (!success) {
         return;
@@ -436,7 +416,7 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
     auto videoForm = new VideoForm(ui->framelessCheck->isChecked(), Config::getInstance().getSkin());
     videoForm->setSerial(serial);
 
-    qsc::IDeviceManage::getInstance().getDevice(serial)->setUserData(static_cast<void*>(videoForm));
+    qsc::IDeviceManage::getInstance().getDevice(serial)->setUserData(static_cast<void *>(videoForm));
     qsc::IDeviceManage::getInstance().getDevice(serial)->registerDeviceObserver(videoForm);
 
     videoForm->showFPS(ui->fpsCheck->isChecked());
@@ -466,8 +446,7 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
     GroupController::instance().addDevice(serial);
 }
 
-void Dialog::onDeviceDisconnected(QString serial)
-{
+void Dialog::onDeviceDisconnected(QString serial) {
     GroupController::instance().removeDevice(serial);
     auto device = qsc::IDeviceManage::getInstance().getDevice(serial);
     if (!device) {
@@ -475,15 +454,14 @@ void Dialog::onDeviceDisconnected(QString serial)
     }
     auto data = device->getUserData();
     if (data) {
-        VideoForm* vf = static_cast<VideoForm*>(data);
+        VideoForm *vf = static_cast<VideoForm *>(data);
         qsc::IDeviceManage::getInstance().getDevice(serial)->deRegisterDeviceObserver(vf);
         vf->close();
         vf->deleteLater();
     }
 }
 
-void Dialog::on_wirelessDisConnectBtn_clicked()
-{
+void Dialog::on_wirelessDisConnectBtn_clicked() {
     if (checkAdbRun()) {
         return;
     }
@@ -495,41 +473,34 @@ void Dialog::on_wirelessDisConnectBtn_clicked()
     m_adb.execute("", adbArgs);
 }
 
-void Dialog::on_selectRecordPathBtn_clicked()
-{
+void Dialog::on_selectRecordPathBtn_clicked() {
     QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
     QString directory = QFileDialog::getExistingDirectory(this, tr("select path"), "", options);
     ui->recordPathEdt->setText(directory);
 }
 
-void Dialog::on_recordPathEdt_textChanged(const QString &arg1)
-{
+void Dialog::on_recordPathEdt_textChanged(const QString &arg1) {
     ui->recordPathEdt->setToolTip(arg1.trimmed());
     ui->notDisplayCheck->setCheckable(!arg1.trimmed().isEmpty());
 }
 
-void Dialog::on_adbCommandBtn_clicked()
-{
+void Dialog::on_adbCommandBtn_clicked() {
     execAdbCmd();
 }
 
-void Dialog::on_stopAdbBtn_clicked()
-{
+void Dialog::on_stopAdbBtn_clicked() {
     m_adb.kill();
 }
 
-void Dialog::on_clearOut_clicked()
-{
+void Dialog::on_clearOut_clicked() {
     ui->outEdit->clear();
 }
 
-void Dialog::on_stopAllServerBtn_clicked()
-{
+void Dialog::on_stopAllServerBtn_clicked() {
     qsc::IDeviceManage::getInstance().disconnectAllDevice();
 }
 
-void Dialog::on_refreshGameScriptBtn_clicked()
-{
+void Dialog::on_refreshGameScriptBtn_clicked() {
     ui->gameBox->clear();
     QDir dir(getKeyMapPath());
     if (!dir.exists()) {
@@ -546,8 +517,7 @@ void Dialog::on_refreshGameScriptBtn_clicked()
     }
 }
 
-void Dialog::on_applyScriptBtn_clicked()
-{
+void Dialog::on_applyScriptBtn_clicked() {
     auto curSerial = ui->serialBox->currentText().trimmed();
     auto device = qsc::IDeviceManage::getInstance().getDevice(curSerial);
     if (!device) {
@@ -557,8 +527,7 @@ void Dialog::on_applyScriptBtn_clicked()
     device->updateScript(getGameScript(ui->gameBox->currentText()));
 }
 
-void Dialog::on_recordScreenCheck_clicked(bool checked)
-{
+void Dialog::on_recordScreenCheck_clicked(bool checked) {
     if (!checked) {
         return;
     }
@@ -570,8 +539,7 @@ void Dialog::on_recordScreenCheck_clicked(bool checked)
     }
 }
 
-void Dialog::on_usbConnectBtn_clicked()
-{
+void Dialog::on_usbConnectBtn_clicked() {
     on_stopAllServerBtn_clicked();
     delayMs(200);
     on_updateDevice_clicked();
@@ -587,9 +555,9 @@ void Dialog::on_usbConnectBtn_clicked()
     on_startServerBtn_clicked();
 }
 
-int Dialog::findDeviceFromeSerialBox(bool wifi)
-{
-    QRegExp regIP("\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\:([0-9]|[1-9]\\d|[1-9]\\d{2}|[1-9]\\d{3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])\\b");
+int Dialog::findDeviceFromeSerialBox(bool wifi) {
+    QRegExp regIP(
+            "\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\:([0-9]|[1-9]\\d|[1-9]\\d{2}|[1-9]\\d{3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])\\b");
     for (int i = 0; i < ui->serialBox->count(); ++i) {
         bool isWifi = regIP.exactMatch(ui->serialBox->itemText(i));
         bool found = wifi ? isWifi : !isWifi;
@@ -601,8 +569,7 @@ int Dialog::findDeviceFromeSerialBox(bool wifi)
     return -1;
 }
 
-void Dialog::on_wifiConnectBtn_clicked()
-{
+void Dialog::on_wifiConnectBtn_clicked() {
     on_stopAllServerBtn_clicked();
     delayMs(200);
 
@@ -638,15 +605,13 @@ void Dialog::on_wifiConnectBtn_clicked()
     on_startServerBtn_clicked();
 }
 
-void Dialog::on_connectedPhoneList_itemDoubleClicked(QListWidgetItem *item)
-{
+void Dialog::on_connectedPhoneList_itemDoubleClicked(QListWidgetItem *item) {
     Q_UNUSED(item);
     ui->serialBox->setCurrentIndex(ui->connectedPhoneList->currentRow());
     on_startServerBtn_clicked();
 }
 
-void Dialog::on_updateNameBtn_clicked()
-{
+void Dialog::on_updateNameBtn_clicked() {
     if (ui->serialBox->count() != 0) {
         if (ui->userNameEdt->text().isEmpty()) {
             Config::getInstance().setNickName(ui->serialBox->currentText(), "Phone");
@@ -662,8 +627,7 @@ void Dialog::on_updateNameBtn_clicked()
     }
 }
 
-void Dialog::on_useSingleModeCheck_clicked()
-{
+void Dialog::on_useSingleModeCheck_clicked() {
     if (ui->useSingleModeCheck->isChecked()) {
         ui->rightWidget->hide();
     } else {
@@ -673,19 +637,16 @@ void Dialog::on_useSingleModeCheck_clicked()
     adjustSize();
 }
 
-void Dialog::on_serialBox_currentIndexChanged(const QString &arg1)
-{
+void Dialog::on_serialBox_currentIndexChanged(const QString &arg1) {
     ui->userNameEdt->setText(Config::getInstance().getNickName(arg1));
 }
 
-quint32 Dialog::getBitRate()
-{
+quint32 Dialog::getBitRate() {
     return ui->bitRateEdit->text().trimmed().toUInt() *
-            (ui->bitRateBox->currentText() == QString("Mbps") ? 1000000 : 1000);
+           (ui->bitRateBox->currentText() == QString("Mbps") ? 1000000 : 1000);
 }
 
-const QString &Dialog::getServerPath()
-{
+const QString &Dialog::getServerPath() {
     static QString serverPath;
     if (serverPath.isEmpty()) {
         serverPath = QString::fromLocal8Bit(qgetenv("QTSCRCPY_SERVER_PATH"));
@@ -721,8 +682,11 @@ const QString &Dialog::getServerPath()
 //    m_audioOutput.installonly(ui->serialBox->currentText(), 28200);
 //}
 
-void Dialog::on_autoUpdatecheckBox_toggled(bool checked)
-{
+void Dialog::on_mahdiBtn_clicked() {
+    qDebug() << "Mahdi Button";
+}
+
+void Dialog::on_autoUpdatecheckBox_toggled(bool checked) {
     if (checked) {
         m_autoUpdatetimer.start(50000);
     } else {
