@@ -27,19 +27,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 163,
+				"line" : 156,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 206,
+				"line" : 199,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 225,
+				"line" : 218,
 				"parent" : 0
 			},
 			{
@@ -57,31 +57,31 @@
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 169,
+				"line" : 162,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 170,
+				"line" : 163,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 171,
+				"line" : 164,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 172,
+				"line" : 165,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 173,
+				"line" : 166,
 				"parent" : 0
 			}
 		]
@@ -262,8 +262,7 @@
 				23,
 				24,
 				27,
-				29,
-				33
+				31
 			]
 		}
 	],
@@ -379,7 +378,7 @@
 			[
 				0,
 				24,
-				33
+				31
 			]
 		},
 		{
@@ -445,27 +444,19 @@
 			]
 		},
 		{
-			"name" : "audio",
-			"sourceIndexes" : 
-			[
-				28,
-				29
-			]
-		},
-		{
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
-				30,
-				31,
-				32
+				28,
+				29,
+				30
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				34
+				32
 			]
 		}
 	],
@@ -626,33 +617,22 @@
 			"sourceGroupIndex" : 6
 		},
 		{
-			"backtrace" : 1,
-			"path" : "audio/audiooutput.h",
-			"sourceGroupIndex" : 7
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "audio/audiooutput.cpp",
-			"sourceGroupIndex" : 7
-		},
-		{
 			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "cmake-build-debug/QtScrcpy_autogen/include/ui_dialog.h",
-			"sourceGroupIndex" : 8
+			"sourceGroupIndex" : 7
 		},
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "cmake-build-debug/QtScrcpy_autogen/include/ui_toolform.h",
-			"sourceGroupIndex" : 8
+			"sourceGroupIndex" : 7
 		},
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "cmake-build-debug/QtScrcpy_autogen/include/ui_videoform.h",
-			"sourceGroupIndex" : 8
+			"sourceGroupIndex" : 7
 		},
 		{
 			"backtrace" : 0,
@@ -665,7 +645,7 @@
 			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "cmake-build-debug/QtScrcpy_autogen/PNK5WDWK6L/qrc_res.cpp.rule",
-			"sourceGroupIndex" : 9
+			"sourceGroupIndex" : 8
 		}
 	],
 	"type" : "EXECUTABLE"

@@ -110,12 +110,6 @@
 	"HEADERS" : 
 	[
 		[
-			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/audio/audiooutput.h",
-			"MU",
-			"PZONOMFGYT/moc_audiooutput.cpp",
-			null
-		],
-		[
 			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/fontawesome/iconhelper.h",
 			"MU",
 			"7653U4RL2C/moc_iconhelper.cpp",
@@ -251,11 +245,6 @@
 	"SETTINGS_FILE" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/CMakeFiles/QtScrcpy_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[
-			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/audio/audiooutput.cpp",
-			"MU",
-			null
-		],
 		[
 			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/fontawesome/iconhelper.cpp",
 			"MU",

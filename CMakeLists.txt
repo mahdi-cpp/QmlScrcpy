@@ -87,12 +87,6 @@ set(QC_UIBASE_SOURCES
         )
 source_group(uibase FILES ${QC_UIBASE_SOURCES})
 
-# audio
-set(QC_AUDIO_SOURCES
-        audio/audiooutput.h
-        audio/audiooutput.cpp
-        )
-source_group(audio FILES ${QC_AUDIO_SOURCES})
 
 # ui
 set(QC_UI_SOURCES
@@ -156,7 +150,6 @@ set(QC_PROJECT_SOURCES
         ${QC_MAIN_SOURCES}
         ${QC_GROUP_CONTROLLER}
         ${QC_PLANTFORM_SOURCES}
-        ${QC_AUDIO_SOURCES}
         )
 
 

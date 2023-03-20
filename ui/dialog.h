@@ -12,7 +12,7 @@
 
 #include "core/include/adbprocess.h"
 #include "../core//include/QtScrcpyCore.h"
-#include "audio/audiooutput.h"
+
 
 namespace Ui
 {
@@ -61,11 +61,11 @@ private slots:
     void on_useSingleModeCheck_clicked();
     void on_serialBox_currentIndexChanged(const QString &arg1);
 
-    void on_startAudioBtn_clicked();
-
-    void on_stopAudioBtn_clicked();
-
-    void on_installSndcpyBtn_clicked();
+//    void on_startAudioBtn_clicked();
+//
+//    void on_stopAudioBtn_clicked();
+//
+//    void on_installSndcpyBtn_clicked();
 
     void on_autoUpdatecheckBox_toggled(bool checked);
 
@@ -91,7 +91,6 @@ private:
     QMenu *m_menu;
     QAction *m_showWindow;
     QAction *m_quit;
-    AudioOutput m_audioOutput;
     QTimer m_autoUpdatetimer;
 };
 
