@@ -1,0 +1,305 @@
+{
+	"BUILD_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/QtScrcpy_autogen",
+	"CMAKE_BINARY_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy",
+	"CMAKE_EXECUTABLE" : "/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/CMakeLists.txt",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/CMakeFiles/3.21.1/CMakeSystem.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/CMakeFiles/3.21.1/CMakeCXXCompiler.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CMakeGenericSystem.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/Platform/Linux.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/Platform/UnixPaths.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CMakeCXXInformation.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CMakeLanguageInformation.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/Compiler/GNU-CXX.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/Compiler/GNU.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/Platform/Linux-GNU-CXX.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/Platform/Linux-GNU.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CMakeCommonLanguageInclude.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5Config.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5Config.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5ModuleLocation.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Core/Qt5CoreConfig.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Core/Qt5CoreConfigExtras.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Core/Qt5CoreMacros.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CMakeParseArguments.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QComposePlatformInputContextPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEglFSEmulatorIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEglFSKmsEglDeviceIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEglFSX11IntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEvdevKeyboardPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEvdevTabletPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QGtk3ThemePlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QIbusPlatformInputContextPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QLinuxFbIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QVirtualKeyboardPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QWebGLIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QXcbGlxIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CMakeParseArguments.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Network/Qt5NetworkConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Network/Qt5NetworkConfig.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Network/Qt5Network_QConnmanEnginePlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Network/Qt5Network_QNetworkManagerEnginePlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Multimedia/Qt5MultimediaConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Multimedia/Qt5MultimediaConfig.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Multimedia/Qt5Multimedia_CameraBinServicePlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Multimedia/Qt5Multimedia_QAlsaPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Multimedia/Qt5Multimedia_QGstreamerAudioDecoderServicePlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Multimedia/Qt5Multimedia_QGstreamerCaptureServicePlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Multimedia/Qt5Multimedia_QGstreamerPlayerServicePlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Multimedia/Qt5Multimedia_QM3uPlaylistPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5Multimedia/Qt5Multimedia_QPulseAudioPlugin.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5WebSockets/Qt5WebSocketsConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5WebSockets/Qt5WebSocketsConfig.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5Config.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5Config.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5/Qt5ModuleLocation.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5X11Extras/Qt5X11ExtrasConfigVersion.cmake",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/lib/cmake/Qt5X11Extras/Qt5X11ExtrasConfig.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/FindThreads.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CheckLibraryExists.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CheckIncludeFileCXX.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CheckCXXSourceCompiles.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/Internal/CheckSourceCompiles.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/FindPackageMessage.cmake",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/res/res.qrc"
+	],
+	"CMAKE_SOURCE_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
+	"HEADERS" : 
+	[
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/audio/audiooutput.h",
+			"MU",
+			"PZONOMFGYT/moc_audiooutput.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/fontawesome/iconhelper.h",
+			"MU",
+			"7653U4RL2C/moc_iconhelper.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/groupcontroller/groupcontroller.h",
+			"MU",
+			"7WSARK52GL/moc_groupcontroller.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/render/qyuvopenglwidget.h",
+			"MU",
+			"RZRAGMB46M/moc_qyuvopenglwidget.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/ui/dialog.h",
+			"MU",
+			"UYX5XTB5RZ/moc_dialog.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/ui/toolform.h",
+			"MU",
+			"UYX5XTB5RZ/moc_toolform.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/ui/videoform.h",
+			"MU",
+			"UYX5XTB5RZ/moc_videoform.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/uibase/keepratiowidget.h",
+			"MU",
+			"B2KWJJ5A6K/moc_keepratiowidget.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/uibase/magneticwidget.h",
+			"MU",
+			"B2KWJJ5A6K/moc_magneticwidget.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/util/config.h",
+			"MU",
+			"KH43KSYMFX/moc_config.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/util/mousetap/mousetap.h",
+			"MU",
+			"A6WZYQ7OMG/moc_mousetap.cpp",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/util/mousetap/xmousetap.h",
+			"MU",
+			"A6WZYQ7OMG/moc_xmousetap.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/QtScrcpy_autogen/include",
+	"MOC_COMPILATION_FILE" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/QtScrcpy_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_MULTIMEDIA_LIB",
+		"QT_NETWORK_LIB",
+		"QT_WIDGETS_LIB",
+		"QT_X11EXTRAS_LIB"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/fontawesome",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/util",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/uibase",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/ui",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/render",
+		"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/QtScrcpyCore/include",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtX11Extras",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtGui",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtCore",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/mkspecs/linux-g++",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtWidgets",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtNetwork",
+		"/home/mahdi/Qt5.10.1/5.10.1/gcc_64/include/QtMultimedia",
+		"/usr/include",
+		"/usr/include/c++/9",
+		"/usr/include/x86_64-linux-gnu/c++/9",
+		"/usr/include/c++/9/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/9/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/share/cmake-3.21/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/QtScrcpy_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 6,
+	"PARSE_CACHE_FILE" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/CMakeFiles/QtScrcpy_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/home/mahdi/Qt5.10.1/5.10.1/gcc_64/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 10,
+	"SETTINGS_FILE" : "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/CMakeFiles/QtScrcpy_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/audio/audiooutput.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/fontawesome/iconhelper.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/groupcontroller/groupcontroller.cpp",
+			"MU",
+			null
+		],
+		[ "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/main.cpp", "MU", null ],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/render/qyuvopenglwidget.cpp",
+			"MU",
+			null
+		],
+		[ "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/ui/dialog.cpp", "MU", null ],
+		[ "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/ui/toolform.cpp", "MU", null ],
+		[ "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/ui/videoform.cpp", "MU", null ],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/uibase/keepratiowidget.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/uibase/magneticwidget.cpp",
+			"MU",
+			null
+		],
+		[ "/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/util/config.cpp", "MU", null ],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/util/mousetap/mousetap.cpp",
+			"MU",
+			null
+		],
+		[
+			"/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/util/mousetap/xmousetap.cpp",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

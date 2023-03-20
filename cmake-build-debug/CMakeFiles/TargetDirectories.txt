@@ -1,0 +1,8 @@
+/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/CMakeFiles/edit_cache.dir
+/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/CMakeFiles/QtScrcpy.dir
+/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/CMakeFiles/QtScrcpy_autogen.dir
+/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/QtScrcpyCore/CMakeFiles/rebuild_cache.dir
+/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/QtScrcpyCore/CMakeFiles/edit_cache.dir
+/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/QtScrcpyCore/CMakeFiles/QtScrcpyCore.dir
+/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug/QtScrcpyCore/CMakeFiles/QtScrcpyCore_autogen.dir

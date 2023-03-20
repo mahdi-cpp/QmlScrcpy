@@ -1,0 +1,13 @@
+/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/mahdi/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.7172.20/bin/ninja/linux/ninja -DCMAKE_PREFIX_PATH=~/Qt5.10.1/5.10.1/gcc_64/lib/cmake -G Ninja /opt/challenge/QtScrcpy-2.1.2/QtScrcpy
+-- [QtScrcpy] Project QtScrcpy 0.0.0
+-- [QtScrcpy] CPU_ARCH:x64
+-- [QtScrcpy] BUILD_TYPE:Debug
+-- [QtScrcpy] C++ compiler ID is: GNU
+-- [QtScrcpy] Set warnings as error
+-- [QtScrcpy] Qt version is: 5.10
+-- multi config:QC_IS_MUTIL_CONFIG
+-- [QtScrcpy] QSC_CPU_ARCH:x64
+-- [QtScrcpyCore] QSC_DEPLOY_PATH: /opt/challenge/QtScrcpy-2.1.2/QtScrcpy/../output/x64/Debug/$<0:>
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /opt/challenge/QtScrcpy-2.1.2/QtScrcpy/cmake-build-debug
