@@ -76,12 +76,8 @@ message(STATUS "[${PROJECT_NAME}] Qt version is: ${QT_VERSION_MAJOR}.${QT_VERSIO
 # Sources
 #
 
-# fontawesome
-set(QC_FONTAWESOME_SOURCES
-        fontawesome/iconhelper.h
-        fontawesome/iconhelper.cpp
-        )
-source_group(fontawesome FILES ${QC_FONTAWESOME_SOURCES})
+
+source_group(ui/toolform/fontawesome FILES ${QC_FONTAWESOME_SOURCES})
 
 # uibase
 set(QC_UIBASE_SOURCES
@@ -95,9 +91,11 @@ source_group(uibase FILES ${QC_UIBASE_SOURCES})
 
 # ui
 set(QC_UI_SOURCES
-        ui/toolform.h
-        ui/toolform.cpp
-        ui/toolform.ui
+        ui/toolform/toolform.h
+        ui/toolform/toolform.cpp
+        ui/toolform/toolform.ui
+        ui/toolform/fontawesome/iconhelper.h
+        ui/toolform/fontawesome/iconhelper.cpp
         ui/videoform.h
         ui/videoform.cpp
         ui/videoform.ui
@@ -166,7 +164,6 @@ source_group(squircle FILES ${QC_SQUIRCLE_SOURCES})
 
 # all sources
 set(QC_PROJECT_SOURCES
-        ${QC_FONTAWESOME_SOURCES}
         ${QC_UIBASE_SOURCES}
         ${QC_UI_SOURCES}
         ${QC_UTIL_SOURCES}
@@ -183,7 +180,7 @@ add_executable(${PROJECT_NAME} ${QC_RUNTIME_TYPE} ${QC_PROJECT_SOURCES})
 # Internal include path (todo: remove this, use absolute path include)
 #
 
-target_include_directories(${PROJECT_NAME} PRIVATE fontawesome)
+target_include_directories(${PROJECT_NAME} PRIVATE ui/toolform/fontawesome)
 target_include_directories(${PROJECT_NAME} PRIVATE util)
 target_include_directories(${PROJECT_NAME} PRIVATE uibase)
 target_include_directories(${PROJECT_NAME} PRIVATE ui)

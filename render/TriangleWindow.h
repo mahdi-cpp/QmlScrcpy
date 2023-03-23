@@ -36,7 +36,7 @@ private:
     bool m_textureInited = false;
 
     // Vertex Buffer Objects (VBO): the default is VertexBuffer (GL_ARRAY_BUFFER) type
-    QOpenGLBuffer m_vbo;
+    QOpenGLBuffer m_vertexBuffer;
 
     // Shader program: compile linked shaders
     QOpenGLShaderProgram m_shaderProgram;

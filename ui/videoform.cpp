@@ -15,7 +15,7 @@
 #include "config.h"
 #include "iconhelper.h"
 #include "qyuvopenglwidget.h"
-#include "toolform.h"
+#include "ui/toolform/toolform.h"
 #include "mousetap/mousetap.h"
 #include "ui_videoform.h"
 #include "videoform.h"

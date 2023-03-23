@@ -7,7 +7,7 @@
 #include "toolform.h"
 #include "ui_toolform.h"
 #include "videoform.h"
-#include "../groupcontroller/groupcontroller.h"
+#include "groupcontroller/groupcontroller.h"
 
 ToolForm::ToolForm(QWidget *adsorbWidget, AdsorbPositions adsorbPos) : MagneticWidget(adsorbWidget, adsorbPos), ui(new Ui::ToolForm)
 {

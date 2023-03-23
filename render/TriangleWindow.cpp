@@ -7,6 +7,7 @@
 // store vertex coordinates and texture coordinates
 // cached together in the vbo
 // Use glVertexAttribPointer to specify the access method
+
 static const GLfloat coordinate[] = {
         // Vertex coordinates, store 4 xyz coordinates
         // The coordinate range is [-1,1], and the center point is 0,0
@@ -39,24 +40,13 @@ static const GLfloat coordinate[] = {
         0.0f
 };
 
-//// vertex shader
-//static const QString s_vertShader = R"(
-//
-//)";
-//
-//// fragment shader
-//static QString s_fragShader = R"(
-//
-//)";
-
-
 TriangleWindow::TriangleWindow(): m_shaderProgram(0)
 {
 
 }
 
 TriangleWindow::~TriangleWindow() {
-    m_vbo.destroy();
+    m_vertexBuffer.destroy();
     deInitTextures();
 }
 
@@ -68,9 +58,9 @@ void TriangleWindow::initialize()
     glDisable(GL_DEPTH_TEST);
 
     // Vertex buffer object initialization
-    m_vbo.create();
-    m_vbo.bind();
-    m_vbo.allocate(coordinate, sizeof(coordinate));
+    m_vertexBuffer.create();
+    m_vertexBuffer.bind();
+    m_vertexBuffer.allocate(coordinate, sizeof(coordinate));
 
     initShader();
     // Set background cleanup color to black
