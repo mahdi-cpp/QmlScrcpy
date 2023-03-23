@@ -30,6 +30,7 @@ public:
         QString serial = "";              // devise serial number
         QString serverLocalPath = "";     // Local Android server path
 
+
         // optional
         QString serverRemotePath = "/data/local/tmp/scrcpy-server.jar";    // The server path to be pushed to the remote device
         quint16 localPort = 27183;     // Local listening port in reverse

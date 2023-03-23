@@ -1,6 +1,4 @@
 #include <QCoreApplication>
-#include <QOpenGLTexture>
-#include <QSurfaceFormat>
 
 #include "qyuvopenglwidget.h"
 
@@ -8,35 +6,35 @@
 // cached together in the vbo
 // Use glVertexAttribPointer to specify the access method
 static const GLfloat coordinate[] = {
-    // Vertex coordinates, store 4 xyz coordinates
-    // The coordinate range is [-1,1], and the center point is 0,0
-    // 2D image z is always 0
-    // How GL_TRIANGLE_STRIP is drawn：
-    // Draw a triangle using the first 3 coordinates and a triangle using the last 3 coordinates, exactly a rectangle
-    // x     y     z
-    -1.0f,
-    -1.0f,
-    0.0f,
-    1.0f,
-    -1.0f,
-    0.0f,
-    -1.0f,
-    1.0f,
-    0.0f,
-    1.0f,
-    1.0f,
-    0.0f,
+        // Vertex coordinates, store 4 xyz coordinates
+        // The coordinate range is [-1,1], and the center point is 0,0
+        // 2D image z is always 0
+        // How GL_TRIANGLE_STRIP is drawn：
+        // Draw a triangle using the first 3 coordinates and a triangle using the last 3 coordinates, exactly a rectangle
+        // x     y     z
+        -1.0f,
+        -1.0f,
+        0.0f,
+        1.0f,
+        -1.0f,
+        0.0f,
+        -1.0f,
+        1.0f,
+        0.0f,
+        1.0f,
+        1.0f,
+        0.0f,
 
-    // Texture coordinates, store 4 xy coordinates
-    // The coordinate range is [0,1], and the lower left corner is 0,0
-    0.0f,
-    1.0f,
-    1.0f,
-    1.0f,
-    0.0f,
-    0.0f,
-    1.0f,
-    0.0f
+        // Texture coordinates, store 4 xy coordinates
+        // The coordinate range is [0,1], and the lower left corner is 0,0
+        0.0f,
+        1.0f,
+        1.0f,
+        1.0f,
+        0.0f,
+        0.0f,
+        1.0f,
+        0.0f
 };
 
 // vertex shader
@@ -84,38 +82,26 @@ static QString s_fragShader = R"(
     }
 )";
 
-QYUVOpenGLWidget::QYUVOpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
-{
-    /*
-    QSurfaceFormat format = QSurfaceFormat::defaultFormat();
-    format.setColorSpace(QSurfaceFormat::sRGBColorSpace);
-    format.setProfile(QSurfaceFormat::CompatibilityProfile);
-    format.setMajorVersion(3);
-    format.setMinorVersion(2);
-    QSurfaceFormat::setDefaultFormat(format);
-    */
+QYUVOpenGLWidget::QYUVOpenGLWidget(QWidget *parent) : QOpenGLWidget(parent) {
+
 }
 
-QYUVOpenGLWidget::~QYUVOpenGLWidget()
-{
+QYUVOpenGLWidget::~QYUVOpenGLWidget() {
     makeCurrent();
     m_vbo.destroy();
     deInitTextures();
     doneCurrent();
 }
 
-QSize QYUVOpenGLWidget::minimumSizeHint() const
-{
+QSize QYUVOpenGLWidget::minimumSizeHint() const {
     return QSize(50, 50);
 }
 
-QSize QYUVOpenGLWidget::sizeHint() const
-{
+QSize QYUVOpenGLWidget::sizeHint() const {
     return size();
 }
 
-void QYUVOpenGLWidget::setFrameSize(const QSize &frameSize)
-{
+void QYUVOpenGLWidget::setFrameSize(const QSize &frameSize) {
     if (m_frameSize != frameSize) {
         m_frameSize = frameSize;
         m_needUpdate = true;
@@ -124,13 +110,27 @@ void QYUVOpenGLWidget::setFrameSize(const QSize &frameSize)
     }
 }
 
-const QSize &QYUVOpenGLWidget::frameSize()
-{
+const QSize &QYUVOpenGLWidget::frameSize() {
     return m_frameSize;
 }
+void QYUVOpenGLWidget::initializeGL() {
 
-void QYUVOpenGLWidget::updateTextures(quint8 *dataY, quint8 *dataU, quint8 *dataV, quint32 linesizeY, quint32 linesizeU, quint32 linesizeV)
-{
+    initializeOpenGLFunctions();
+    glDisable(GL_DEPTH_TEST);
+
+    // Vertex buffer object initialization
+    m_vbo.create();
+    m_vbo.bind();
+    m_vbo.allocate(coordinate, sizeof(coordinate));
+
+    initShader();
+    // Set background cleanup color to black
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    // clean up color background
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void QYUVOpenGLWidget::updateTextures(quint8 *dataY, quint8 *dataU, quint8 *dataV, quint32 linesizeY, quint32 linesizeU, quint32 linesizeV) {
     if (m_textureInited) {
         updateTexture(m_texture[0], 0, dataY, linesizeY);
         updateTexture(m_texture[1], 1, dataU, linesizeU);
@@ -139,24 +139,8 @@ void QYUVOpenGLWidget::updateTextures(quint8 *dataY, quint8 *dataU, quint8 *data
     }
 }
 
-void QYUVOpenGLWidget::initializeGL()
-{
-    initializeOpenGLFunctions();
-    glDisable(GL_DEPTH_TEST);
+void QYUVOpenGLWidget::paintGL() {
 
-    // Vertex buffer object initialization
-    m_vbo.create();
-    m_vbo.bind();
-    m_vbo.allocate(coordinate, sizeof(coordinate));
-    initShader();
-    // Set background cleanup color to black
-    glClearColor(0.0, 0.0, 0.0, 0.0);
-    // clean up color background
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
-void QYUVOpenGLWidget::paintGL()
-{
     if (m_needUpdate) {
         deInitTextures();
         initTextures();
@@ -177,14 +161,29 @@ void QYUVOpenGLWidget::paintGL()
     }
 }
 
-void QYUVOpenGLWidget::resizeGL(int width, int height)
-{
+
+void QYUVOpenGLWidget::updateTexture(GLuint texture, quint32 textureType, quint8 *pixels, quint32 stride) {
+    if (!pixels)
+        return;
+
+    QSize size = 0 == textureType ? m_frameSize : m_frameSize / 2;
+
+    makeCurrent();
+
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, static_cast<GLint>(stride));
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, size.width(), size.height(), GL_LUMINANCE, GL_UNSIGNED_BYTE, pixels);
+
+    doneCurrent();
+
+}
+void QYUVOpenGLWidget::resizeGL(int width, int height) {
     glViewport(0, 0, width, height);
     repaint();
 }
 
-void QYUVOpenGLWidget::initShader()
-{
+void QYUVOpenGLWidget::initShader() {
+
     // The float, int, etc. of opengles need to manually specify the precision
     if (QCoreApplication::testAttribute(Qt::AA_UseOpenGLES)) {
         s_fragShader.prepend(R"(
@@ -218,8 +217,8 @@ void QYUVOpenGLWidget::initShader()
     m_shaderProgram.setUniformValue("textureV", 2);
 }
 
-void QYUVOpenGLWidget::initTextures()
-{
+void QYUVOpenGLWidget::initTextures() {
+
     // create texture
     glGenTextures(1, &m_texture[0]);
     glBindTexture(GL_TEXTURE_2D, m_texture[0]);
@@ -229,7 +228,8 @@ void QYUVOpenGLWidget::initTextures()
     // Set the display strategy when the texture exceeds the coordinates in the st direction
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width(), m_frameSize.height(), 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width(), m_frameSize.height(), 0, GL_LUMINANCE,
+                 GL_UNSIGNED_BYTE, nullptr);
 
     glGenTextures(1, &m_texture[1]);
     glBindTexture(GL_TEXTURE_2D, m_texture[1]);
@@ -237,7 +237,8 @@ void QYUVOpenGLWidget::initTextures()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width() / 2, m_frameSize.height() / 2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width() / 2, m_frameSize.height() / 2, 0, GL_LUMINANCE,
+                 GL_UNSIGNED_BYTE, nullptr);
 
     glGenTextures(1, &m_texture[2]);
     glBindTexture(GL_TEXTURE_2D, m_texture[2]);
@@ -247,13 +248,14 @@ void QYUVOpenGLWidget::initTextures()
     // Set the display strategy when the texture exceeds the coordinates in the st direction
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width() / 2, m_frameSize.height() / 2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width() / 2, m_frameSize.height() / 2, 0, GL_LUMINANCE,
+                 GL_UNSIGNED_BYTE, nullptr);
 
     m_textureInited = true;
 }
 
-void QYUVOpenGLWidget::deInitTextures()
-{
+void QYUVOpenGLWidget::deInitTextures() {
+
     if (QOpenGLFunctions::isInitialized(QOpenGLFunctions::d_ptr)) {
         glDeleteTextures(3, m_texture);
     }
@@ -262,16 +264,4 @@ void QYUVOpenGLWidget::deInitTextures()
     m_textureInited = false;
 }
 
-void QYUVOpenGLWidget::updateTexture(GLuint texture, quint32 textureType, quint8 *pixels, quint32 stride)
-{
-    if (!pixels)
-        return;
 
-    QSize size = 0 == textureType ? m_frameSize : m_frameSize / 2;
-
-    makeCurrent();
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glPixelStorei(GL_UNPACK_ROW_LENGTH, static_cast<GLint>(stride));
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, size.width(), size.height(), GL_LUMINANCE, GL_UNSIGNED_BYTE, pixels);
-    doneCurrent();
-}

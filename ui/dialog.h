@@ -8,9 +8,12 @@
 #include <QSystemTrayIcon>
 #include <QListWidget>
 #include <QTimer>
+#include "QQuickView"
+
 
 #include "core/include/adbprocess.h"
 #include "../core//include/QtScrcpyCore.h"
+#include "TriangleWindow.h"
 
 namespace Ui
 {
@@ -81,6 +84,9 @@ private:
     quint32 getBitRate();
     const QString &getServerPath();
 
+    QPointer<QQuickView> m_qmlView;
+    QPointer<TriangleWindow> m_Triangle;
+
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -92,6 +98,7 @@ private:
     QAction *m_showWindow;
     QAction *m_quit;
     QTimer m_autoUpdatetimer;
+    QQuickView view;
 };
 
 #endif // DIALOG_H

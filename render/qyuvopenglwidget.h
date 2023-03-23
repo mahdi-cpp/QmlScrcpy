@@ -1,13 +1,12 @@
 #ifndef QYUVOPENGLWIDGET_H
 #define QYUVOPENGLWIDGET_H
+
 #include <QOpenGLBuffer>
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLWidget>
 
-class QYUVOpenGLWidget
-    : public QOpenGLWidget
-    , protected QOpenGLFunctions
+class QYUVOpenGLWidget: public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 public:
@@ -27,10 +26,10 @@ protected:
     void paintGL() override;
 
 private:
+    void updateTexture(GLuint texture, quint32 textureType, quint8 *pixels, quint32 stride);
     void initShader();
     void initTextures();
     void deInitTextures();
-    void updateTexture(GLuint texture, quint32 textureType, quint8 *pixels, quint32 stride);
 
 private:
     // Video frame size

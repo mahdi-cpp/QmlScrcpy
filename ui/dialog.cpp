@@ -5,11 +5,13 @@
 #include <QTime>
 #include <QTimer>
 #include <QCoreApplication>
+#include <QQuickView>
 
 #include "config.h"
 #include "dialog.h"
 #include "ui_dialog.h"
 #include "videoform.h"
+#include "squircle/Squircle.h"
 #include "../groupcontroller/groupcontroller.h"
 
 QString s_keyMapPath = "";
@@ -26,6 +28,7 @@ const QString &getKeyMapPath() {
 }
 
 Dialog::Dialog(QWidget *parent) : QWidget(parent), ui(new Ui::Widget) {
+
     ui->setupUi(this);
     initUI();
 
@@ -35,6 +38,7 @@ Dialog::Dialog(QWidget *parent) : QWidget(parent), ui(new Ui::Widget) {
     on_updateDevice_clicked();
 
     connect(&m_autoUpdatetimer, &QTimer::timeout, this, &Dialog::on_updateDevice_clicked);
+
     if (ui->autoUpdatecheckBox->isChecked()) {
         m_autoUpdatetimer.start(50000);
     }
@@ -118,8 +122,8 @@ Dialog::Dialog(QWidget *parent) : QWidget(parent), ui(new Ui::Widget) {
     connect(m_hideIcon, &QSystemTrayIcon::activated, this, &Dialog::slotActivated);
 
     connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceConnected, this, &Dialog::onDeviceConnected);
-    connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceDisconnected, this,
-            &Dialog::onDeviceDisconnected);
+    connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceDisconnected, this,&Dialog::onDeviceDisconnected);
+
 }
 
 Dialog::~Dialog() {
@@ -408,6 +412,7 @@ void Dialog::getIPbyIp() {
 }
 
 void Dialog::onDeviceConnected(bool success, const QString &serial, const QString &deviceName, const QSize &size) {
+
     Q_UNUSED(deviceName);
     if (!success) {
         return;
@@ -416,8 +421,23 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
     auto videoForm = new VideoForm(ui->framelessCheck->isChecked(), Config::getInstance().getSkin());
     videoForm->setSerial(serial);
 
+    QSurfaceFormat format;
+    format.setSamples(40);
+    m_Triangle = new TriangleWindow();
+    m_Triangle->setFormat(format);
+    m_Triangle->resize(42, 932);
+    m_Triangle->show();
+    qsc::IDeviceManage::getInstance().getDevice(serial)->registerDeviceObserver(m_Triangle);
+
+//    qmlRegisterType<Squircle>("OpenGLUnderQML", 1, 0, "Squircle");
+//    m_qmlView = new QQuickView();
+//    m_qmlView->setSource(QUrl("file:/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/render/main.qml"));
+//    m_qmlView->setResizeMode(QQuickView::SizeRootObjectToView);
+//    m_qmlView->show();
+
     qsc::IDeviceManage::getInstance().getDevice(serial)->setUserData(static_cast<void *>(videoForm));
     qsc::IDeviceManage::getInstance().getDevice(serial)->registerDeviceObserver(videoForm);
+
 
     videoForm->showFPS(ui->fpsCheck->isChecked());
     if (ui->alwaysTopCheck->isChecked()) {
@@ -452,6 +472,7 @@ void Dialog::onDeviceDisconnected(QString serial) {
     if (!device) {
         return;
     }
+
     auto data = device->getUserData();
     if (data) {
         VideoForm *vf = static_cast<VideoForm *>(data);
@@ -684,6 +705,7 @@ const QString &Dialog::getServerPath() {
 
 void Dialog::on_mahdiBtn_clicked() {
     qDebug() << "Mahdi Button";
+    ui->autoUpdatecheckBox->setChecked(false);
 }
 
 void Dialog::on_autoUpdatecheckBox_toggled(bool checked) {

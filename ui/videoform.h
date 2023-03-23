@@ -3,8 +3,12 @@
 
 #include <QPointer>
 #include <QWidget>
+#include "QQuickView"
 
 #include "../core/include/QtScrcpyCore.h"
+#include "squircle/SquircleRenderer.h"
+#include "squircle/Squircle.h"
+#include "TriangleWindow.h"
 
 namespace Ui
 {
@@ -25,7 +29,7 @@ public:
 
     void staysOnTop(bool top = true);
     void updateShowSize(const QSize &newSize);
-    void updateRender(int width, int height, uint8_t* dataY, uint8_t* dataU, uint8_t* dataV, int linesizeY, int linesizeU, int linesizeV);
+//    void updateRender(int width, int height, uint8_t* dataY, uint8_t* dataU, uint8_t* dataV, int linesizeY, int linesizeU, int linesizeV);
     void setSerial(const QString& serial);
     QRect getGrabCursorRect();
     const QSize &frameSize();
@@ -37,8 +41,6 @@ public:
     bool isHost();
 
 private:
-    void onFrame(int width, int height, uint8_t* dataY, uint8_t* dataU, uint8_t* dataV,
-                 int linesizeY, int linesizeU, int linesizeV) override;
     void updateFPS(quint32 fps) override;
     void grabCursor(bool grab) override;
 
@@ -75,8 +77,14 @@ private:
     Ui::videoForm *ui;
     QPointer<ToolForm> m_toolForm;
     QPointer<QWidget> m_loadingWidget;
-    QPointer<QYUVOpenGLWidget> m_videoWidget;
     QPointer<QLabel> m_fpsLabel;
+
+    QPointer<QYUVOpenGLWidget> m_videoWidget;
+    QPointer<Squircle> m_squircle;
+
+
+
+    QQuickView view;
 
     //inside member
     QSize m_frameSize;
@@ -86,6 +94,12 @@ private:
     bool m_skin = true;
     QPoint m_fullScreenBeforePos;
     QString m_serial;
+
+
+    quint8 dY;
+    quint8 dU;
+    quint8 dV;
+
 };
 
 #endif // VIDEOFORM_H

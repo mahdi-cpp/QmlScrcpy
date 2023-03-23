@@ -13,6 +13,11 @@ set(QC_PROJECT_NAME "QtScrcpy")
 file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/version QC_FILE_VERSION)
 set(QC_PROJECT_VERSION ${QC_FILE_VERSION})
 
+configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/render/squircle.vsh
+        ${CMAKE_CURRENT_SOURCE_DIR}/render/squircle.fsh
+)
+
 # Project declare
 project(${QC_PROJECT_NAME} VERSION ${QC_PROJECT_VERSION} LANGUAGES CXX)
 message(STATUS "[${PROJECT_NAME}] Project ${PROJECT_NAME} ${PROJECT_VERSION}")
@@ -58,8 +63,8 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Network Multimedia WebSockets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network Multimedia WebSockets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Network Multimedia WebSockets Quick Qml REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network Multimedia WebSockets Quick Qml REQUIRED)
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     find_package(QT NAMES Qt6 Qt5 COMPONENTS X11Extras REQUIRED)
     find_package(Qt${QT_VERSION_MAJOR} COMPONENTS X11Extras REQUIRED)
@@ -137,6 +142,24 @@ set(QC_MAIN_SOURCES
         ${QC_QRC_SOURCES}
         )
 
+# render
+set(QC_RENDER_SOURCES
+        render/OpenGLWindow.cpp
+        render/OpenGLWindow.h
+        render/TriangleWindow.cpp
+        render/TriangleWindow.h
+        )
+
+# squircle
+set(QC_SQUIRCLE_SOURCES
+        squircle/Squircle.cpp
+        squircle/Squircle.h
+        squircle/SquircleRenderer.cpp
+        squircle/SquircleRenderer.h
+        )
+
+source_group(render FILES ${QC_RENDER_SOURCES})
+source_group(squircle FILES ${QC_SQUIRCLE_SOURCES})
 
 # Translation related (use shell script instead of cmake to handle translation)
 # add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/res/i18n)
@@ -150,7 +173,8 @@ set(QC_PROJECT_SOURCES
         ${QC_MAIN_SOURCES}
         ${QC_GROUP_CONTROLLER}
         ${QC_PLANTFORM_SOURCES}
-        )
+        ${QC_RENDER_SOURCES}
+        ${QC_SQUIRCLE_SOURCES})
 
 
 add_executable(${PROJECT_NAME} ${QC_RUNTIME_TYPE} ${QC_PROJECT_SOURCES})
@@ -180,7 +204,7 @@ message(STATUS "multi config:" QC_IS_MUTIL_CONFIG)
 # https://stackoverflow.com/questions/7747857/in-cmake-how-do-i-work-around-the-debug-and-release-directories-visual-studio-2
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../output/${QC_CPU_ARCH}/${CMAKE_BUILD_TYPE}/$<0:>"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/.output/${QC_CPU_ARCH}/${CMAKE_BUILD_TYPE}/$<0:>"
         )
 
 # Linux
@@ -219,5 +243,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Network
         Qt${QT_VERSION_MAJOR}::Multimedia
+        Qt${QT_VERSION_MAJOR}::Quick
+        Qt${QT_VERSION_MAJOR}::Qml
         core
         )

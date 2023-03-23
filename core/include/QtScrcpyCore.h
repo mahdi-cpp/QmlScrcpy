@@ -6,6 +6,7 @@
 namespace qsc {
 
 class DeviceObserver {
+
 protected:
     DeviceObserver() {
 
@@ -79,6 +80,8 @@ public:
 signals:
     void deviceConnected(bool success, const QString& serial, const QString& deviceName, const QSize& size);
     void deviceDisconnected(QString serial);
+    void onFrame(int width, int height, uint8_t* dataY, uint8_t* dataU, uint8_t* dataV, int linesizeY, int linesizeU, int linesizeV);
+
 
 public:
     virtual void setUserData(void* data) = 0;
@@ -135,6 +138,8 @@ public:
 signals:
     void deviceConnected(bool success, const QString& serial, const QString& deviceName, const QSize& size);
     void deviceDisconnected(QString serial);
+    void onNewFrame(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY, int linesizeU, int linesizeV);
+    void settingUpdate(const QString command, bool value);
 };
 
 }

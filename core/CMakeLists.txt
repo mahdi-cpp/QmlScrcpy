@@ -16,6 +16,7 @@ if (CMAKE_SIZEOF_VOID_P EQUAL 8)
 else ()
     set(QSC_CPU_ARCH x86)
 endif ()
+
 message(STATUS "[${PROJECT_NAME}] QSC_CPU_ARCH:${QSC_CPU_ARCH}")
 
 if (NOT DEFINED QSC_DEPLOY_PATH)

@@ -11,7 +11,6 @@
 #include <QStyleOption>
 #include <QTimer>
 #include <QWindow>
-#include <QtWidgets/QHBoxLayout>
 
 #include "config.h"
 #include "iconhelper.h"
@@ -20,6 +19,11 @@
 #include "mousetap/mousetap.h"
 #include "ui_videoform.h"
 #include "videoform.h"
+#include "squircle/Squircle.h"
+
+#include "QQuickView"
+#include "QQmlContext"
+
 
 VideoForm::VideoForm(bool framelessWindow, bool skin, QWidget *parent) : QWidget(parent), ui(new Ui::videoForm),
                                                                          m_skin(skin) {
@@ -48,6 +52,21 @@ void VideoForm::initUI() {
         }
     }
 
+
+//    view.setSource(QUrl("file:/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/render/main.qml"));
+//    view.resize(400,800);
+//    view.show();
+
+
+
+//    MessageBoard msgBoard;
+//    QQuickView view;
+//    QQmlContext *context = view.rootContext();
+//    context->setContextProperty("msgBoard", &msgBoard);
+
+
+    m_squircle = new Squircle();
+
     m_videoWidget = new QYUVOpenGLWidget();
     m_videoWidget->hide();
     ui->keepRatioWidget->setWidget(m_videoWidget);
@@ -68,9 +87,26 @@ void VideoForm::initUI() {
     ui->keepRatioWidget->setMouseTracking(true);
 }
 
-QRect VideoForm::getGrabCursorRect() {
-    QRect rc;
+//void VideoForm::updateRender(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY,
+//                             int linesizeU, int linesizeV) {
+////    if (m_videoWidget->isHidden()) {
+////        if (m_loadingWidget) {
+////            m_loadingWidget->close();
+////        }
+////        m_videoWidget->show();
+////    }
+//
+////    updateShowSize(QSize(width, height));
+////    m_videoWidget->setFrameSize(QSize(width, height));
+////    m_videoWidget->updateTextures(dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
+//
+//    m_Triangle->setFrameSize(QSize(width, height));
+//    m_Triangle->updateA(dY, dU, dV, linesizeY, linesizeU, linesizeV);
+//}
 
+QRect VideoForm::getGrabCursorRect() {
+
+    QRect rc;
     rc = QRect(ui->keepRatioWidget->mapToGlobal(m_videoWidget->pos()), m_videoWidget->size());
     // high dpi support -- taken from the WIN32 section and untested
     rc.setTopLeft(rc.topLeft() * m_videoWidget->devicePixelRatioF());
@@ -108,20 +144,6 @@ void VideoForm::showFPS(bool show) {
     m_fpsLabel->setVisible(show);
 }
 
-void VideoForm::updateRender(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY,
-                             int linesizeU, int linesizeV) {
-    if (m_videoWidget->isHidden()) {
-        if (m_loadingWidget) {
-            m_loadingWidget->close();
-        }
-        m_videoWidget->show();
-    }
-
-    updateShowSize(QSize(width, height));
-    m_videoWidget->setFrameSize(QSize(width, height));
-    m_videoWidget->updateTextures(dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
-}
-
 void VideoForm::setSerial(const QString &serial) {
     m_serial = serial;
 }
@@ -146,6 +168,7 @@ void VideoForm::moveCenter() {
 }
 
 void VideoForm::installShortcut() {
+
     QShortcut *shortcut = nullptr;
 
     // switchFullScreen
@@ -470,9 +493,11 @@ void VideoForm::grabCursor(bool grab) {
     MouseTap::getInstance()->enableMouseEventTap(rc, grab);
 }
 
-void VideoForm::onFrame(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY, int linesizeU,int linesizeV) {
-    updateRender(width, height, dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
-}
+//void
+//VideoForm::onFrame(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY, int linesizeU,
+//                   int linesizeV) {
+//    updateRender(width, height, dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
+//}
 
 void VideoForm::staysOnTop(bool top) {
     bool needShow = false;

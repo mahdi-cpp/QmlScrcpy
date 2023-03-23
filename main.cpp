@@ -6,6 +6,9 @@
 #include <QTcpSocket>
 #include <QTranslator>
 
+#include <filesystem>
+#include <unistd.h>
+
 #include "config.h"
 #include "dialog.h"
 #include "mousetap/mousetap.h"
@@ -67,6 +70,17 @@ int main(int argc, char *argv[]) {
     // The value obtained under mac is the value of CFBundleVersion
     qDebug() << a.applicationVersion();
     qDebug() << a.applicationName();
+
+    qDebug() << "QCoreApplication::applicationDirPath():" << QCoreApplication::applicationDirPath();
+
+
+    QString str = QCoreApplication::applicationDirPath();
+    int index = str.indexOf("/.output");
+    QString leftSide = str.left(index);
+
+    Config::getInstance().setProjectPath(leftSide);
+    qDebug() << "getProjectPath():" << Config::getInstance().getProjectPath();
+
 
     //update version
     QStringList versionList = QCoreApplication::applicationVersion().split(".");

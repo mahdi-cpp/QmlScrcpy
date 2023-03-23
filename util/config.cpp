@@ -128,6 +128,13 @@ const QString &Config::getConfigPath() {
     return s_configPath;
 }
 
+void Config::setProjectPath(QString path) {
+    projectPath = path;
+}
+QString Config::getProjectPath() {
+    return projectPath;
+}
+
 void Config::setUserBootConfig(const UserBootConfig &config) {
     m_userData->beginGroup(GROUP_COMMON);
     m_userData->setValue(COMMON_RECORD_KEY, config.recordPath);

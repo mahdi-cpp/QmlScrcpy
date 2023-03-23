@@ -26,6 +26,7 @@ Device::Device(DeviceParams params, QObject *parent) : IDevice(parent), m_params
             for (const auto& item : m_deviceObservers) {
                 item->onFrame(width, height, dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
             }
+//            emit onFrame(width, height, dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
         }, this);
 
         m_fileHandler = new FileHandler(this);
