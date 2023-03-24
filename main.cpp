@@ -13,6 +13,13 @@
 #include "dialog.h"
 #include "mousetap/mousetap.h"
 
+#include "QQmlContext"
+
+#include "QtWs2022/service/ResourceService.h"
+#include "QtWs2022/scene/Scene.h"
+#include "QtWs2022/service/ServiceManager.h"
+#include "QtWs2022/sceneprovider/SceneProvider.h"
+
 static Dialog *g_mainDlg = Q_NULLPTR;
 static QtMessageHandler g_oldMessageHandler = Q_NULLPTR;
 
@@ -23,6 +30,8 @@ void installTranslator();
 static QtMsgType g_msgType = QtInfoMsg;
 
 QtMsgType covertLogLevel(const QString &logLevel);
+
+
 
 int main(int argc, char *argv[]) {
 
@@ -64,12 +73,12 @@ int main(int argc, char *argv[]) {
     QSurfaceFormat::setDefaultFormat(varFormat);
 
     g_oldMessageHandler = qInstallMessageHandler(myMessageOutput);
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
 
     // After setting the version number and application name through the qmake VERSION variable or rc under windows, you can directly get it here
     // The value obtained under mac is the value of CFBundleVersion
-    qDebug() << a.applicationVersion();
-    qDebug() << a.applicationName();
+    qDebug() << app.applicationVersion();
+    qDebug() << app.applicationName();
 
     qDebug() << "QCoreApplication::applicationDirPath():" << QCoreApplication::applicationDirPath();
 
@@ -86,7 +95,7 @@ int main(int argc, char *argv[]) {
     QStringList versionList = QCoreApplication::applicationVersion().split(".");
     if (versionList.size() >= 3) {
         QString version = versionList[0] + "." + versionList[1] + "." + versionList[2];
-        a.setApplicationVersion(version);
+        app.setApplicationVersion(version);
     }
 
     installTranslator();
@@ -101,6 +110,7 @@ int main(int argc, char *argv[]) {
         file.close();
     }
 
+
     qsc::AdbProcess::setAdbPath(Config::getInstance().getAdbPath());
 
     g_mainDlg = new Dialog{};
@@ -112,7 +122,7 @@ int main(int argc, char *argv[]) {
 //    qInfo() << QString("QtScrcpy %1 <https://github.com/barry-ran/QtScrcpy>").arg(
 //            QCoreApplication::applicationVersion());
 
-    int ret = a.exec();
+    int ret = app.exec();
     delete g_mainDlg;
 
     return ret;

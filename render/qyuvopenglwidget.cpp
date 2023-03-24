@@ -191,30 +191,30 @@ void QYUVOpenGLWidget::initShader() {
                              precision mediump float;
                              )");
     }
-    m_shaderProgram.addShaderFromSourceCode(QOpenGLShader::Vertex, s_vertShader);
-    m_shaderProgram.addShaderFromSourceCode(QOpenGLShader::Fragment, s_fragShader);
-    m_shaderProgram.link();
-    m_shaderProgram.bind();
+    m_program.addShaderFromSourceCode(QOpenGLShader::Vertex, s_vertShader);
+    m_program.addShaderFromSourceCode(QOpenGLShader::Fragment, s_fragShader);
+    m_program.link();
+    m_program.bind();
 
     // Specify the access method of vertex coordinates in vba
 
     // Parameter explanation: the parameter name of the vertex coordinates in the shader, the vertex coordinates are float, the starting offset is 0,
     // the vertex coordinate type is vec3, and the stride is 3 floats
-    m_shaderProgram.setAttributeBuffer("vertexIn", GL_FLOAT, 0, 3, 3 * sizeof(float));
+    m_program.setAttributeBuffer("vertexIn", GL_FLOAT, 0, 3, 3 * sizeof(float));
     // Enable vertex attributes
-    m_shaderProgram.enableAttributeArray("vertexIn");
+    m_program.enableAttributeArray("vertexIn");
 
     // Specify how texture coordinates are accessed in vbo
     // Parameter explanation: the parameter name of the texture coordinate in the shader, the texture coordinate is float,
     // the starting offset is 12 float (skip the 12 vertex coordinates stored earlier),
     // the texture coordinate type is vec2, and the stride is 2 float
-    m_shaderProgram.setAttributeBuffer("textureIn", GL_FLOAT, 12 * sizeof(float), 2, 2 * sizeof(float));
-    m_shaderProgram.enableAttributeArray("textureIn");
+    m_program.setAttributeBuffer("textureIn", GL_FLOAT, 12 * sizeof(float), 2, 2 * sizeof(float));
+    m_program.enableAttributeArray("textureIn");
 
     //Associate the texture unit in the fragment shader with the texture unit in opengl (opengl generally provides 16 texture units)
-    m_shaderProgram.setUniformValue("textureY", 0);
-    m_shaderProgram.setUniformValue("textureU", 1);
-    m_shaderProgram.setUniformValue("textureV", 2);
+    m_program.setUniformValue("textureY", 0);
+    m_program.setUniformValue("textureU", 1);
+    m_program.setUniformValue("textureV", 2);
 }
 
 void QYUVOpenGLWidget::initTextures() {

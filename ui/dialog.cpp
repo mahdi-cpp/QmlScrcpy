@@ -5,14 +5,20 @@
 #include <QTime>
 #include <QTimer>
 #include <QCoreApplication>
+
 #include <QQuickView>
+#include <QQmlContext>
 
 #include "config.h"
 #include "dialog.h"
 #include "ui_dialog.h"
 #include "videoform.h"
-#include "squircle/Squircle.h"
+
 #include "../groupcontroller/groupcontroller.h"
+#include "QtWs2022/sceneprovider/SceneProvider.h"
+#include "QtWs2022/scene/Scene.h"
+#include "QtWs2022/service/ServiceManager.h"
+
 
 QString s_keyMapPath = "";
 
@@ -421,23 +427,36 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
     auto videoForm = new VideoForm(ui->framelessCheck->isChecked(), Config::getInstance().getSkin());
     videoForm->setSerial(serial);
 
-    QSurfaceFormat format;
-    format.setSamples(40);
-    m_Triangle = new TriangleWindow();
-    m_Triangle->setFormat(format);
-    m_Triangle->resize(42, 932);
-    m_Triangle->show();
-    qsc::IDeviceManage::getInstance().getDevice(serial)->registerDeviceObserver(m_Triangle);
+//    QSurfaceFormat format;
+//    format.setSamples(40);
+//    m_Triangle = new TriangleWindow();
+//    m_Triangle->setFormat(format);
+//    m_Triangle->resize(42, 932);
+//    m_Triangle->show();
+//    qsc::IDeviceManage::getInstance().getDevice(serial)->registerDeviceObserver(m_Triangle);
 
-//    qmlRegisterType<Squircle>("OpenGLUnderQML", 1, 0, "Squircle");
-//    m_qmlView = new QQuickView();
-//    m_qmlView->setSource(QUrl("file:/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/render/main.qml"));
-//    m_qmlView->setResizeMode(QQuickView::SizeRootObjectToView);
-//    m_qmlView->show();
+
+
+    // Declare/Register all used custom QML elements
+    SceneProvider::declareQml();
+    Scene::declareQml();
+    ResourceService::declareQml();
+
+    ResourceService* resourceService = new ResourceService(this);
+    ServiceManager::getInstance().setResourceService(resourceService);            // Register service to our C++ singleton
+
+    m_qmlView = new QQuickView();
+    m_qmlView->setSource(QUrl("/home/mahdi/CLionProjects/QtScrcpy/QtWs2022/qml/main.qml"));
+    m_qmlView->setResizeMode(QQuickView::SizeRootObjectToView);
+
+    QQmlContext *rootContext;
+    rootContext = m_qmlView->rootContext();
+    rootContext->setContextProperty("resourceService", resourceService); // Also set it to QML root context
+    m_qmlView->show();
+
 
     qsc::IDeviceManage::getInstance().getDevice(serial)->setUserData(static_cast<void *>(videoForm));
     qsc::IDeviceManage::getInstance().getDevice(serial)->registerDeviceObserver(videoForm);
-
 
     videoForm->showFPS(ui->fpsCheck->isChecked());
     if (ui->alwaysTopCheck->isChecked()) {

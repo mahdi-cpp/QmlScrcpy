@@ -3,8 +3,8 @@ import OpenGLUnderQML 1.0
 
 Item {
     id:parent
-    width: 400
-    height: 900
+    width: 488
+    height: 1080
 
     Rectangle {
         color: "red"
@@ -17,9 +17,14 @@ Item {
         height: 50
     }
 
+    SceneProvider {
+        width:488
+        height:1080
+    }
+
     Text {
         id: label
-        color: "white"
+        color: "red"
         wrapMode: Text.WordWrap
         text: "12 The background here is a squircle rendered with raw OpenGL using the 'beforeRender()' signal in QQuickWindow.
           This text label and its border is rendered using QML"
@@ -29,15 +34,6 @@ Item {
         anchors.margins: 20
     }
 
-    Squircle {
-        width:420
-        height:900
-        SequentialAnimation on t {
-            NumberAnimation { to: 1; duration: 2500; easing.type: Easing.InQuad }
-            NumberAnimation { to: 0; duration: 2500; easing.type: Easing.OutQuad }
-            loops: Animation.Infinite
-            running: true
-        }
-    }
+
 }
 

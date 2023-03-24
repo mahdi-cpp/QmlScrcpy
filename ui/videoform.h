@@ -6,8 +6,6 @@
 #include "QQuickView"
 
 #include "../core/include/QtScrcpyCore.h"
-#include "squircle/SquircleRenderer.h"
-#include "squircle/Squircle.h"
 #include "TriangleWindow.h"
 
 namespace Ui
@@ -80,9 +78,6 @@ private:
     QPointer<QLabel> m_fpsLabel;
 
     QPointer<QYUVOpenGLWidget> m_videoWidget;
-    QPointer<Squircle> m_squircle;
-
-
 
     QQuickView view;
 

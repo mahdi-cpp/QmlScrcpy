@@ -14,8 +14,8 @@ file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/version QC_FILE_VERSION)
 set(QC_PROJECT_VERSION ${QC_FILE_VERSION})
 
 configure_file(
-        ${CMAKE_CURRENT_SOURCE_DIR}/render/squircle.vsh
-        ${CMAKE_CURRENT_SOURCE_DIR}/render/squircle.fsh
+        qml/squircle.vsh
+        qml/squircle.fsh
 )
 
 # Project declare
@@ -148,16 +148,27 @@ set(QC_RENDER_SOURCES
         render/TriangleWindow.h
         )
 
-# squircle
-set(QC_SQUIRCLE_SOURCES
-        squircle/Squircle.cpp
-        squircle/Squircle.h
-        squircle/SquircleRenderer.cpp
-        squircle/SquircleRenderer.h
+
+# QtWs2022
+set(QC_QTWS2022_SOURCES
+        QtWs2022/scene/Scene.h
+        QtWs2022/scene/Scene.cpp
+        QtWs2022/scene/SceneRenderer.h
+        QtWs2022/scene/SceneRenderer.cpp
+
+        QtWs2022/sceneprovider/SceneProvider.h
+        QtWs2022/sceneprovider/SceneProvider.cpp
+        QtWs2022/sceneprovider/SceneProviderRenderer.h
+        QtWs2022/sceneprovider/SceneProviderRenderer.cpp
+
+        QtWs2022/service/ServiceManager.h
+        QtWs2022/service/ServiceManager.cpp
+        QtWs2022/service/ResourceService.h
+        QtWs2022/service/ResourceService.cpp
         )
 
 source_group(render FILES ${QC_RENDER_SOURCES})
-source_group(squircle FILES ${QC_SQUIRCLE_SOURCES})
+source_group(scene FILES ${QC_QTWS2022_SOURCES})
 
 # Translation related (use shell script instead of cmake to handle translation)
 # add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/res/i18n)
@@ -171,7 +182,7 @@ set(QC_PROJECT_SOURCES
         ${QC_GROUP_CONTROLLER}
         ${QC_PLANTFORM_SOURCES}
         ${QC_RENDER_SOURCES}
-        ${QC_SQUIRCLE_SOURCES})
+        ${QC_QTWS2022_SOURCES})
 
 
 add_executable(${PROJECT_NAME} ${QC_RUNTIME_TYPE} ${QC_PROJECT_SOURCES})

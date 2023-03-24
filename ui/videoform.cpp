@@ -19,7 +19,6 @@
 #include "mousetap/mousetap.h"
 #include "ui_videoform.h"
 #include "videoform.h"
-#include "squircle/Squircle.h"
 
 #include "QQuickView"
 #include "QQmlContext"
@@ -64,8 +63,6 @@ void VideoForm::initUI() {
 //    QQmlContext *context = view.rootContext();
 //    context->setContextProperty("msgBoard", &msgBoard);
 
-
-    m_squircle = new Squircle();
 
     m_videoWidget = new QYUVOpenGLWidget();
     m_videoWidget->hide();

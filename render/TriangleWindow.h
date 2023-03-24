@@ -39,7 +39,7 @@ private:
     QOpenGLBuffer m_vertexBuffer;
 
     // Shader program: compile linked shaders
-    QOpenGLShaderProgram m_shaderProgram;
+    QOpenGLShaderProgram m_program;
 
     // YUV textures for generating texture maps
     GLuint m_texture[3] = { 0 };
