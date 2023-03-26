@@ -39,8 +39,7 @@ Item {
             opacity:0.8
     }
 
-    SceneProvider {
-    }
+    SceneProvider {}
 
     Scene {
         x: 400
@@ -57,7 +56,6 @@ Item {
         y: 20
     }
 
-
     Rectangle {
         width: 0
         height: 0
@@ -67,45 +65,55 @@ Item {
         opacity: 1
     }
 
-    Rectangle {
-        width: 100
-        height:50
-        color: "#ff9800"
-        radius: 10
+    Button {
+        text: "Show Mirror"
         x: 100
         y: 50
-        transform: Rotation { origin.x: 25; origin.y: 25; angle: 45}
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                resourceService.ali = true
-                car.visible = false
-                kitchen.opacity = 0.0
-                animation.restart()
-            }
+        onClicked: {
+            resourceService.mirror = true
+            car.visible = false
+            kitchen.opacity = 0.0
+            animation.restart()
         }
     }
-
     Button {
-        x: 300
-        y: 50
-        text: "Hide"
+        text: "Hide Mirror"
+        x: 100
+        y: 100
         onClicked: {
-            resourceService.ali = false
+            resourceService.mirror = false
             car.visible = true
             kitchen.opacity = 1
         }
     }
 
+        Button {
+            x: 600
+            y: 50
+            text: "Restart"
+            onClicked: {
+                animation.restart()
+            }
+        }
+        Button {
+            x: 600
+            y: 100
+            text: "Stop"
+            onClicked: {
+                animation.stop()
+            }
+        }
+
     MediaPlayer {
         id: mediaplayer
         source: "/home/mahdi/photos/a.mkv"
+        //--autoPlay: true
     }
 
     VideoOutput {
+        x: 1100
         width: 600
         height: 400
         source: mediaplayer
     }
-
 }

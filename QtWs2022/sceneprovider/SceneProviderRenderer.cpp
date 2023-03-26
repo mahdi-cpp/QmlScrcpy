@@ -87,7 +87,7 @@ static QString s_fragShader = R"(
     }
 )";
 
-SceneProviderRenderer::SceneProviderRenderer(QObject* parent) : QObject{parent} {
+SceneProviderRenderer::SceneProviderRenderer(QObject *parent) : QObject{parent} {
     initializeOpenGLFunctions();
     initialize();
     connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::onNewFrame, this, &SceneProviderRenderer::onFrame);
@@ -99,12 +99,11 @@ SceneProviderRenderer::~SceneProviderRenderer() {
     deInitTextures();
 }
 
-QOpenGLFramebufferObject* SceneProviderRenderer::scene() const {
+QOpenGLFramebufferObject *SceneProviderRenderer::scene() const {
     return m_scene;
 }
 
-void SceneProviderRenderer::initialize()
-{
+void SceneProviderRenderer::initialize() {
     glDisable(GL_DEPTH_TEST);
 
     m_vao = new QOpenGLVertexArrayObject();
@@ -126,7 +125,7 @@ void SceneProviderRenderer::initialize()
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void SceneProviderRenderer::init(QQuickWindow* window, const QSize& resolution) {
+void SceneProviderRenderer::init(QQuickWindow *window, const QSize &resolution) {
     m_window = window;
 
     m_resourceService = ServiceManager::getInstance().resourceService();
@@ -160,7 +159,7 @@ void SceneProviderRenderer::synchronize() {
 
 void SceneProviderRenderer::render() {
 
-    if(!m_resourceService->ali()){
+    if (m_resourceService->mirror() == false) {
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         return;
@@ -213,7 +212,6 @@ void SceneProviderRenderer::cleanup() {
         m_program->deleteLater();
         m_program = nullptr;
     }
-
 }
 
 void SceneProviderRenderer::setFrameSize(const QSize &frameSize) {
@@ -226,10 +224,10 @@ void SceneProviderRenderer::setFrameSize(const QSize &frameSize) {
 }
 
 void SceneProviderRenderer::onFrame(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY, int linesizeU, int linesizeV) {
-    if(!m_resourceService->ali()){
+    if (m_resourceService->mirror() == false) {
         return;
     }
-
+    qDebug() << width;
     setFrameSize(QSize(width, height));
     updateTextures(dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
 }
@@ -304,7 +302,6 @@ void SceneProviderRenderer::initShader() {
 }
 
 void SceneProviderRenderer::initTextures() {
-
 
     // create texture
     glGenTextures(1, &m_texture[0]);

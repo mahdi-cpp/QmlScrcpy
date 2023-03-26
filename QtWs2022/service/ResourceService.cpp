@@ -20,8 +20,8 @@ double ResourceService::yaw() const {
     return m_yaw;
 }
 
-bool ResourceService::ali() const {
-    return m_ali;
+bool ResourceService::mirror() const {
+    return m_mirror;
 }
 
 
@@ -46,7 +46,7 @@ void ResourceService::setYaw(double yaw) {
     }
 }
 
-void ResourceService::setAli(bool value) {
-        m_ali = value;
-        emit aliChanged(m_ali);
+void ResourceService::setMirror(bool value) {
+        m_mirror = value;
+        emit mirrorChanged(m_mirror);
 }

@@ -28,14 +28,14 @@ void SceneRenderer::render() {
         QOpenGLVertexArrayObject::Binder binder(m_vao);
         m_program->bind();
 
-       if(!m_resourceService->ali()) {
-           glActiveTexture(GL_TEXTURE0);
-       }
-
-        glBindTexture(GL_TEXTURE_2D, m_sceneProviderRenderer->scene()->texture());
-        //m_program->release();
-
+        if(!m_resourceService->mirror()) {
+            glActiveTexture(GL_TEXTURE0);
+        }
         //glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, m_sceneProviderRenderer->scene()->texture());
+//        m_program->release();
+//
+//        //glActiveTexture(GL_TEXTURE0);
 //        glClearColor(0, 0, 0, 0);
 //        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -51,7 +51,8 @@ QOpenGLFramebufferObject* SceneRenderer::createFramebufferObject(const QSize& si
 
 void SceneRenderer::synchronize(QQuickFramebufferObject* object) {
     m_window = object->window();
-//    m_window->setClearBeforeRendering(true);
+    m_window->setClearBeforeRendering(false);
+    m_window->setTextRenderType(QQuickWindow::NativeTextRendering);
 
     if (!m_sceneProviderRenderer) {
         m_sceneProviderRenderer = ServiceManager::getInstance().renderer();

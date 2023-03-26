@@ -3,14 +3,9 @@ import QtQuick 2.9
 import App 1.0
 
 Item {
-    id: root
-
     width: 655
     height: 490
 
-    SceneProvider {
-
-    }
     SceneProvider {
     }
 
