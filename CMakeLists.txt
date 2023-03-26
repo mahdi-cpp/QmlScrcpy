@@ -14,8 +14,8 @@ file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/version QC_FILE_VERSION)
 set(QC_PROJECT_VERSION ${QC_FILE_VERSION})
 
 configure_file(
-        qml/squircle.vsh
-        qml/squircle.fsh
+        QtWs2022/opengl/squircle.vsh
+        QtWs2022/opengl/squircle.fsh
 )
 
 # Project declare
@@ -167,8 +167,17 @@ set(QC_QTWS2022_SOURCES
         QtWs2022/service/ResourceService.cpp
         )
 
+# QtWs2022
+set(QC_LOGORENDER_SOURCES
+        LogoRenderer/logorenderer.h
+        LogoRenderer/logorenderer.cpp
+        LogoRenderer/fboinsgrenderer.h
+        LogoRenderer/fboinsgrenderer.cpp
+        )
+
 source_group(render FILES ${QC_RENDER_SOURCES})
-source_group(scene FILES ${QC_QTWS2022_SOURCES})
+source_group(QtWs2022 FILES ${QC_QTWS2022_SOURCES})
+source_group(LogoRenderer FILES ${QC_LOGORENDER_SOURCES})
 
 # Translation related (use shell script instead of cmake to handle translation)
 # add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/res/i18n)
@@ -182,7 +191,8 @@ set(QC_PROJECT_SOURCES
         ${QC_GROUP_CONTROLLER}
         ${QC_PLANTFORM_SOURCES}
         ${QC_RENDER_SOURCES}
-        ${QC_QTWS2022_SOURCES})
+        ${QC_QTWS2022_SOURCES}
+        ${QC_LOGORENDER_SOURCES} QtWs2022/scene/MainWindow.cpp QtWs2022/scene/MainWindow.h QtWs2022/scene/PieChart.cpp QtWs2022/scene/PieChart.h)
 
 
 add_executable(${PROJECT_NAME} ${QC_RUNTIME_TYPE} ${QC_PROJECT_SOURCES})

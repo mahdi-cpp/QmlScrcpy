@@ -6,8 +6,6 @@
 #include <QTimer>
 #include <QCoreApplication>
 
-#include <QQuickView>
-#include <QQmlContext>
 
 #include "config.h"
 #include "dialog.h"
@@ -15,10 +13,8 @@
 #include "videoform.h"
 
 #include "../groupcontroller/groupcontroller.h"
-#include "QtWs2022/sceneprovider/SceneProvider.h"
-#include "QtWs2022/scene/Scene.h"
-#include "QtWs2022/service/ServiceManager.h"
 
+#include "LogoRenderer/fboinsgrenderer.h"
 
 QString s_keyMapPath = "";
 
@@ -424,9 +420,6 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
         return;
     }
 
-    auto videoForm = new VideoForm(ui->framelessCheck->isChecked(), Config::getInstance().getSkin());
-    videoForm->setSerial(serial);
-
 //    QSurfaceFormat format;
 //    format.setSamples(40);
 //    m_Triangle = new TriangleWindow();
@@ -435,52 +428,42 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
 //    m_Triangle->show();
 //    qsc::IDeviceManage::getInstance().getDevice(serial)->registerDeviceObserver(m_Triangle);
 
+//    FboInSGRenderer::declareQml();
 
+    m_MainWindow = new MainWindow();
+    m_MainWindow->show();
 
-    // Declare/Register all used custom QML elements
-    SceneProvider::declareQml();
-    Scene::declareQml();
-    ResourceService::declareQml();
+    Q_UNUSED(size);
 
-    ResourceService* resourceService = new ResourceService(this);
-    ServiceManager::getInstance().setResourceService(resourceService);            // Register service to our C++ singleton
+//    auto videoForm = new VideoForm(ui->framelessCheck->isChecked(), Config::getInstance().getSkin());
+//    videoForm->setSerial(serial);
+//
+//    qsc::IDeviceManage::getInstance().getDevice(serial)->setUserData(static_cast<void *>(videoForm));
+//    qsc::IDeviceManage::getInstance().getDevice(serial)->registerDeviceObserver(videoForm);
+//
+//    videoForm->showFPS(ui->fpsCheck->isChecked());
+//    if (ui->alwaysTopCheck->isChecked()) {
+//        videoForm->staysOnTop();
+//    }
 
-    m_qmlView = new QQuickView();
-    m_qmlView->setSource(QUrl("/home/mahdi/CLionProjects/QtScrcpy/QtWs2022/qml/main.qml"));
-    m_qmlView->setResizeMode(QQuickView::SizeRootObjectToView);
-
-    QQmlContext *rootContext;
-    rootContext = m_qmlView->rootContext();
-    rootContext->setContextProperty("resourceService", resourceService); // Also set it to QML root context
-    m_qmlView->show();
-
-
-    qsc::IDeviceManage::getInstance().getDevice(serial)->setUserData(static_cast<void *>(videoForm));
-    qsc::IDeviceManage::getInstance().getDevice(serial)->registerDeviceObserver(videoForm);
-
-    videoForm->showFPS(ui->fpsCheck->isChecked());
-    if (ui->alwaysTopCheck->isChecked()) {
-        videoForm->staysOnTop();
-    }
-
-    // must be show before updateShowSize
-    videoForm->show();
-    QString name = Config::getInstance().getNickName(serial);
-    if (name.isEmpty()) {
-        name = Config::getInstance().getTitle();
-    }
-    videoForm->setWindowTitle(name + "-" + serial);
-    videoForm->updateShowSize(size);
-
-    bool deviceVer = size.height() > size.width();
-    QRect rc = Config::getInstance().getRect(serial);
-    bool rcVer = rc.height() > rc.width();
-    // same width/height rate
-    if (rc.isValid() && (deviceVer == rcVer)) {
-        // mark: resize is for fix setGeometry magneticwidget bug
-        videoForm->resize(rc.size());
-        videoForm->setGeometry(rc);
-    }
+//    // must be show before updateShowSize
+//    videoForm->show();
+//    QString name = Config::getInstance().getNickName(serial);
+//    if (name.isEmpty()) {
+//        name = Config::getInstance().getTitle();
+//    }
+//    videoForm->setWindowTitle(name + "-" + serial);
+//    videoForm->updateShowSize(size);
+//
+//    bool deviceVer = size.height() > size.width();
+//    QRect rc = Config::getInstance().getRect(serial);
+//    bool rcVer = rc.height() > rc.width();
+//    // same width/height rate
+//    if (rc.isValid() && (deviceVer == rcVer)) {
+//        // mark: resize is for fix setGeometry magneticwidget bug
+//        videoForm->resize(rc.size());
+//        videoForm->setGeometry(rc);
+//    }
 
     GroupController::instance().addDevice(serial);
 }

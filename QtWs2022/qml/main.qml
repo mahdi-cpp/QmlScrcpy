@@ -1,181 +1,111 @@
-import QtQuick 2.0
-import QtQuick.Layouts 1.0
-import QtQuick.Controls 2.0
-import QtQuick.Window 2.0
-import QtGraphicalEffects 1.0
+import QtQuick 2.9
+import QtQuick.Layouts 1
+import QtQuick.Controls 2
+import QtQuick.Shapes 1.0
+
+import QtMultimedia 5.0
 
 import App 1.0
 
-Window {
+Item {
     width: 1739
-    height: 869
+    height: 1050
     visible: true
-    title: qsTr("QtWs 2022")
-    flags: Qt.Dialog
 
-    // We need to instantiate a single BackgroundRenderer to every QML window
-    SceneProvider {}
+    Image {
+        id: car
+        source: "/home/mahdi/photos/car.jpg"
+        width: 1700
+        height: 800
+        x: 20
+        y: 20
+    }
 
-    //SeparateWindow {
-        //id: separateWindow
-    //}
-
-    Item {
-        anchors.fill: parent
-
-            Label {
-                 Layout.alignment: Qt.AlignHCenter
-                 text: "Qt Scrcpy"
-                 x: 300
-                 y: 200
-                 color: "white"
-                 font.pointSize: 14
-                 }
-
-            Scene {
-                x: 200
-                y: 180
-                width: 650
-                height: 500
+    Image {
+        id: kitchen
+        source: "/home/mahdi/photos/3.jpg"
+        width: 400
+        height: 900
+        x: 900
+        y: 20
+            RotationAnimator {
+                id:animation
+                target: kitchen;
+                from: 0;
+                to: 360;
+                duration: 5000
+                running: true
             }
+            opacity:0.8
+    }
 
-                        Rectangle{
-                            width: 500
-                            height: 50
-                            color: "white"
-                            x: 300
-                            y: 600
-                            opacity: 0.8
+    SceneProvider {
+    }
 
-                            Label {
-                            Layout.alignment: Qt.AlignHCenter
-                            text: "Mirror Android Devices "
-                            color: "white"
-                            font.pointSize: 30
-                            }
+    Scene {
+        x: 400
+        y: 20
+        width: 400
+        height: 900
+    }
 
-                        }
+    Image {
+        source: "/home/mahdi/photos/6.png"
+        width: 324
+        height: 93
+        x: 20
+        y: 20
+    }
 
 
-        GroupBox {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            x: 1400
-            y: 550
-            ColumnLayout {
-                anchors.fill: parent
+    Rectangle {
+        width: 0
+        height: 0
+        x: 300
+        y: 600
+        color: "red"
+        opacity: 1
+    }
 
-                Button {
-                    text: "Open separate window"
-                    onClicked: separateWindow.showNormal()
-                }
-
-                Button {
-                    text: animation.running ? "Stop animation" : "Start animation"
-                    onClicked: animation.running ? animation.stop() : animation.start()
-
-                    ParallelAnimation {
-                        id: animation
-
-                        loops: Animation.Infinite
-
-                        SequentialAnimation {
-                            NumberAnimation {
-                                target: pitchSlider
-                                property: "value"
-                                easing.type: Easing.InCubic
-                                from: 0
-                                to: 360
-                                duration: 5000
-                            }
-                            NumberAnimation {
-                                target: pitchSlider
-                                property: "value"
-                                easing.type: Easing.InCubic
-                                from: 360
-                                to: 0
-                                duration: 5000
-                            }
-                        }
-                        SequentialAnimation {
-                            NumberAnimation {
-                                target: yawSlider
-                                property: "value"
-                                easing.type: Easing.InOutQuad
-                                from: 0
-                                to: 360
-                                duration: 3000
-                            }
-                            NumberAnimation {
-                                target: yawSlider
-                                property: "value"
-                                easing.type: Easing.InOutQuad
-                                from: 360
-                                to: 0
-                                duration: 3000
-                            }
-                        }
-
-                        SequentialAnimation {
-                            NumberAnimation {
-                                target: rollSlider
-                                property: "value"
-                                easing.type: Easing.InOutBack
-                                from: 0
-                                to: 360
-                                duration: 6000
-                            }
-                            NumberAnimation {
-                                target: rollSlider
-                                property: "value"
-                                easing.type: Easing.InOutBack
-                                from: 360
-                                to: 0
-                                duration: 6000
-                            }
-                        }
-                    }
-                }
-
-                Label {
-                    text: "Pitch"
-                }
-
-                Slider {
-                    id: pitchSlider
-
-                    from: 0
-                    to: 360
-
-                    onValueChanged: resourceService.pitch = value
-                }
-
-                Label {
-                    text: "Yaw"
-                }
-
-                Slider {
-                    id: yawSlider
-
-                    from: 0
-                    to: 360
-
-                    onValueChanged: resourceService.yaw = value
-                }
-
-                Label {
-                    text: "Roll"
-                }
-
-                Slider {
-                    id: rollSlider
-
-                    from: 0
-                    to: 360
-
-                    onValueChanged: resourceService.roll = value
-                }
+    Rectangle {
+        width: 100
+        height:50
+        color: "#ff9800"
+        radius: 10
+        x: 100
+        y: 50
+        transform: Rotation { origin.x: 25; origin.y: 25; angle: 45}
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                resourceService.ali = true
+                car.visible = false
+                kitchen.opacity = 0.0
+                animation.restart()
             }
         }
     }
+
+    Button {
+        x: 300
+        y: 50
+        text: "Hide"
+        onClicked: {
+            resourceService.ali = false
+            car.visible = true
+            kitchen.opacity = 1
+        }
+    }
+
+    MediaPlayer {
+        id: mediaplayer
+        source: "/home/mahdi/photos/a.mkv"
+    }
+
+    VideoOutput {
+        width: 600
+        height: 400
+        source: mediaplayer
+    }
+
 }

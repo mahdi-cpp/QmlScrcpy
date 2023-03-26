@@ -12,28 +12,36 @@ struct VertexData2D {
 };
 Q_DECLARE_TYPEINFO(VertexData2D, Q_PRIMITIVE_TYPE);
 
+
 SceneRenderer::SceneRenderer() {
     initializeOpenGLFunctions();
-
+    m_resourceService = ServiceManager::getInstance().resourceService();
     setupRendering();
 }
 
 void SceneRenderer::render() {
-    //m_window->beginExternalCommands();
 
     glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     if (m_sceneProviderRenderer) {
         QOpenGLVertexArrayObject::Binder binder(m_vao);
         m_program->bind();
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, m_sceneProviderRenderer->scene()->texture());
-        glDrawElements(GL_TRIANGLE_STRIP, m_elementBuffer->size(), GL_UNSIGNED_INT, nullptr);
-    }
+       if(!m_resourceService->ali()) {
+           glActiveTexture(GL_TEXTURE0);
+       }
 
-    //m_window->endExternalCommands();
+        glBindTexture(GL_TEXTURE_2D, m_sceneProviderRenderer->scene()->texture());
+        //m_program->release();
+
+        //glActiveTexture(GL_TEXTURE0);
+//        glClearColor(0, 0, 0, 0);
+//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        //glDrawElements(GL_TRIANGLE_STRIP, m_elementBuffer->size(), GL_UNSIGNED_INT, nullptr);
+
+    }
 }
 
 QOpenGLFramebufferObject* SceneRenderer::createFramebufferObject(const QSize& size) {
@@ -43,6 +51,7 @@ QOpenGLFramebufferObject* SceneRenderer::createFramebufferObject(const QSize& si
 
 void SceneRenderer::synchronize(QQuickFramebufferObject* object) {
     m_window = object->window();
+//    m_window->setClearBeforeRendering(true);
 
     if (!m_sceneProviderRenderer) {
         m_sceneProviderRenderer = ServiceManager::getInstance().renderer();

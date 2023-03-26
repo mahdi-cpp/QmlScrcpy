@@ -15,6 +15,9 @@ class ResourceService : public QObject {
     Q_PROPERTY(double pitch READ pitch WRITE setPitch NOTIFY pitchChanged)
     Q_PROPERTY(double roll READ roll WRITE setRoll NOTIFY rollChanged)
     Q_PROPERTY(double yaw READ yaw WRITE setYaw NOTIFY yawChanged)
+
+    Q_PROPERTY(double ali READ ali WRITE setAli NOTIFY aliChanged)
+
 public:
     explicit ResourceService(QObject* parent = nullptr);
 
@@ -24,18 +27,26 @@ public:
     double roll() const;
     double yaw() const;
 
+    bool ali() const;
+
 public slots:
     void setPitch(double pitch);
     void setRoll(double roll);
     void setYaw(double yaw);
+
+    void setAli(bool vlaue);
 
 signals:
     void pitchChanged(double pitch);
     void rollChanged(double roll);
     void yawChanged(double yaw);
 
+    void aliChanged(bool value);
+
 private:
     double m_pitch = 0;
     double m_roll  = 0;
     double m_yaw   = 0;
+
+    bool m_ali = false;
 };

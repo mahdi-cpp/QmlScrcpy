@@ -22,8 +22,10 @@ public:
     void initialize() override;
     void render() override;
 
+private slots:
+    void onFrame(int width, int height, uint8_t* dataY, uint8_t* dataU, uint8_t* dataV, int linesizeY, int linesizeU, int linesizeV);
+
 private:
-    void onFrame(int width, int height, uint8_t* dataY, uint8_t* dataU, uint8_t* dataV, int linesizeY, int linesizeU, int linesizeV) override;
     void initShader();
     void initTextures();
     void deInitTextures();

@@ -6,9 +6,10 @@
 #include <QThread>
 
 namespace {
-    constexpr int SceneWidth  = 800;
-    constexpr int SceneHeight = 600;
+    constexpr int SceneWidth  = 480;
+    constexpr int SceneHeight = 1080;
 } // namespace
+
 
 class CleanupJob : public QRunnable {
     Q_DISABLE_COPY(CleanupJob)
@@ -19,6 +20,8 @@ public:
 private:
     SceneProviderRenderer* m_sceneProviderRenderer;
 };
+
+
 
 SceneProvider::SceneProvider(QQuickItem* parent) : QQuickItem(parent) {
     connect(this, &QQuickItem::windowChanged, this, &SceneProvider::onWindowChanged);

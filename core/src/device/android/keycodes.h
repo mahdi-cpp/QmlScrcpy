@@ -439,7 +439,7 @@ enum AndroidKeycode
     /** TV key.
      * On TV remotes, switches to viewing live TV. */
     AKEYCODE_TV = 170,
-    /** Window key.
+    /** MainWindow key.
      * On TV remotes, toggles picture-in-picture mode or other windowing functions. */
     AKEYCODE_WINDOW = 171,
     /** Guide key.

@@ -14,6 +14,7 @@
 #include "core/include/adbprocess.h"
 #include "../core//include/QtScrcpyCore.h"
 #include "TriangleWindow.h"
+#include "QtWs2022/scene/MainWindow.h"
 
 namespace Ui
 {
@@ -65,9 +66,7 @@ private slots:
     void on_mahdiBtn_clicked();
 
 //    void on_startAudioBtn_clicked();
-//
 //    void on_stopAudioBtn_clicked();
-//
 //    void on_installSndcpyBtn_clicked();
 
     void on_autoUpdatecheckBox_toggled(bool checked);
@@ -84,7 +83,7 @@ private:
     quint32 getBitRate();
     const QString &getServerPath();
 
-    QPointer<QQuickView> m_qmlView;
+    QPointer<MainWindow> m_MainWindow;
     QPointer<TriangleWindow> m_Triangle;
 
 protected:

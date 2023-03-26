@@ -79,8 +79,6 @@ private:
 
     QPointer<QYUVOpenGLWidget> m_videoWidget;
 
-    QQuickView view;
-
     //inside member
     QSize m_frameSize;
     QSize m_normalSize;

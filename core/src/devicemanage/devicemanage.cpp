@@ -112,7 +112,7 @@ void DeviceManage::onDeviceDisconnected(QString serial)
 }
 
 void DeviceManage::onFrame(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY, int linesizeU, int linesizeV) {
-    emit onNewFrame(width, height, dataY, dataU, dataV, linesizeU, linesizeY, linesizeV);
+    emit onNewFrame(width, height, dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
 }
 
 quint16 DeviceManage::getFreePort()

@@ -42,7 +42,7 @@ static const GLfloat coordinate[] = {
 
 TriangleWindow::TriangleWindow(): m_program(0)
 {
-
+    connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::onNewFrame, this, &TriangleWindow::onFrame);
 }
 
 TriangleWindow::~TriangleWindow() {
@@ -52,9 +52,8 @@ TriangleWindow::~TriangleWindow() {
 
 void TriangleWindow::initialize()
 {
-    qDebug() << "TriangleWindow::initialize()";
-
     initializeOpenGLFunctions();
+
     glDisable(GL_DEPTH_TEST);
 
     // Vertex buffer object initialization
@@ -63,6 +62,7 @@ void TriangleWindow::initialize()
     m_vertexBuffer.allocate(coordinate, sizeof(coordinate));
 
     initShader();
+
     // Set background cleanup color to black
     glClearColor(0.0, 0.0, 0.0, 0.0);
     // clean up color background
@@ -132,11 +132,11 @@ void TriangleWindow::render()
 
 void TriangleWindow::initShader() {
 
-    if (!m_program.addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, Config::getInstance().getProjectPath() + "/qml/scene.vsh")) {
+    if (!m_program.addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, Config::getInstance().getProjectPath() + "/QtWs2022/qml/squircle.vsh")) {
         qDebug() << "Error: " << typeid(this).name() << "Vertex shader compilation failed";
         return;
     }
-    if (!m_program.addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, Config::getInstance().getProjectPath() + "/qml/scene.fsh"))  {
+    if (!m_program.addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, Config::getInstance().getProjectPath() + "/QtWs2022/qml/squircle.fsh"))  {
         qDebug()  << "Error: " << typeid(this).name() <<  "Fragment shader compilation failed";
         return;
     }
@@ -175,8 +175,7 @@ void TriangleWindow::initTextures() {
     // Set the display strategy when the texture exceeds the coordinates in the st direction
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width(), m_frameSize.height(), 0, GL_LUMINANCE,
-                 GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width(), m_frameSize.height(), 0, GL_LUMINANCE,GL_UNSIGNED_BYTE, nullptr);
 
     glGenTextures(1, &m_texture[1]);
     glBindTexture(GL_TEXTURE_2D, m_texture[1]);

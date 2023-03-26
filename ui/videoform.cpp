@@ -44,6 +44,7 @@ VideoForm::~VideoForm() {
 }
 
 void VideoForm::initUI() {
+
     if (m_skin) {
         QPixmap phone;
         if (phone.load(":/res/phone.png")) {
@@ -55,7 +56,6 @@ void VideoForm::initUI() {
 //    view.setSource(QUrl("file:/opt/challenge/QtScrcpy-2.1.2/QtScrcpy/render/main.qml"));
 //    view.resize(400,800);
 //    view.show();
-
 
 
 //    MessageBoard msgBoard;
@@ -638,6 +638,7 @@ void VideoForm::wheelEvent(QWheelEvent *event) {
         emit device->wheelEvent(&wheelEvent, m_videoWidget->frameSize(), m_videoWidget->size());
     }
 }
+
 
 void VideoForm::keyPressEvent(QKeyEvent *event) {
     auto device = qsc::IDeviceManage::getInstance().getDevice(m_serial);

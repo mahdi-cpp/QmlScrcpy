@@ -4,6 +4,7 @@
 #include "config.h"
 
 #include <QDebug>
+#include <QCoreApplication>
 
 // store vertex coordinates and texture coordinates
 // cached together in the vbo
@@ -41,18 +42,50 @@ static const GLfloat coordinate[] = {
         0.0f
 };
 
-struct VertexData3D {
-    QVector3D vertex;
-    QVector2D texCoord;
-    QVector3D normal;
-};
-Q_DECLARE_TYPEINFO(VertexData3D, Q_PRIMITIVE_TYPE);
+// vertex shader
+static const QString s_vertShader = R"(
+    attribute vec3 vertexIn;    // xyz vertex coordinates
+    attribute vec2 textureIn;   // xy texture coordinates
+    varying vec2 textureOut;    // Texture coordinates passed to the fragment shader
+    void main(void)
+    {
+        gl_Position = vec4(vertexIn, 1.0);  // 1.0 means vertexIn is a vertex position
+        textureOut = textureIn; // Texture coordinates are passed directly to the fragment shader
+    }
+)";
 
-namespace {
-    constexpr float FOV       = 45.f;
-    constexpr float NearPlane = 0.1f;
-    constexpr float FarPlane  = 100.f;
-} // namespace
+// fragment shader
+static QString s_fragShader = R"(
+    varying vec2 textureOut;        // Texture coordinates passed by the vertex shader
+    uniform sampler2D textureY;     // uniform Texture unit, using texture unit can use multiple textures
+    uniform sampler2D textureU;     // sampler2D is a 2D sampler
+    uniform sampler2D textureV;     // Declare yuv three texture units
+    void main(void)
+    {
+        vec3 yuv;
+        vec3 rgb;
+
+        // SDL2 BT709_SHADER_CONSTANTS
+        // https://github.com/spurious/SDL-mirror/blob/4ddd4c445aa059bb127e101b74a8c5b59257fbe2/src/render/opengl/SDL_shaders_gl.c#L102
+        const vec3 Rcoeff = vec3(1.1644,  0.000,  1.7927);
+        const vec3 Gcoeff = vec3(1.1644, -0.2132, -0.5329);
+        const vec3 Bcoeff = vec3(1.1644,  2.1124,  0.000);
+
+        // Sampling according to the specified texture textureY and coordinate textureOut
+        yuv.x = texture2D(textureY, textureOut).r;
+        yuv.y = texture2D(textureU, textureOut).r - 0.5;
+        yuv.z = texture2D(textureV, textureOut).r - 0.5;
+
+        // Convert to rgb after sampling
+        // reduce some brightness
+        yuv.x = yuv.x - 0.0625;
+        rgb.r = dot(yuv, Rcoeff);
+        rgb.g = dot(yuv, Gcoeff);
+        rgb.b = dot(yuv, Bcoeff);
+        // output color value
+        gl_FragColor = vec4(rgb, 1.0);
+    }
+)";
 
 SceneProviderRenderer::SceneProviderRenderer(QObject* parent) : QObject{parent} {
     initializeOpenGLFunctions();
@@ -62,7 +95,7 @@ SceneProviderRenderer::SceneProviderRenderer(QObject* parent) : QObject{parent} 
 
 SceneProviderRenderer::~SceneProviderRenderer() {
     cleanup();
-    m_vertexBuffer.destroy();
+    m_vertexBuffer->destroy();
     deInitTextures();
 }
 
@@ -72,15 +105,21 @@ QOpenGLFramebufferObject* SceneProviderRenderer::scene() const {
 
 void SceneProviderRenderer::initialize()
 {
-    initializeOpenGLFunctions();
     glDisable(GL_DEPTH_TEST);
 
+    m_vao = new QOpenGLVertexArrayObject();
+
     // Vertex buffer object initialization
-    m_vertexBuffer.create();
-    m_vertexBuffer.bind();
-    m_vertexBuffer.allocate(coordinate, sizeof(coordinate));
+    m_vertexBuffer = new QOpenGLBuffer(QOpenGLBuffer::Type::VertexBuffer);
+    if (!m_vertexBuffer->create()) {
+        qFatal("Couldn't create Vertex Buffer");
+    }
+
+    m_vertexBuffer->bind();
+    m_vertexBuffer->allocate(coordinate, sizeof(coordinate));
 
     initShader();
+
     // Set background cleanup color to black
     glClearColor(0.0, 0.0, 0.0, 0.0);
     // clean up color background
@@ -90,7 +129,10 @@ void SceneProviderRenderer::initialize()
 void SceneProviderRenderer::init(QQuickWindow* window, const QSize& resolution) {
     m_window = window;
 
-    setupRendering();
+    m_resourceService = ServiceManager::getInstance().resourceService();
+
+    //setupRendering();
+    m_texture_photo = new QOpenGLTexture(QImage("/home/mahdi/CLionProjects/QtWs2022/opengl/watermelon.jpg"));
 
     if (m_scene) {
         if (m_scene->isBound()) {
@@ -101,181 +143,39 @@ void SceneProviderRenderer::init(QQuickWindow* window, const QSize& resolution) 
     }
 
     QOpenGLFramebufferObjectFormat format;
-    format.setAttachment(QOpenGLFramebufferObject::Attachment::Depth);
+    format.setAttachment(QOpenGLFramebufferObject::Attachment::CombinedDepthStencil);
     format.setMipmap(true);
     m_scene = new QOpenGLFramebufferObject(resolution, format);
-
-//    m_program->bind();
-//    m_matrixProjection.setToIdentity();
-//    m_matrixProjection.perspective(FOV,
-//                                   static_cast<float>(resolution.width()) / static_cast<float>(resolution.height()),
-//                                   NearPlane,
-//                                   FarPlane);
-//    m_program->setUniformValue("projection", m_matrixProjection);
-//    m_program->release();
 
     ServiceManager::getInstance().addRenderer(this);
 }
 
-void SceneProviderRenderer::setupRendering() {
-
-    m_resourceService = ServiceManager::getInstance().resourceService();
-
-//    m_texture = new QOpenGLTexture(QImage("/home/mahdi/CLionProjects/QtWs2022/opengl/watermelon.jpg"));
-
-    m_vao = new QOpenGLVertexArrayObject();
-
-//    m_program = new QOpenGLShaderProgram(this);
-//
-//    m_vertexBuffer = new QOpenGLBuffer(QOpenGLBuffer::Type::VertexBuffer);
-//    if (!m_vertexBuffer->create()) {
-//        qFatal("Couldn't create Vertex Buffer");
-//    }
-//
-//    const QVector<VertexData3D> cubeVertices{
-//        {{-1, -1, -1}, {0, 0}, {0, 0, -1}}, // VertexCoord(3), TextureCoord(2), Normal(3)
-//        {{1, -1, -1}, {1, 0}, {0, 0, -1}},
-//        {{1, 1, -1}, {1, 1}, {0, 0, -1}},
-//        {{-1, 1, -1}, {0, 1}, {0, 0, -1}},
-//        //
-//        {{-1, -1, 1}, {0, 0}, {0, 0, 1}},
-//        {{1, -1, 1}, {1, 0}, {0, 0, 1}},
-//        {{1, 1, 1}, {1, 1}, {0, 0, 1}},
-//        {{-1, 1, 1}, {0, 1}, {0, 0, 1}},
-//        //
-//        {{-1, 1, 1}, {1, 0}, {-1, 0, 0}},
-//        {{-1, 1, -1}, {1, 1}, {-1, 0, 0}},
-//        {{-1, -1, -1}, {0, 1}, {-1, 0, 0}},
-//        {{-1, -1, 1}, {0, 0}, {-1, 0, 0}},
-//        //
-//        {{1, 1, 1}, {1, 0}, {1, 0, 0}},
-//        {{1, 1, -1}, {1, 1}, {1, 0, 0}},
-//        {{1, -1, -1}, {0, 1}, {1, 0, 0}},
-//        {{1, -1, 1}, {0, 0}, {1, 0, 0}},
-//        //
-//        {{-1, -1, -1}, {0, 1}, {0, -1, 0}},
-//        {{1, -1, -1}, {1, 1}, {0, -1, 0}},
-//        {{1, -1, 1}, {1, 0}, {0, -1, 0}},
-//        {{-1, -1, 1}, {0, 0}, {0, -1, 0}},
-//        //
-//        {{-1, 1, -1}, {0, 1}, {0, 1, 0}},
-//        {{1, 1, -1}, {1, 1}, {0, 1, 0}},
-//        {{1, 1, 1}, {1, 0}, {0, 1, 0}},
-//        {{-1, 1, 1}, {0, 0}, {0, 1, 0}},
-//    };
-//
-//    m_vertexBuffer->bind();
-//    m_vertexBuffer->setUsagePattern(QOpenGLBuffer::StaticDraw);
-//    m_vertexBuffer->allocate(cubeVertices.constData(), cubeVertices.size() * static_cast<int>(sizeof(VertexData3D)));
-//
-//    m_elementBuffer = new QOpenGLBuffer(QOpenGLBuffer::Type::IndexBuffer);
-//    if (!m_elementBuffer->create()) {
-//        qFatal("Couldn't create Element Buffer");
-//    }
-//    const QVector<unsigned int> quadIndices = QVector<unsigned int>{
-//        0,  1,  2,  2,  3,  0,  //
-//        4,  5,  6,  6,  7,  4,  //
-//        8,  9,  10, 10, 11, 8,  //
-//        12, 13, 14, 14, 15, 12, //
-//        16, 17, 18, 18, 19, 16, //
-//        20, 21, 22, 22, 23, 20, //
-//    };
-
-//    m_elementBuffer->bind();
-//    m_elementBuffer->setUsagePattern(QOpenGLBuffer::StaticDraw);
-//    m_elementBuffer->allocate(quadIndices.constData(), quadIndices.size() * static_cast<int>(sizeof(unsigned int)));
-
-//    if (!m_program->create()) {
-//        qFatal("Couldn't create Shader Program");
-//    }
-//    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, "/home/mahdi/CLionProjects/QtWs2022/opengl/cube.vsh")) {
-//        qFatal("Vertex shader compilation failed");
-//    }
-//    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, "/home/mahdi/CLionProjects/QtWs2022/opengl/cube.fsh")) {
-//        qFatal("Fragment shader compilation failed");
-//    }
-//
-//    if (!m_program->link()) {
-//        qFatal("Couldn't link shader program");
-//    }
-//
-//    m_program->bind();
-//
-//    m_program->setUniformValue("texture", 0);
-//    m_matrixProjection.perspective(FOV, 1.0f, NearPlane, FarPlane);
-//
-//    constexpr float viewZ = -4.5;
-//    m_matrixView.lookAt({0, 0, viewZ}, {0, 0, 0}, {0, 1, 0});
-//
-//    m_program->setUniformValue("objectColor", 1, 1, 1);
-//    m_program->setUniformValue("lightColor", 1, 1, 1);
-//    m_program->setUniformValue("lightPos", 0, 0, viewZ * 4);
-//    m_program->setUniformValue("viewPos", 0, 0, viewZ);
-//
-//    m_program->setUniformValue("projection", m_matrixProjection);
-//    m_program->setUniformValue("model", m_matrixModel);
-//    m_program->setUniformValue("view", m_matrixView);
-//    m_program->setUniformValue("trans_inv_model", m_matrixModel.normalMatrix());
-//
-//    QOpenGLVertexArrayObject::Binder binder(m_vao);
-//    m_vertexBuffer->bind();
-//    m_program->enableAttributeArray("verCoord");
-//    m_program->setAttributeBuffer("verCoord", GL_FLOAT, 0, 3, sizeof(VertexData3D));
-//
-//    m_program->enableAttributeArray("texCoord");
-//    m_program->setAttributeBuffer("texCoord", GL_FLOAT, sizeof(QVector3D), 2, sizeof(VertexData3D));
-//
-//    m_program->enableAttributeArray("normal");
-//    m_program->setAttributeBuffer("normal", GL_FLOAT, sizeof(QVector2D) + sizeof(QVector3D), 3, sizeof(VertexData3D));
-//
-//    m_elementBuffer->bind();
-//
-//    m_program->release();
-}
-
 void SceneProviderRenderer::synchronize() {
+
 //    m_program->bind();
 //
-//    m_matrixModel.setToIdentity();
-//    QQuaternion quaternion = QQuaternion::fromEulerAngles(static_cast<float>(m_resourceService->pitch()),
-//                                                          static_cast<float>(m_resourceService->yaw()),
-//                                                          static_cast<float>(m_resourceService->roll()));
-//    quaternion.normalize();
-//    m_matrixModel.rotate(quaternion);
-//    m_program->setUniformValue("model", m_matrixModel);
-//    m_program->setUniformValue("trans_inv_model", m_matrixModel.normalMatrix());
-//
 //    m_program->release();
+
 }
 
 void SceneProviderRenderer::render() {
-    //m_window->beginExternalCommands();
-    // Here will go all of our custom rendering code
 
-    if (!m_scene) {
+    if(!m_resourceService->ali()){
+        glClearColor(0, 0, 0, 0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        return;
+    }
+
+    if (!m_scene || !m_program) {
         return;
     }
 
     m_scene->bind();
     {
-//        glEnable(GL_DEPTH_TEST);
-//        glDepthFunc(GL_LESS);
-//
-//        QOpenGLVertexArrayObject::Binder binder(m_vao);
-//
-//        glViewport(0, 0, m_scene->size().width(), m_scene->size().height());
-//
-//        glClearColor(0, 0, 0, 0);
-//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//        m_program->bind();
-//        m_texture->bind();
-//
-//        glDrawElements(GL_TRIANGLES, m_elementBuffer->size(), GL_UNSIGNED_INT, nullptr);
-//
-//        m_program->release();
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
 
-        glViewport(0, 0, 420, 900);
+        glViewport(0, 0, 400, 900);
 
         if (m_needUpdate) {
             deInitTextures();
@@ -295,57 +195,25 @@ void SceneProviderRenderer::render() {
 
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         }
+
+        glClearColor(0, 0, 0, 0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        m_program->bind();
+        //m_texture_photo->bind();
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 512, 512, GL_LUMINANCE, GL_UNSIGNED_BYTE, m_texture_photo);
+        m_program->release();
     }
     m_scene->release();
-
-    // it is important that we left the OpenGL state unchanged
-    //m_window->endExternalCommands();
 }
 
 void SceneProviderRenderer::cleanup() {
-//    if (m_program) {
-//        m_program->release();
-//        m_program->deleteLater();
-//        m_program = nullptr;
-//    }
-//
-//    if (m_texture) {
-//        if (m_texture->isBound()) {
-//            m_texture->release();
-//        }
-//        if (m_texture->isCreated()) {
-//            m_texture->destroy();
-//        }
-//        delete m_texture;
-//        m_texture = nullptr;
-//    }
-
-    if (m_vao) {
-        if (m_vao->isCreated()) {
-            m_vao->release();
-            m_vao->destroy();
-        }
-        delete m_vao;
-        m_vao = nullptr;
+    if (m_program) {
+        m_program->release();
+        m_program->deleteLater();
+        m_program = nullptr;
     }
 
-    if (m_elementBuffer) {
-        if (m_elementBuffer->isCreated()) {
-            m_elementBuffer->release();
-            m_elementBuffer->destroy();
-        }
-        delete m_elementBuffer;
-        m_elementBuffer = nullptr;
-    }
-
-//    if (m_vertexBuffer) {
-//        if (m_vertexBuffer->isCreated()) {
-//            m_vertexBuffer->release();
-//            m_vertexBuffer->destroy();
-//        }
-//        delete m_vertexBuffer;
-//        m_vertexBuffer = nullptr;
-//    }
 }
 
 void SceneProviderRenderer::setFrameSize(const QSize &frameSize) {
@@ -353,12 +221,15 @@ void SceneProviderRenderer::setFrameSize(const QSize &frameSize) {
         m_frameSize = frameSize;
         m_needUpdate = true;
         // init texture immediately
-        render();
+//        render();
     }
 }
 
 void SceneProviderRenderer::onFrame(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY, int linesizeU, int linesizeV) {
-    qDebug() << width;
+    if(!m_resourceService->ali()){
+        return;
+    }
+
     setFrameSize(QSize(width, height));
     updateTextures(dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
 }
@@ -368,7 +239,6 @@ void SceneProviderRenderer::updateTextures(quint8 *dataY, quint8 *dataU, quint8 
         updateTexture(m_texture[0], 0, dataY, linesizeY);
         updateTexture(m_texture[1], 1, dataU, linesizeU);
         updateTexture(m_texture[2], 2, dataV, linesizeV);
-        render();
     }
 }
 
@@ -385,69 +255,91 @@ void SceneProviderRenderer::updateTexture(GLuint texture, quint32 textureType, q
 
 void SceneProviderRenderer::initShader() {
 
-    if (!m_program.addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, Config::getInstance().getProjectPath() + "/qml/scene.vsh")) {
-        qDebug() << "Error: " << typeid(this).name() << "Vertex shader compilation failed";
-        return;
+//    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, Config::getInstance().getProjectPath() + "/qml/scene.vsh")) {
+//        qDebug() << "Error: " << typeid(this).name() << "Vertex shader compilation failed";
+//        return;
+//    }
+//    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, Config::getInstance().getProjectPath() + "/qml/scene.fsh"))  {
+//        qDebug()  << "Error: " << typeid(this).name() <<  "Fragment shader compilation failed";
+//        return;
+//    }
+
+
+    // The float, int, etc. of opengles need to manually specify the precision
+    if (QCoreApplication::testAttribute(Qt::AA_UseOpenGLES)) {
+        s_fragShader.prepend(R"(
+                             precision mediump int;
+                             precision mediump float;
+                             )");
     }
-    if (!m_program.addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, Config::getInstance().getProjectPath() + "/qml/scene.fsh"))  {
-        qDebug()  << "Error: " << typeid(this).name() <<  "Fragment shader compilation failed";
-        return;
-    }
-    m_program.link();
-    m_program.bind();
+
+    m_program = new QOpenGLShaderProgram(this);
+    m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, s_vertShader);
+    m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, s_fragShader);
+    m_program->link();
+    m_program->bind();
 
     // Specify the access method of vertex coordinates in vba
 
     // Parameter explanation: the parameter name of the vertex coordinates in the shader, the vertex coordinates are float, the starting offset is 0,
     // the vertex coordinate type is vec3, and the stride is 3 floats
-    m_program.setAttributeBuffer("vertexIn", GL_FLOAT, 0, 3, 3 * sizeof(float));
+    m_program->setAttributeBuffer("vertexIn", GL_FLOAT, 0, 3, 3 * sizeof(float));
     // Enable vertex attributes
-    m_program.enableAttributeArray("vertexIn");
+    m_program->enableAttributeArray("vertexIn");
+
+    QOpenGLVertexArrayObject::Binder binder(m_vao);
+    m_vertexBuffer->bind();
 
     // Specify how texture coordinates are accessed in vbo
     // Parameter explanation: the parameter name of the texture coordinate in the shader, the texture coordinate is float,
     // the starting offset is 12 float (skip the 12 vertex coordinates stored earlier),
     // the texture coordinate type is vec2, and the stride is 2 float
-    m_program.setAttributeBuffer("textureIn", GL_FLOAT, 12 * sizeof(float), 2, 2 * sizeof(float));
-    m_program.enableAttributeArray("textureIn");
+    m_program->setAttributeBuffer("textureIn", GL_FLOAT, 12 * sizeof(float), 2, 2 * sizeof(float));
+    m_program->enableAttributeArray("textureIn");
 
     //Associate the texture unit in the fragment shader with the texture unit in opengl (opengl generally provides 16 texture units)
-    m_program.setUniformValue("textureY", 0);
-    m_program.setUniformValue("textureU", 1);
-    m_program.setUniformValue("textureV", 2);
+    m_program->setUniformValue("textureY", 0);
+    m_program->setUniformValue("textureU", 1);
+    m_program->setUniformValue("textureV", 2);
 }
 
 void SceneProviderRenderer::initTextures() {
 
+
     // create texture
     glGenTextures(1, &m_texture[0]);
     glBindTexture(GL_TEXTURE_2D, m_texture[0]);
+
     // Strategy when setting texture scaling
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
     // Set the display strategy when the texture exceeds the coordinates in the st direction
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width(), m_frameSize.height(), 0, GL_LUMINANCE,
-                 GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width(), m_frameSize.height(), 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, nullptr);
 
     glGenTextures(1, &m_texture[1]);
     glBindTexture(GL_TEXTURE_2D, m_texture[1]);
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width() / 2, m_frameSize.height() / 2, 0, GL_LUMINANCE,GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width() / 2, m_frameSize.height() / 2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, nullptr);
 
     glGenTextures(1, &m_texture[2]);
     glBindTexture(GL_TEXTURE_2D, m_texture[2]);
+
     // Strategy when setting texture scaling
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
     // Set the display strategy when the texture exceeds the coordinates in the st direction
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width() / 2, m_frameSize.height() / 2, 0, GL_LUMINANCE,GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_frameSize.width() / 2, m_frameSize.height() / 2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, nullptr);
 
     m_textureInited = true;
 }

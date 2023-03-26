@@ -7,7 +7,7 @@
 //! \brief The ServiceManager class
 //! This class acts only as a object holder accessible from the whole application
 //! For our demo use case it holds one global instance of ResourceService
-//! and BackgrondRenderRenderer instance for each of our QML Window
+//! and BackgrondRenderRenderer instance for each of our QML MainWindow
 //!
 class ServiceManager {
 public:

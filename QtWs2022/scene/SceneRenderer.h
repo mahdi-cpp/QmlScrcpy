@@ -33,4 +33,6 @@ private:
     QOpenGLBuffer* m_elementBuffer  = nullptr;
     QOpenGLShaderProgram* m_program = nullptr;
     QOpenGLVertexArrayObject* m_vao = nullptr;
+
+    ResourceService* m_resourceService = nullptr;
 };

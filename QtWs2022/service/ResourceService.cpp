@@ -20,6 +20,11 @@ double ResourceService::yaw() const {
     return m_yaw;
 }
 
+bool ResourceService::ali() const {
+    return m_ali;
+}
+
+
 void ResourceService::setPitch(double pitch) {
     if (!qFuzzyCompare(m_pitch, pitch)) {
         m_pitch = pitch;
@@ -39,4 +44,9 @@ void ResourceService::setYaw(double yaw) {
         m_yaw = yaw;
         emit yawChanged(m_yaw);
     }
+}
+
+void ResourceService::setAli(bool value) {
+        m_ali = value;
+        emit aliChanged(m_ali);
 }
