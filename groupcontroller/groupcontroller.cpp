@@ -15,7 +15,9 @@ bool GroupController::isHost(const QString &serial)
         return true;
     }
 
-    return static_cast<VideoForm*>(data)->isHost();
+    return false;
+
+    //return static_cast<VideoForm*>(data)->isHost();
 }
 
 QSize GroupController::getFrameSize(const QString &serial)

@@ -432,9 +432,10 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
 
     m_MainWindow = new MainWindow();
     m_MainWindow->show();
-
     Q_UNUSED(size);
+    Q_UNUSED(serial);
 
+//
 //    auto videoForm = new VideoForm(ui->framelessCheck->isChecked(), Config::getInstance().getSkin());
 //    videoForm->setSerial(serial);
 //
@@ -445,7 +446,7 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
 //    if (ui->alwaysTopCheck->isChecked()) {
 //        videoForm->staysOnTop();
 //    }
-
+//
 //    // must be show before updateShowSize
 //    videoForm->show();
 //    QString name = Config::getInstance().getNickName(serial);
@@ -464,8 +465,8 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
 //        videoForm->resize(rc.size());
 //        videoForm->setGeometry(rc);
 //    }
+//    GroupController::instance().addDevice(serial);
 
-    GroupController::instance().addDevice(serial);
 }
 
 void Dialog::onDeviceDisconnected(QString serial) {

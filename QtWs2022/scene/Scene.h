@@ -4,6 +4,8 @@
 #include <QTimer>
 
 #include <QPointer>
+#include "QtWs2022/service/ResourceService.h"
+#include "QtWs2022/service/ServiceManager.h"
 
 //!
 //! \brief The Scene class
@@ -25,11 +27,12 @@ public:
 private:
     QTimer m_timer;
 
-    QString m_serial;
     QSize frameSize;
     QSize showSize;
 
     void mouseProcess(QMouseEvent *event);
+
+    ResourceService* m_resourceService = nullptr;
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;

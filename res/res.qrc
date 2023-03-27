@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>font/fontawesome-webfont.ttf</file>
         <file>image/videoform/phone-h.png</file>
         <file>image/videoform/phone-v.png</file>
         <file>qss/psblack.css</file>

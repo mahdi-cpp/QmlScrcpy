@@ -17,6 +17,7 @@ SceneRenderer::SceneRenderer() {
     initializeOpenGLFunctions();
     m_resourceService = ServiceManager::getInstance().resourceService();
     setupRendering();
+
 }
 
 void SceneRenderer::render() {

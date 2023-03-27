@@ -5,9 +5,12 @@
 #include <QQmlEngine>
 
 Scene::Scene(QQuickItem *parent) : QQuickFramebufferObject(parent) {
+
     m_timer.setInterval(16);
     connect(&m_timer, &QTimer::timeout, this, &Scene::update);
     m_timer.start();
+
+    m_resourceService = ServiceManager::getInstance().resourceService();
 
     setAcceptedMouseButtons(Qt::AllButtons);
 
@@ -20,8 +23,6 @@ Scene::Scene(QQuickItem *parent) : QQuickFramebufferObject(parent) {
     showSize.setWidth(400);
     showSize.setHeight(900);
 
-
-    m_serial = "192.168.1.171:5555";
 }
 
 void Scene::declareQml() {
@@ -34,6 +35,7 @@ QQuickFramebufferObject::Renderer *Scene::createRenderer() const {
 
 void Scene::onDeviceConnected(bool success, const QString &serial, const QString &deviceName, const QSize &size) {
 
+    Q_UNUSED(serial);
     Q_UNUSED(size);
     Q_UNUSED(deviceName);
 
@@ -44,8 +46,6 @@ void Scene::onDeviceConnected(bool success, const QString &serial, const QString
     }
 
     qDebug() << "onDeviceConnected success";
-
-    m_serial = serial;
 }
 
 void Scene::onDeviceDisconnected(QString serial) {
@@ -54,7 +54,7 @@ void Scene::onDeviceDisconnected(QString serial) {
 }
 
 void Scene::mouseProcess(QMouseEvent *event) {
-    auto device = qsc::IDeviceManage::getInstance().getDevice(m_serial);
+    auto device = qsc::IDeviceManage::getInstance().getDevice(m_resourceService->serial());
     if (!device) {
         return;
     }
@@ -84,7 +84,7 @@ void Scene::wheelEvent(QWheelEvent *event) {
             event->orientation(),
             event->buttons(), event->modifiers(), event->phase(), event->source(), event->inverted());
 
-    auto device = qsc::IDeviceManage::getInstance().getDevice(m_serial);
+    auto device = qsc::IDeviceManage::getInstance().getDevice(m_resourceService->serial());
     if (!device) {
         return;
     }

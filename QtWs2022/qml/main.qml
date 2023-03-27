@@ -1,24 +1,25 @@
 import QtQuick 2.10
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
-import QtQuick.Shapes 1.0
 
 import QtMultimedia 5.0
 
 import App 1.0
 
+import "./components"
+
 Item {
-    width: 1739
-    height: 900
+
+    width: 1485
+    height: 1144
     visible: true
 
     SceneProvider {}
 
     Image {
         id: car
-        source: "/home/mahdi/photos/car.jpg"
-        width: 1700
-        height: 800
+        source: "/home/mahdi/photos/ipad.jpg"
+        anchors.fill: parent
         x: 20
         y: 20
     }
@@ -47,24 +48,6 @@ Item {
         }
         opacity: 1.0
     }
-    Image {
-        id: logo
-        source: "/home/mahdi/photos/6.png"
-        width: 324
-        height: 93
-        x: 20
-        y: 20
-        visible: false
-    }
-
-    Rectangle {
-        width: 100
-        height: 50
-        x: 300
-        y: 600
-        color: "red"
-        opacity: 1
-    }
 
     Button {
         x: 600
@@ -85,8 +68,8 @@ Item {
 
     Rectangle {
         id: cover
-        x: 400
-        y: 20
+        x: mirror.x
+        y: mirror.y
         width: 400
         height: 900
         color: "#444"
@@ -104,10 +87,10 @@ Item {
             }
             onRunningChanged: {
                 if (!running) {
-                    mirror.visible = true;
+                    mirror.visible = true
                     resourceService.mirror = true
                     car.visible = false
-                    logo.visible = false
+                    toolbar.opacity = 0
                     kitchen.opacity = 0.0
                 }
             }
@@ -125,18 +108,22 @@ Item {
             onRunningChanged: {
                 if (!running) {
                     car.visible = true
-                    logo.visible = true
                 }
             }
         }
     }
-        Scene {
-            id: mirror
-            x: 400
-            y: 20
-            width: 400
-            height: 900
-        }
+    Scene {
+        id: mirror
+        x: 250
+        y: 20
+        width: 400
+        height: 900
+    }
+
+    ToolBar {
+        id: toolbar
+        onSelect: resourceService.processClick(icon)
+    }
 
     Button {
         text: "Show Mirror"
@@ -151,10 +138,11 @@ Item {
         x: 100
         y: 100
         onClicked: {
+            toolbar.visible = true
             car.visible = true
-            logo.visible = true
-                        mirror.visible = false;
-                        resourceService.mirror = false
+            toolbar.visible = true
+            mirror.visible = false
+            resourceService.mirror = false
             cover_animation_hide.start()
         }
     }
@@ -162,7 +150,7 @@ Item {
     MediaPlayer {
         id: mediaplayer
         source: "/home/mahdi/photos/a.mkv"
-        //--autoPlay: true
+        //autoPlay: true
     }
 
     VideoOutput {

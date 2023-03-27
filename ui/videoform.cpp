@@ -13,9 +13,7 @@
 #include <QWindow>
 
 #include "config.h"
-#include "iconhelper.h"
 #include "qyuvopenglwidget.h"
-#include "ui/toolform/toolform.h"
 #include "mousetap/mousetap.h"
 #include "ui_videoform.h"
 #include "videoform.h"
@@ -83,23 +81,26 @@ void VideoForm::initUI() {
     m_videoWidget->setMouseTracking(true);
     ui->keepRatioWidget->setMouseTracking(true);
 }
+void VideoForm::onFrame(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY, int linesizeU, int linesizeV)
+{
+    updateRender(width, height, dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
+}
 
-//void VideoForm::updateRender(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY,
-//                             int linesizeU, int linesizeV) {
-////    if (m_videoWidget->isHidden()) {
-////        if (m_loadingWidget) {
-////            m_loadingWidget->close();
-////        }
-////        m_videoWidget->show();
-////    }
-//
-////    updateShowSize(QSize(width, height));
-////    m_videoWidget->setFrameSize(QSize(width, height));
-////    m_videoWidget->updateTextures(dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
-//
+void VideoForm::updateRender(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY, int linesizeU, int linesizeV) {
+    if (m_videoWidget->isHidden()) {
+        if (m_loadingWidget) {
+            m_loadingWidget->close();
+        }
+        m_videoWidget->show();
+    }
+
+    updateShowSize(QSize(width, height));
+    m_videoWidget->setFrameSize(QSize(width, height));
+    m_videoWidget->updateTextures(dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
+
 //    m_Triangle->setFrameSize(QSize(width, height));
 //    m_Triangle->updateA(dY, dU, dV, linesizeY, linesizeU, linesizeV);
-//}
+}
 
 QRect VideoForm::getGrabCursorRect() {
 
@@ -145,14 +146,14 @@ void VideoForm::setSerial(const QString &serial) {
     m_serial = serial;
 }
 
-void VideoForm::showToolForm(bool show) {
-    if (!m_toolForm) {
-        m_toolForm = new ToolForm(this, ToolForm::AP_OUTSIDE_RIGHT);
-        m_toolForm->setSerial(m_serial);
-    }
-    m_toolForm->move(pos().x() + geometry().width(), pos().y() + 30);
-    m_toolForm->setVisible(show);
-}
+//void VideoForm::showToolForm(bool show) {
+//    if (!m_toolForm) {
+//        m_toolForm = new ToolForm(this, ToolForm::AP_OUTSIDE_RIGHT);
+//        m_toolForm->setSerial(m_serial);
+//    }
+//    m_toolForm->move(pos().x() + geometry().width(), pos().y() + 30);
+//    m_toolForm->setVisible(show);
+//}
 
 void VideoForm::moveCenter() {
     QRect screenRect = getScreenRect();
@@ -452,7 +453,7 @@ void VideoForm::switchFullScreen() {
         if (m_skin) {
             updateStyleSheet(m_frameSize.height() > m_frameSize.width());
         }
-        showToolForm(true);
+        //showToolForm(true);
     } else {
         // Horizontal full screen fills the full screen without maintaining aspect ratio
         if (m_widthHeightRatio > 1.0f) {
@@ -464,7 +465,7 @@ void VideoForm::switchFullScreen() {
 
         m_fullScreenBeforePos = pos();
 
-        showToolForm(false);
+        //showToolForm(false);
         if (m_skin) {
             layout()->setContentsMargins(0, 0, 0, 0);
         }
@@ -473,9 +474,9 @@ void VideoForm::switchFullScreen() {
     }
 }
 
-bool VideoForm::isHost() {
-    return m_toolForm->isHost();
-}
+//bool VideoForm::isHost() {
+//    return m_toolForm->isHost();
+//}
 
 void VideoForm::updateFPS(quint32 fps) {
     //qDebug() << "FPS:" << fps;
@@ -502,9 +503,9 @@ void VideoForm::staysOnTop(bool top) {
         needShow = true;
     }
     setWindowFlag(Qt::WindowStaysOnTopHint, top);
-    if (m_toolForm) {
-        m_toolForm->setWindowFlag(Qt::WindowStaysOnTopHint, top);
-    }
+//    if (m_toolForm) {
+//        m_toolForm->setWindowFlag(Qt::WindowStaysOnTopHint, top);
+//    }
     if (needShow) {
         show();
     }
@@ -671,7 +672,7 @@ void VideoForm::paintEvent(QPaintEvent *paint) {
 void VideoForm::showEvent(QShowEvent *event) {
     Q_UNUSED(event)
     if (!isFullScreen()) {
-        showToolForm();
+        //showToolForm();
     }
 }
 

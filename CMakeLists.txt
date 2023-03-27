@@ -77,25 +77,18 @@ message(STATUS "[${PROJECT_NAME}] Qt version is: ${QT_VERSION_MAJOR}.${QT_VERSIO
 #
 
 
-source_group(ui/toolform/fontawesome FILES ${QC_FONTAWESOME_SOURCES})
+#source_group(ui/toolform/fontawesome FILES ${QC_FONTAWESOME_SOURCES})
 
 # uibase
 set(QC_UIBASE_SOURCES
         uibase/keepratiowidget.h
         uibase/keepratiowidget.cpp
-        uibase/magneticwidget.h
-        uibase/magneticwidget.cpp
         )
 source_group(uibase FILES ${QC_UIBASE_SOURCES})
 
 
 # ui
 set(QC_UI_SOURCES
-        ui/toolform/toolform.h
-        ui/toolform/toolform.cpp
-        ui/toolform/toolform.ui
-        ui/toolform/fontawesome/iconhelper.h
-        ui/toolform/fontawesome/iconhelper.cpp
         ui/videoform.h
         ui/videoform.cpp
         ui/videoform.ui

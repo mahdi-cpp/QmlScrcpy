@@ -36,9 +36,10 @@ public:
     void showFPS(bool show);
     void switchFullScreen();
 
-    bool isHost();
+    //bool isHost();
 
 private:
+    void onFrame(int width, int height, uint8_t* dataY, uint8_t* dataU, uint8_t* dataV, int linesizeY, int linesizeU, int linesizeV) override;
     void updateFPS(quint32 fps) override;
     void grabCursor(bool grab) override;
 
@@ -46,10 +47,13 @@ private:
     QMargins getMargins(bool vertical);
     void initUI();
 
-    void showToolForm(bool show = true);
+    //void showToolForm(bool show = true);
     void moveCenter();
     void installShortcut();
     QRect getScreenRect();
+
+private slots:
+    void updateRender(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY, int linesizeU, int linesizeV) ;
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -73,7 +77,7 @@ protected:
 private:
     // ui
     Ui::videoForm *ui;
-    QPointer<ToolForm> m_toolForm;
+    //QPointer<ToolForm> m_toolForm;
     QPointer<QWidget> m_loadingWidget;
     QPointer<QLabel> m_fpsLabel;
 

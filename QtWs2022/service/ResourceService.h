@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QObject>
+#include <QDebug>
+#include <QPointer>
 
 //!
 //! \brief The ResourceService class
@@ -22,6 +24,11 @@ public:
     explicit ResourceService(QObject* parent = nullptr);
 
     static void declareQml();
+
+    void setSerial(const QString &serial);
+    QString serial();
+
+    Q_INVOKABLE void processClick(QString type);
 
     double pitch() const;
     double roll() const;
@@ -47,6 +54,10 @@ private:
     double m_pitch = 0;
     double m_roll  = 0;
     double m_yaw   = 0;
-
     bool m_mirror = false;
+
+    QString m_serial;
+
+    bool m_showTouch = false;
+    bool m_screen = false;
 };
