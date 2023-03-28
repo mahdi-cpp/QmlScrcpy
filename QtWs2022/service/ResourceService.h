@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QPointer>
+#include <QSize>
 
 //!
 //! \brief The ResourceService class
@@ -12,16 +13,27 @@
 //! for SceneProvider to gather
 //!
 class ResourceService : public QObject {
-    Q_OBJECT
-
-    Q_PROPERTY(double pitch READ pitch WRITE setPitch NOTIFY pitchChanged)
-    Q_PROPERTY(double roll READ roll WRITE setRoll NOTIFY rollChanged)
-    Q_PROPERTY(double yaw READ yaw WRITE setYaw NOTIFY yawChanged)
+Q_OBJECT
 
     Q_PROPERTY(double mirror READ mirror WRITE setMirror NOTIFY mirrorChanged)
 
+//    Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
+//    Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged)
+
+    Q_PROPERTY(QSize frameSize READ frameSize WRITE setFrameSize NOTIFY frameSizeChanged)
+
+    Q_PROPERTY(QSize portraitSize READ portraitSize WRITE setPortraitSize NOTIFY portraitSizeChanged)
+    Q_PROPERTY(QSize landscapeSize READ landscapeSize WRITE setLandscapeSize NOTIFY landscapeSizeChanged)
+
+    Q_PROPERTY(int orientation READ orientation WRITE setOrientation NOTIFY orientationChanged)
+
+    enum DisplayOrientation {
+        portrait,    // Portrait orientation is vertical
+        landscape,   // Landscape orientation is horizontal
+    };
+
 public:
-    explicit ResourceService(QObject* parent = nullptr);
+    explicit ResourceService(QObject *parent = nullptr);
 
     static void declareQml();
 
@@ -29,34 +41,46 @@ public:
     QString serial();
 
     Q_INVOKABLE void processClick(QString type);
+    Q_INVOKABLE void qmlCommands(QString type);
 
-    double pitch() const;
-    double roll() const;
-    double yaw() const;
+    void sendCppEvents(QString name);
 
     bool mirror() const;
 
+    int orientation() const;
+    QSize frameSize() const;
+
+    QSize portraitSize() const;
+    QSize landscapeSize() const;
+
 public slots:
-    void setPitch(double pitch);
-    void setRoll(double roll);
-    void setYaw(double yaw);
 
     void setMirror(bool vlaue);
+    void setFrameSize(QSize size);
+    void setPortraitSize(QSize size);
+    void setLandscapeSize(QSize size);
+    void setOrientation(int);
 
 signals:
-    void pitchChanged(double pitch);
-    void rollChanged(double roll);
-    void yawChanged(double yaw);
-
     void mirrorChanged(bool value);
+    void frameSizeChanged(QSize size);
+    void portraitSizeChanged(QSize size);
+    void landscapeSizeChanged(QSize size);
+    void orientationChanged(int orientation);
+
+    void qmlGenerateEvents(QString name);
+    void cppGenerateEvents(QString name);
 
 private:
-    double m_pitch = 0;
-    double m_roll  = 0;
-    double m_yaw   = 0;
+    QSize m_frameSize;
+    QSize m_portraitSize;
+    QSize m_landscapeSize;
+
     bool m_mirror = false;
 
     QString m_serial;
+
+    int m_orientation = DisplayOrientation::portrait;
 
     bool m_showTouch = false;
     bool m_screen = false;

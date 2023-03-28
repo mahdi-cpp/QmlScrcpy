@@ -18,7 +18,6 @@ public:
     PieChart(QQuickItem *parent = nullptr);
     static void declareQml();
 
-
     QString name() const;
     void setName(const QString &name);
 

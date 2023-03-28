@@ -1,29 +1,38 @@
-#include "ResourceService.h"
-#include "QtScrcpyCore.h"
-
 #include <QQmlEngine>
 
-ResourceService::ResourceService(QObject *parent) : QObject{parent} {}
+#include "QtScrcpyCore.h"
+
+#include "ResourceService.h"
+
+ResourceService::ResourceService(QObject *parent) : QObject{parent} {
+    m_portraitSize.setWidth(375);
+    m_portraitSize.setHeight(830);
+}
 
 void ResourceService::declareQml() {
     qmlRegisterType<ResourceService>("App", 1, 0, "ResourceService");
 }
 
-double ResourceService::pitch() const {
-    return m_pitch;
-}
-
-double ResourceService::roll() const {
-    return m_roll;
-}
-
-double ResourceService::yaw() const {
-    return m_yaw;
-}
-
 bool ResourceService::mirror() const {
     return m_mirror;
 }
+
+QSize ResourceService::frameSize() const {
+    return m_frameSize;
+}
+
+QSize ResourceService::portraitSize() const {
+    return m_portraitSize;
+}
+
+QSize ResourceService::landscapeSize() const {
+    return m_landscapeSize;
+}
+
+int ResourceService::orientation() const {
+    return m_orientation;
+}
+
 
 void ResourceService::setSerial(const QString &serial) {
     m_serial = serial;
@@ -31,6 +40,14 @@ void ResourceService::setSerial(const QString &serial) {
 
 QString ResourceService::serial() {
     return m_serial;
+}
+
+void ResourceService::qmlCommands(QString name) {
+    emit qmlGenerateEvents(name);
+}
+
+void ResourceService::sendCppEvents(QString name)  {
+    emit cppGenerateEvents(name);
 }
 
 void ResourceService::processClick(QString type) {
@@ -52,7 +69,7 @@ void ResourceService::processClick(QString type) {
     } else if (type == "screen-on") {
         //m_screen = !m_screen;
         device->setScreenPowerMode(true);
-    }else if (type == "screen-off") {
+    } else if (type == "screen-off") {
         //m_screen = !m_screen;
         device->setScreenPowerMode(false);
     } else if (type == "power") {
@@ -69,28 +86,44 @@ void ResourceService::processClick(QString type) {
     }
 }
 
-void ResourceService::setPitch(double pitch) {
-    if (!qFuzzyCompare(m_pitch, pitch)) {
-        m_pitch = pitch;
-        emit pitchChanged(m_pitch);
-    }
-}
-
-void ResourceService::setRoll(double roll) {
-    if (!qFuzzyCompare(m_roll, roll)) {
-        m_roll = roll;
-        emit rollChanged(m_roll);
-    }
-}
-
-void ResourceService::setYaw(double yaw) {
-    if (!qFuzzyCompare(m_yaw, yaw)) {
-        m_yaw = yaw;
-        emit yawChanged(m_yaw);
-    }
-}
-
 void ResourceService::setMirror(bool value) {
     m_mirror = value;
     emit mirrorChanged(m_mirror);
+}
+
+void ResourceService::setFrameSize(QSize size) {
+    m_frameSize = size;
+
+    if  (size.height() > size.width()) {
+        m_portraitSize.setWidth(375);
+        m_portraitSize.setHeight(830);
+        m_orientation = DisplayOrientation::portrait;
+    } else {
+        float scale = 1.35;
+        m_landscapeSize.setWidth(1080 * scale);
+        m_landscapeSize.setHeight(488 * scale);
+        m_orientation = DisplayOrientation::landscape;
+    }
+
+    emit frameSizeChanged(m_frameSize);
+    emit orientationChanged(m_orientation);
+
+    emit cppGenerateEvents("DISPLAY_ORIENTATION_CHANGED");
+    emit cppGenerateEvents("FRAME_SIZE_CHANGED");
+}
+
+void ResourceService::setOrientation(int orientation) {
+    m_orientation = orientation;
+    emit orientationChanged(m_orientation);
+    emit cppGenerateEvents("DISPLAY_ORIENTATION_CHANGED");
+}
+
+void ResourceService::setPortraitSize(QSize size) {
+    m_portraitSize = size;
+    emit portraitSizeChanged(m_portraitSize);
+}
+
+void ResourceService::setLandscapeSize(QSize size){
+    m_landscapeSize = size;
+    emit landscapeSizeChanged(m_landscapeSize);
 }

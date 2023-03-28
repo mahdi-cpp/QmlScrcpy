@@ -1,4 +1,5 @@
 #include "SceneProvider.h"
+#include "QtWs2022/service/ServiceManager.h"
 
 #include <QDebug>
 #include <QQmlEngine>
@@ -21,9 +22,11 @@ private:
     SceneProviderRenderer* m_sceneProviderRenderer;
 };
 
-
-
 SceneProvider::SceneProvider(QQuickItem* parent) : QQuickItem(parent) {
+
+    m_resourceService = ServiceManager::getInstance().resourceService();
+
+    connect(m_resourceService, &ResourceService::cppGenerateEvents, this, &SceneProvider::cppGenerateEvents); //Interacting C++ to Qml
     connect(this, &QQuickItem::windowChanged, this, &SceneProvider::onWindowChanged);
 }
 

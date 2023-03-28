@@ -17,12 +17,6 @@ Scene::Scene(QQuickItem *parent) : QQuickFramebufferObject(parent) {
     connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceConnected, this, &Scene::onDeviceConnected);
     connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceDisconnected, this, &Scene::onDeviceDisconnected);
 
-    frameSize.setWidth(488);
-    frameSize.setHeight(1080);
-
-    showSize.setWidth(400);
-    showSize.setHeight(900);
-
 }
 
 void Scene::declareQml() {
@@ -58,7 +52,7 @@ void Scene::mouseProcess(QMouseEvent *event) {
     if (!device) {
         return;
     }
-    emit device->mouseEvent(event, frameSize, showSize);
+    emit device->mouseEvent(event, m_resourceService->frameSize(), m_resourceService->portraitSize());
 }
 
 void Scene::mousePressEvent(QMouseEvent *event) {
@@ -88,5 +82,5 @@ void Scene::wheelEvent(QWheelEvent *event) {
     if (!device) {
         return;
     }
-    emit device->wheelEvent(&wheelEvent, frameSize, showSize);
+    emit device->wheelEvent(&wheelEvent, m_resourceService->frameSize(), m_resourceService->portraitSize());
 }

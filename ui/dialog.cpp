@@ -217,6 +217,7 @@ void Dialog::execAdbCmd() {
     }
     QString cmd = ui->adbCommandEdt->text().trimmed();
     outLog("adb " + cmd, false);
+
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     m_adb.execute(ui->serialBox->currentText().trimmed(), cmd.split(" ", Qt::SkipEmptyParts));
 #else
@@ -283,6 +284,7 @@ void Dialog::on_startServerBtn_clicked() {
     params.serial = ui->serialBox->currentText().trimmed();
     params.maxSize = videoSize;
     params.bitRate = getBitRate();
+
     // on devices with Android >= 10, the capture frame rate can be limited
     params.maxFps = static_cast<quint32>(Config::getInstance().getMaxFps());
     params.closeScreen = ui->closeScreenCheck->isChecked();
@@ -435,7 +437,7 @@ void Dialog::onDeviceConnected(bool success, const QString &serial, const QStrin
     Q_UNUSED(size);
     Q_UNUSED(serial);
 
-//
+
 //    auto videoForm = new VideoForm(ui->framelessCheck->isChecked(), Config::getInstance().getSkin());
 //    videoForm->setSerial(serial);
 //
@@ -681,30 +683,6 @@ const QString &Dialog::getServerPath() {
     }
     return serverPath;
 }
-
-//void Dialog::on_startAudioBtn_clicked()
-//{
-//    if (ui->serialBox->count() == 0) {
-//        qWarning() << "No device is connected!";
-//        return;
-//    }
-//
-//    m_audioOutput.start(ui->serialBox->currentText(), 28200);
-//}
-
-//void Dialog::on_stopAudioBtn_clicked()
-//{
-//    m_audioOutput.stop();
-//}
-//
-//void Dialog::on_installSndcpyBtn_clicked()
-//{
-//    if (ui->serialBox->count() == 0) {
-//        qWarning() << "No device is connected!";
-//        return;
-//    }
-//    m_audioOutput.installonly(ui->serialBox->currentText(), 28200);
-//}
 
 void Dialog::on_mahdiBtn_clicked() {
     qDebug() << "Mahdi Button";

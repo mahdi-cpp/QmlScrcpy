@@ -35,7 +35,6 @@ public:
     bool filterLog(const QString &log);
     void getIPbyIp();
 
-
 private slots:
     void onDeviceConnected(bool success, const QString& serial, const QString& deviceName, const QSize& size);
     void onDeviceDisconnected(QString serial);

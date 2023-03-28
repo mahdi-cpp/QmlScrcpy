@@ -4,6 +4,7 @@
 
 #include <QQuickItem>
 #include <QQuickWindow>
+#include <QString>
 
 //!
 //! \brief The SceneProvider class
@@ -24,8 +25,12 @@ protected:
 private slots:
     void onWindowChanged(QQuickWindow* window);
 
+signals:
+    void cppGenerateEvents(QString name);
+
 private:
     SceneProviderRenderer* m_sceneProviderRenderer = nullptr;
+    ResourceService* m_resourceService = nullptr;
 
     QMetaObject::Connection m_connectionInitialized;
 };

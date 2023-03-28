@@ -1,22 +1,51 @@
 #ifndef QTSCRCPY_MAINWINDOW_H
 #define QTSCRCPY_MAINWINDOW_H
 
-#include "QQuickView"
 #include <QPointer>
+#include <QPointer>
+#include <QTimer>
+#include <QTime>
+#include <QQuickView>
+
+#include "QtScrcpyCore.h"
+#include "adbprocess.h"
+
+#include "QtWs2022/service/ResourceService.h"
+#include "QtWs2022/service/ServiceManager.h"
 
 class MainWindow : public QQuickView{
 
 public:
     MainWindow(QQuickView *parent = nullptr);
+    ~MainWindow();
 
-private:
-    QString m_serial;
-    QSize frameSize;
-    QSize showSize;
+    Q_INVOKABLE void test(QString name);
+
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
+
+private:
+    void getIPbyIp();
+    bool checkAdbRun();
+    void delayMs(int ms);
+    void outLog(const QString &log, bool newLine = true);
+    const QString &getServerPath();
+
+    void requestStartMirrir();
+    void wifiConnect();
+
+private slots:
+    void onDeviceConnected(bool success, const QString& serial, const QString& deviceName, const QSize& size);
+    void onDeviceDisconnected(QString serial);
+    void qmlGenerateEventsProcess(QString name);
+
+private:
+    ResourceService* m_resourceService = nullptr;
+
+    qsc::AdbProcess m_adb;
+    QTimer m_autoUpdatetimer;
 
 };
 

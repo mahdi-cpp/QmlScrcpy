@@ -12,7 +12,6 @@ SceneProviderRenderer* ServiceManager::renderer() const {
 
 void ServiceManager::setResourceService(ResourceService* resourceService) {
     m_resourceService = resourceService;
-    m_resourceService->setSerial("192.168.1.171:5555");
 }
 
 void ServiceManager::addRenderer(SceneProviderRenderer* renderer) {

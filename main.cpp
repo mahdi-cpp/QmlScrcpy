@@ -2,12 +2,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QSurfaceFormat>
-#include <QTcpServer>
-#include <QTcpSocket>
 #include <QTranslator>
-
-#include <filesystem>
-#include <unistd.h>
 
 #include "config.h"
 #include "dialog.h"
@@ -15,12 +10,13 @@
 
 #include "QQmlContext"
 
-#include "QtWs2022/service/ResourceService.h"
-#include "QtWs2022/scene/Scene.h"
+
 #include "QtWs2022/service/ServiceManager.h"
 #include "QtWs2022/sceneprovider/SceneProvider.h"
 
 static Dialog *g_mainDlg = Q_NULLPTR;
+static QPointer<MainWindow> m_MainWindow;
+
 static QtMessageHandler g_oldMessageHandler = Q_NULLPTR;
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
@@ -110,11 +106,14 @@ int main(int argc, char *argv[]) {
         file.close();
     }
 
-
     qsc::AdbProcess::setAdbPath(Config::getInstance().getAdbPath());
 
-    g_mainDlg = new Dialog{};
-    g_mainDlg->show();
+//    g_mainDlg = new Dialog{};
+//    g_mainDlg->show();
+
+    m_MainWindow = new MainWindow();
+    m_MainWindow->setGeometry(700,100, 1450, 850);
+    m_MainWindow->show();
 
 //    qInfo() << QObject::tr(
 //            "This software is completely open source and free. Use it at your own risk. You can download it at the "

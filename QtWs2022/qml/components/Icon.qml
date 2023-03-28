@@ -1,10 +1,12 @@
 import QtQuick 2.10
 
 Item {
-    width: 50
-    height: 50
+    width: size
+    height: size
 
     property string icon:  "eye"
+    property int size:  40
+
     signal click()
 
     Rectangle {
@@ -16,8 +18,8 @@ Item {
     Image {
         anchors.centerIn: parent
         source: "/home/mahdi/photos/icon/" + icon + ".svg"
-        width: 35
-        height: 35
+        width: size - 10
+        height: size - 10
     }
 
     MouseArea {

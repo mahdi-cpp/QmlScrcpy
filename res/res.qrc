@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>image/videoform/phone-h.png</file>
-        <file>image/videoform/phone-v.png</file>
         <file>qss/psblack.css</file>
         <file>qss/psblack/add_bottom.png</file>
         <file>qss/psblack/add_left.png</file>

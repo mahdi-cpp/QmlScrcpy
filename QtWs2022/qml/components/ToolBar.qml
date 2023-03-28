@@ -3,21 +3,39 @@ import QtQuick.Layouts 1.0
 
 Item {
     id: root
-    width: 680
-    height: 84
-    x: 700
-    y: 700
+    width: 600
+    height: 74
+    x: 310
+    y: 100
     signal select(string icon)
 
-    Rectangle {
-        anchors.fill: parent
-        radius: 50
-        color: "#fff"
-        opacity: 0.6
+    function setPortrait(){
+        grid.flow = GridLayout.TopToBottom
     }
+    function setLandscape(){
+        grid.flow = GridLayout.LeftToRight
+    }
+
+//    Rectangle {
+//        anchors.fill: parent
+//        radius: 50
+//        color: "#fff"
+//        opacity: 0.6
+//    }
+//    Text {
+//        text: "Hello World!"
+//        font.family: "Helvetica"
+//        font.pointSize: 24
+//        color: "red"
+//    }
+
     GridLayout {
+        id: grid
         x: 100
         y: 18
+        columns: 20
+        rows: 20
+        flow: GridLayout.TopToBottom
         Icon {
             icon: "home"
             onClick: select(icon)
@@ -59,10 +77,10 @@ Item {
             onClick: select(icon)
         }
     }
-    Ring {
-        id: user
-        user: "parsa"
-        x: 2
-        y: 2
-    }
+//    Ring {
+//        id: user
+//        user: "parsa"
+//        x: 2
+//        y: 2
+//    }
 }

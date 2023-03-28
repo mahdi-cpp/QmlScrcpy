@@ -8,6 +8,9 @@
 #include <QQuickFramebufferObject>
 #include <QQuickWindow>
 
+#include "QtWs2022/service/ResourceService.h"
+#include "QtWs2022/service/ServiceManager.h"
+
 //!
 //! \brief The SceneRenderer class
 //! SceneRenderer will live on RenderThread
@@ -26,13 +29,13 @@ private:
 
 private:
     QQuickWindow* m_window = nullptr;
-
     SceneProviderRenderer* m_sceneProviderRenderer = nullptr;
+    ResourceService* m_resourceService = nullptr;
 
     QOpenGLBuffer* m_vertexBuffer   = nullptr;
     QOpenGLBuffer* m_elementBuffer  = nullptr;
     QOpenGLShaderProgram* m_program = nullptr;
     QOpenGLVertexArrayObject* m_vao = nullptr;
 
-    ResourceService* m_resourceService = nullptr;
+
 };

@@ -42,51 +42,6 @@ static const GLfloat coordinate[] = {
         0.0f
 };
 
-// vertex shader
-static const QString s_vertShader = R"(
-    attribute vec3 vertexIn;    // xyz vertex coordinates
-    attribute vec2 textureIn;   // xy texture coordinates
-    varying vec2 textureOut;    // Texture coordinates passed to the fragment shader
-    void main(void)
-    {
-        gl_Position = vec4(vertexIn, 1.0);  // 1.0 means vertexIn is a vertex position
-        textureOut = textureIn; // Texture coordinates are passed directly to the fragment shader
-    }
-)";
-
-// fragment shader
-static QString s_fragShader = R"(
-    varying vec2 textureOut;        // Texture coordinates passed by the vertex shader
-    uniform sampler2D textureY;     // uniform Texture unit, using texture unit can use multiple textures
-    uniform sampler2D textureU;     // sampler2D is a 2D sampler
-    uniform sampler2D textureV;     // Declare yuv three texture units
-    void main(void)
-    {
-        vec3 yuv;
-        vec3 rgb;
-
-        // SDL2 BT709_SHADER_CONSTANTS
-        // https://github.com/spurious/SDL-mirror/blob/4ddd4c445aa059bb127e101b74a8c5b59257fbe2/src/render/opengl/SDL_shaders_gl.c#L102
-        const vec3 Rcoeff = vec3(1.1644,  0.000,  1.7927);
-        const vec3 Gcoeff = vec3(1.1644, -0.2132, -0.5329);
-        const vec3 Bcoeff = vec3(1.1644,  2.1124,  0.000);
-
-        // Sampling according to the specified texture textureY and coordinate textureOut
-        yuv.x = texture2D(textureY, textureOut).r;
-        yuv.y = texture2D(textureU, textureOut).r - 0.5;
-        yuv.z = texture2D(textureV, textureOut).r - 0.5;
-
-        // Convert to rgb after sampling
-        // reduce some brightness
-        yuv.x = yuv.x - 0.0625;
-        rgb.r = dot(yuv, Rcoeff);
-        rgb.g = dot(yuv, Gcoeff);
-        rgb.b = dot(yuv, Bcoeff);
-        // output color value
-        gl_FragColor = vec4(rgb, 1.0);
-    }
-)";
-
 SceneProviderRenderer::SceneProviderRenderer(QObject *parent) : QObject{parent} {
     initializeOpenGLFunctions();
     initialize();
@@ -227,8 +182,14 @@ void SceneProviderRenderer::onFrame(int width, int height, uint8_t *dataY, uint8
     if (m_resourceService->mirror() == false) {
         return;
     }
-    qDebug() << width;
+    //qDebug() << width;
     setFrameSize(QSize(width, height));
+
+    if (m_resourceService->frameSize().width() != width) {
+        m_resourceService->setFrameSize(QSize(width, height));
+    }
+
+
     updateTextures(dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
 }
 
@@ -244,7 +205,9 @@ void SceneProviderRenderer::updateTexture(GLuint texture, quint32 textureType, q
     if (!pixels)
         return;
 
-    QSize size = 0 == textureType ? m_frameSize : m_frameSize / 2;
+    //qDebug() << "textureType:" << textureType ;
+
+    QSize size = (textureType == 0 ? m_frameSize : m_frameSize);
 
     glBindTexture(GL_TEXTURE_2D, texture);
     glPixelStorei(GL_UNPACK_ROW_LENGTH, static_cast<GLint>(stride));
@@ -252,28 +215,17 @@ void SceneProviderRenderer::updateTexture(GLuint texture, quint32 textureType, q
 }
 
 void SceneProviderRenderer::initShader() {
+    m_program = new QOpenGLShaderProgram(this);
 
-//    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, Config::getInstance().getProjectPath() + "/qml/scene.vsh")) {
-//        qDebug() << "Error: " << typeid(this).name() << "Vertex shader compilation failed";
-//        return;
-//    }
-//    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, Config::getInstance().getProjectPath() + "/qml/scene.fsh"))  {
-//        qDebug()  << "Error: " << typeid(this).name() <<  "Fragment shader compilation failed";
-//        return;
-//    }
-
-
-    // The float, int, etc. of opengles need to manually specify the precision
-    if (QCoreApplication::testAttribute(Qt::AA_UseOpenGLES)) {
-        s_fragShader.prepend(R"(
-                             precision mediump int;
-                             precision mediump float;
-                             )");
+    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, Config::getInstance().getProjectPath() + "/QtWs2022/opengl/squircle.vsh")) {
+        qDebug() << "Error: " << typeid(this).name() << "Vertex shader compilation failed";
+        return;
+    }
+    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, Config::getInstance().getProjectPath() + "/QtWs2022/opengl/squircle.fsh")) {
+        qDebug() << "Error: " << typeid(this).name() << "Fragment shader compilation failed";
+        return;
     }
 
-    m_program = new QOpenGLShaderProgram(this);
-    m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, s_vertShader);
-    m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, s_fragShader);
     m_program->link();
     m_program->bind();
 

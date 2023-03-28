@@ -541,7 +541,7 @@ enum AndroidKeycode
     /** Calendar special function key.
      * Used to launch a calendar application. */
     AKEYCODE_CALENDAR = 208,
-    /** Music special function key.
+    /** Music.qml special function key.
      * Used to launch a music player application. */
     AKEYCODE_MUSIC = 209,
     /** Calculator special function key.

@@ -24,16 +24,6 @@ public:
 
     virtual Renderer *createRenderer() const override;
 
-private:
-    QTimer m_timer;
-
-    QSize frameSize;
-    QSize showSize;
-
-    void mouseProcess(QMouseEvent *event);
-
-    ResourceService* m_resourceService = nullptr;
-
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
@@ -45,4 +35,12 @@ protected:
 private slots:
     void onDeviceConnected(bool success, const QString& serial, const QString& deviceName, const QSize& size);
     void onDeviceDisconnected(QString serial);
+
+private:
+    QTimer m_timer;
+
+    void mouseProcess(QMouseEvent *event);
+
+    ResourceService* m_resourceService = nullptr;
+
 };

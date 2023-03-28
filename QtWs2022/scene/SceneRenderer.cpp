@@ -1,7 +1,5 @@
 #include "SceneRenderer.h"
 
-#include "QtWs2022/service/ServiceManager.h"
-
 #include <QDebug>
 #include <QOpenGLFramebufferObjectFormat>
 #include <QVector2D>
@@ -14,10 +12,11 @@ Q_DECLARE_TYPEINFO(VertexData2D, Q_PRIMITIVE_TYPE);
 
 
 SceneRenderer::SceneRenderer() {
-    initializeOpenGLFunctions();
-    m_resourceService = ServiceManager::getInstance().resourceService();
-    setupRendering();
 
+    m_resourceService = ServiceManager::getInstance().resourceService();
+
+    initializeOpenGLFunctions();
+    setupRendering();
 }
 
 void SceneRenderer::render() {
