@@ -12,6 +12,7 @@
 
 #include "ui/service/ResourceService.h"
 #include "ui/service/ServiceManager.h"
+#include "service/websocket/websocket.h"
 
 class MainWindow : public QQuickView{
 
@@ -35,6 +36,8 @@ private:
 
     void requestStartMirrir();
     void wifiConnect();
+
+    QPointer<WebSocket> m_echo_server;
 
 private slots:
     void onDeviceConnected(bool success, const QString& serial, const QString& deviceName, const QSize& size);

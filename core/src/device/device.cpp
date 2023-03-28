@@ -9,7 +9,6 @@
 #include "filehandler.h"
 #include "recorder.h"
 #include "server.h"
-#include "websocket.h"
 #include "demuxer.h"
 
 namespace qsc {
@@ -40,12 +39,7 @@ Device::Device(DeviceParams params, QObject *parent) : IDevice(parent), m_params
     }
 
     m_demuxer = new Demuxer(this);
-
     m_server = new Server(this);
-
-    m_echo_server = new WebSocket(8593, true, this);
-
-//    QObject::connect(m_echo_server, &WebSocket::closed, this, &QCoreApplication::quit);
 
     if (m_params.recordFile && !m_params.recordPath.trimmed().isEmpty()) {
         QString absFilePath;
