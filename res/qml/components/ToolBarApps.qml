@@ -5,15 +5,13 @@ Item {
     id: root
     width: 600
     height: 74
-    x: 300
-    y: 350
+    x: 30
+    y: 40
     signal select(string icon)
 
     GridLayout {
         id: grid
-        x: 100
-        y: 18
-        columns: 4
+        columns: 2
 
             CustomAppIcon{
                 onClick: select("mirror")

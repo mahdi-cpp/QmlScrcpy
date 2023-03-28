@@ -37,10 +37,11 @@ private slots:
     void onDeviceDisconnected(QString serial);
 
 private:
-    QTimer m_timer;
-
     void mouseProcess(QMouseEvent *event);
 
+private:
+    QTimer m_timer;
     ResourceService* m_resourceService = nullptr;
+
 
 };

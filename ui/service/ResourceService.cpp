@@ -46,10 +46,6 @@ void ResourceService::qmlCommands(QString name) {
     emit qmlGenerateEvents(name);
 }
 
-void ResourceService::sendCppEvents(QString name)  {
-    emit cppGenerateEvents(name);
-}
-
 void ResourceService::processClick(QString type) {
     qDebug() << "Type:" << type;
 

@@ -43,6 +43,17 @@ Item {
                 break
             }
         }
+
+        onWebSocket: {
+            switch (type) {
+            case "MUSIC":
+                music.message(data)
+                break
+            case "VIDEO":
+                console.log("video")
+                break
+            }
+        }
     }
 
     function prepareShowAndroidScreen() {
@@ -72,14 +83,6 @@ Item {
         x: 20
         y: 20
     }
-    Image {
-        source: "../images/parsa.jpg"
-        width: 118
-        height: 118
-        x: 200
-        y: 200
-    }
-
     Music {
         id: music
         x: 950
@@ -99,106 +102,18 @@ Item {
             duration: 300
         }
     }
-
-    Rectangle {
-        id: cover
-        anchors.centerIn: center
-        width: resourceService.portraitSize.width
-        height: resourceService.portraitSize.height
-        color: "#2979ff"
-        opacity: 0.8
-        scale: 0.2
-        radius: 25
-        ParallelAnimation {
-            id: cover_animation_show
-            ScaleAnimator {
-                target: cover
-                from: 0.2
-                to: 1.0
-                duration: 400
-                easing.type: Easing.InOutQuad
-            }
-            onRunningChanged: {
-                if (!running) {
-                    prepareShowAndroidScreen()
-                }
-            }
-        }
-        ParallelAnimation {
-            id: cover_animation_hide
-            ScaleAnimator {
-                target: cover
-                from: 1.0
-                to: 0.0
-                duration: 400
-                easing.type: Easing.InOutQuad
-            }
-            onRunningChanged: {
-                if (!running) {
-
-                }
-            }
-        }
-        ParallelAnimation {
-            id: cover_animation_portrait
-            ScaleAnimator {
-                target: cover
-                from: 1.0
-                to: 0.4
-                duration: 400
-                easing.type: Easing.InOutQuad
-            }
-            onRunningChanged: {
-                if (!running) {
-                    mirror.width = resourceService.portraitSize.width
-                    mirror.height = resourceService.portraitSize.height
-
-                    cover.width = resourceService.portraitSize.width
-                    cover.height = resourceService.portraitSize.height
-                    cover_animation_show.start()
-                }
-            }
-        }
-        ParallelAnimation {
-            id: cover_animation_landscape
-            ScaleAnimator {
-                target: cover
-                from: 1.0
-                to: 0.4
-                duration: 400
-                easing.type: Easing.InOutQuad
-            }
-            onRunningChanged: {
-                if (!running) {
-                    mirror.width = resourceService.landscapeSize.width
-                    mirror.height = resourceService.landscapeSize.height
-
-                    cover.width = resourceService.landscapeSize.width
-                    cover.height = resourceService.landscapeSize.height
-                    cover_animation_show.start()
-                }
-            }
-        }
-    }
-    Scene {
-        id: mirror
-        anchors.centerIn: center
-        width: resourceService.portraitSize.width
-        height: resourceService.portraitSize.height
-    }
-    Rectangle {
-        id: center
-        x: 185
-        y: 413
-        width: 0
-        height: 0
-        color: "#ff9800"
-    }
-
     ToolBar {
         id: toolbar
-        x: 320
-        onSelect: resourceService.processClick(icon)
+        onSelect: {
+
+            switch (icon) {
+            case "close":
+                resourceService.qmlCommands("REQUEST_MIRROR_FINISH")
+                break
+            default:
+                resourceService.processClick(icon)
+            }
+        }
     }
 
     ToolBarApps {
@@ -220,9 +135,119 @@ Item {
 
                 break
             case "photo":
-                resourceService.qmlCommands("REQUEST_MIRROR_FINISH")
+
                 break
             }
         }
+    }
+
+    Rectangle {
+        id: cover
+        anchors.centerIn: center
+        width: resourceService.portraitSize.width
+        height: resourceService.portraitSize.height
+        color: "#2979ff"
+        opacity: 0.8
+        scale: 0
+        radius: 25
+        ParallelAnimation {
+            id: cover_animation_show
+            ScaleAnimator {
+                target: cover
+                from: 0
+                to: 1.0
+                duration: 400
+                easing.type: Easing.InOutQuad
+            }
+            NumberAnimation {
+                target: toolbar
+                property: "y"
+                to: 200
+                duration: 300
+                easing.type: Easing.InOutQuad
+            }
+            onRunningChanged: {
+                if (!running) {
+                    prepareShowAndroidScreen()
+                }
+            }
+        }
+        ParallelAnimation {
+            id: cover_animation_hide
+            ScaleAnimator {
+                target: cover
+                from: 1.0
+                to: 0.0
+                duration: 400
+                easing.type: Easing.InOutQuad
+            }
+            NumberAnimation {
+                target: toolbar
+                property: "y"
+                to: -600
+                duration: 300
+                easing.type: Easing.InOutQuad
+            }
+            onRunningChanged: {
+                if (!running) {
+
+                }
+            }
+        }
+        ParallelAnimation {
+            id: cover_animation_portrait
+            ScaleAnimator {
+                target: cover
+                from: 1.0
+                to: 0.0
+                duration: 400
+                easing.type: Easing.InOutQuad
+            }
+            onRunningChanged: {
+                if (!running) {
+                    mirror.width = resourceService.portraitSize.width
+                    mirror.height = resourceService.portraitSize.height
+
+                    cover.width = resourceService.portraitSize.width
+                    cover.height = resourceService.portraitSize.height
+                    cover_animation_show.start()
+                }
+            }
+        }
+        ParallelAnimation {
+            id: cover_animation_landscape
+            ScaleAnimator {
+                target: cover
+                from: 1.0
+                to: 0.0
+                duration: 400
+                easing.type: Easing.InOutQuad
+            }
+            onRunningChanged: {
+                if (!running) {
+                    mirror.width = resourceService.landscapeSize.width
+                    mirror.height = resourceService.landscapeSize.height
+
+                    cover.width = resourceService.landscapeSize.width
+                    cover.height = resourceService.landscapeSize.height
+                    cover_animation_show.start()
+                }
+            }
+        }
+    }
+    Scene {
+        id: mirror
+        anchors.centerIn: center
+        visible: false
+        width: resourceService.portraitSize.width
+        height: resourceService.portraitSize.height
+    }
+    Rectangle {
+        id: center
+        x: 185
+        y: 413
+        width: 0
+        height: 0
+        color: "#ff9800"
     }
 }

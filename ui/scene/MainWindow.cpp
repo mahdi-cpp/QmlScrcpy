@@ -28,6 +28,10 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
     m_resourceService->setSerial("192.168.1.171:5555");
     m_resourceService = ServiceManager::getInstance().resourceService();
 
+    new WebSocket(8095);
+
+    m_broadcast = new Broadcast(); // UDP broadcast to clients can find server data
+    m_broadcast->start();
 
     connect(m_resourceService, &ResourceService::qmlGenerateEvents, this, &MainWindow::qmlGenerateEventsProcess); //Interacting Qml to C++
 
@@ -104,7 +108,7 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
         }
     });
 
-    m_resourceService->sendCppEvents("Hello of MainWindow to qml");
+    emit m_resourceService->cppGenerateEvents("Hello of MainWindow to qml");
 }
 
 MainWindow::~MainWindow() {
@@ -162,12 +166,12 @@ void MainWindow::onDeviceConnected(bool success, const QString& serial, const QS
     qDebug() << serial << deviceName << size.width();
 
     if(success){
-        m_resourceService->sendCppEvents("MIRROR_START");
+        emit m_resourceService->cppGenerateEvents("MIRROR_START");
     }
 }
 
 void MainWindow::onDeviceDisconnected(QString serial){
-    m_resourceService->sendCppEvents("MIRROR_FINISHED");
+    emit m_resourceService->cppGenerateEvents("MIRROR_FINISHED");
     qDebug() << "MainWindow::onDeviceDisconnected:" << serial;
 }
 

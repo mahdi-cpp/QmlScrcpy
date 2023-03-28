@@ -27,6 +27,7 @@ private slots:
 
 signals:
     void cppGenerateEvents(QString name);
+    void webSocket(QString type, QString data);
 
 private:
     SceneProviderRenderer* m_sceneProviderRenderer = nullptr;

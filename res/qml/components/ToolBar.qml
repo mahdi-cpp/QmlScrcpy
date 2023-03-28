@@ -3,10 +3,10 @@ import QtQuick.Layouts 1.0
 
 Item {
     id: root
-    width: 600
-    height: 74
-    x: 310
-    y: 10
+    width: 64
+    height: 530
+    x: 390
+    y: -600
     signal select(string icon)
 
     function setPortrait(){
@@ -16,26 +16,24 @@ Item {
         grid.flow = GridLayout.LeftToRight
     }
 
-//    Rectangle {
-//        anchors.fill: parent
-//        radius: 50
-//        color: "#fff"
-//        opacity: 0.6
-//    }
-//    Text {
-//        text: "Hello World!"
-//        font.family: "Helvetica"
-//        font.pointSize: 24
-//        color: "red"
-//    }
+    Rectangle {
+        anchors.fill: parent
+        radius: 50
+        color: "#fff"
+        opacity: 0.8
+    }
 
     GridLayout {
         id: grid
-        x: 100
+        x: 12
         y: 18
         columns: 20
         rows: 20
         flow: GridLayout.TopToBottom
+                Icon {
+                    icon: "close"
+                    onClick: select(icon)
+                }
         Icon {
             icon: "home"
             onClick: select(icon)

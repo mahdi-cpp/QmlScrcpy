@@ -1,12 +1,10 @@
 #include "websocket.h"
 
-#include <QtCore/QDebug>
-
-//! [constructor]
-WebSocket::WebSocket(quint16 port, bool debug, QObject *parent) :
-        QObject(parent),
+WebSocket::WebSocket(quint16 port, bool debug, QObject *parent) :QObject(parent),
         m_pWebSocketServer(new QWebSocketServer(QStringLiteral("Echo Server"), QWebSocketServer::NonSecureMode, this)),
         m_debug(debug) {
+
+    m_resourceService = ServiceManager::getInstance().resourceService();
 
     if (m_pWebSocketServer->listen(QHostAddress::Any, port)) {
         if (m_debug)
@@ -16,14 +14,12 @@ WebSocket::WebSocket(quint16 port, bool debug, QObject *parent) :
         connect(m_pWebSocketServer, &QWebSocketServer::closed, this, &WebSocket::closed);
     }
 }
-//! [constructor]
 
 WebSocket::~WebSocket() {
     m_pWebSocketServer->close();
     qDeleteAll(m_clients.begin(), m_clients.end());
 }
 
-//! [onNewConnection]
 void WebSocket::onNewConnection() {
     QWebSocket *pSocket = m_pWebSocketServer->nextPendingConnection();
 
@@ -33,20 +29,17 @@ void WebSocket::onNewConnection() {
 
     m_clients << pSocket;
 }
-//! [onNewConnection]
 
-//! [processTextMessage]
 void WebSocket::processTextMessage(QString message) {
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
     if (m_debug)
         qDebug() << "Message received:" << message;
     if (pClient) {
         pClient->sendTextMessage("ok : " + message);
+        emit m_resourceService->webSocket("MUSIC", message);
     }
 }
-//! [processTextMessage]
 
-//! [processBinaryMessage]
 void WebSocket::processBinaryMessage(QByteArray message) {
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
     if (m_debug)
@@ -55,9 +48,7 @@ void WebSocket::processBinaryMessage(QByteArray message) {
         pClient->sendBinaryMessage(message);
     }
 }
-//! [processBinaryMessage]
 
-//! [socketDisconnected]
 void WebSocket::socketDisconnected() {
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
     if (m_debug)

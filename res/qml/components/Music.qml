@@ -6,6 +6,10 @@ Item {
     height: 400 + 200
     signal select(string icon)
 
+    function message(message) {
+        album.text = message
+    }
+
     function setPortrait() {
         grid.flow = GridLayout.TopToBottom
     }
@@ -28,6 +32,7 @@ Item {
         opacity: 1
         y: 450
         Text {
+            id: album
             text: "You Got to listen ..."
             font.family: "Helvetica"
             font.pointSize: 20

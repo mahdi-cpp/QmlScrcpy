@@ -43,8 +43,6 @@ public:
     Q_INVOKABLE void processClick(QString type);
     Q_INVOKABLE void qmlCommands(QString type);
 
-    void sendCppEvents(QString name);
-
     bool mirror() const;
 
     int orientation() const;
@@ -70,6 +68,7 @@ signals:
 
     void qmlGenerateEvents(QString name);
     void cppGenerateEvents(QString name);
+    void webSocket(QString type, QString data);
 
 private:
     QSize m_frameSize;

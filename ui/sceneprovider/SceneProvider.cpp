@@ -27,6 +27,8 @@ SceneProvider::SceneProvider(QQuickItem* parent) : QQuickItem(parent) {
     m_resourceService = ServiceManager::getInstance().resourceService();
 
     connect(m_resourceService, &ResourceService::cppGenerateEvents, this, &SceneProvider::cppGenerateEvents); //Interacting C++ to Qml
+    connect(m_resourceService, &ResourceService::webSocket, this, &SceneProvider::webSocket); //Interacting C++ WebSocket to Qml
+
     connect(this, &QQuickItem::windowChanged, this, &SceneProvider::onWindowChanged);
 }
 
