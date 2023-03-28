@@ -90,8 +90,6 @@ set(QSC_DEVICE_SOURCES
         src/device/server/tcpserver.cpp
         src/device/server/videosocket.h
         src/device/server/videosocket.cpp
-        src/device/websocket/websocket.cpp
-        src/device/websocket/websocket.h
         src/device/demuxer/demuxer.h
         src/device/demuxer/demuxer.cpp
         )

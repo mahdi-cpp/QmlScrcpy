@@ -5,7 +5,6 @@
 #include <QTranslator>
 
 #include "config.h"
-#include "dialog.h"
 #include "mousetap/mousetap.h"
 
 #include "QQmlContext"
@@ -13,11 +12,12 @@
 
 #include "QtWs2022/service/ServiceManager.h"
 #include "QtWs2022/sceneprovider/SceneProvider.h"
+#include "QtWs2022/scene/MainWindow.h"
 
-static Dialog *g_mainDlg = Q_NULLPTR;
+//static Dialog *g_mainDlg = Q_NULLPTR;
 static QPointer<MainWindow> m_MainWindow;
 
-static QtMessageHandler g_oldMessageHandler = Q_NULLPTR;
+//static QtMessageHandler g_oldMessageHandler = Q_NULLPTR;
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
     */
     QSurfaceFormat::setDefaultFormat(varFormat);
 
-    g_oldMessageHandler = qInstallMessageHandler(myMessageOutput);
+    //g_oldMessageHandler = qInstallMessageHandler(myMessageOutput);
     QApplication app(argc, argv);
 
     // After setting the version number and application name through the qmake VERSION variable or rc under windows, you can directly get it here
@@ -97,14 +97,14 @@ int main(int argc, char *argv[]) {
     installTranslator();
 
     // load style sheet
-    QFile file(":/qss/psblack.css");
-    if (file.open(QFile::ReadOnly)) {
-        QString qss = QLatin1String(file.readAll());
-        QString paletteColor = qss.mid(20, 7);
-        qApp->setPalette(QPalette(QColor(paletteColor)));
-        qApp->setStyleSheet(qss);
-        file.close();
-    }
+//    QFile file(":/qss/psblack.css");
+//    if (file.open(QFile::ReadOnly)) {
+//        QString qss = QLatin1String(file.readAll());
+//        QString paletteColor = qss.mid(20, 7);
+//        qApp->setPalette(QPalette(QColor(paletteColor)));
+//        qApp->setStyleSheet(qss);
+//        file.close();
+//    }
 
     qsc::AdbProcess::setAdbPath(Config::getInstance().getAdbPath());
 
@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
 //            QCoreApplication::applicationVersion());
 
     int ret = app.exec();
-    delete g_mainDlg;
+    //delete g_mainDlg;
 
     return ret;
 }
@@ -171,28 +171,28 @@ QtMsgType covertLogLevel(const QString &logLevel) {
 #endif
 }
 
-void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
-    if (g_oldMessageHandler) {
-        g_oldMessageHandler(type, context, msg);
-    }
-
-    // Is Qt log level higher than warning?
-    float fLogLevel = g_msgType;
-    if (QtInfoMsg == g_msgType) {
-        fLogLevel = QtDebugMsg + 0.5f;
-    }
-    float fLogLevel2 = type;
-    if (QtInfoMsg == type) {
-        fLogLevel2 = QtDebugMsg + 0.5f;
-    }
-
-    if (fLogLevel <= fLogLevel2) {
-        if (g_mainDlg && g_mainDlg->isVisible() && !g_mainDlg->filterLog(msg)) {
-            g_mainDlg->outLog(msg);
-        }
-    }
-
-    if (QtFatalMsg == type) {
-        //abort();
-    }
-}
+//void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
+//    if (g_oldMessageHandler) {
+//        g_oldMessageHandler(type, context, msg);
+//    }
+//
+//    // Is Qt log level higher than warning?
+//    float fLogLevel = g_msgType;
+//    if (QtInfoMsg == g_msgType) {
+//        fLogLevel = QtDebugMsg + 0.5f;
+//    }
+//    float fLogLevel2 = type;
+//    if (QtInfoMsg == type) {
+//        fLogLevel2 = QtDebugMsg + 0.5f;
+//    }
+//
+////    if (fLogLevel <= fLogLevel2) {
+////        if (g_mainDlg && g_mainDlg->isVisible() && !g_mainDlg->filterLog(msg)) {
+////            g_mainDlg->outLog(msg);
+////        }
+////    }
+//
+//    if (QtFatalMsg == type) {
+//        //abort();
+//    }
+//}

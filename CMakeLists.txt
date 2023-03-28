@@ -76,29 +76,15 @@ message(STATUS "[${PROJECT_NAME}] Qt version is: ${QT_VERSION_MAJOR}.${QT_VERSIO
 # Sources
 #
 
-
 #source_group(ui/toolform/fontawesome FILES ${QC_FONTAWESOME_SOURCES})
-
-# uibase
-set(QC_UIBASE_SOURCES
-        uibase/keepratiowidget.h
-        uibase/keepratiowidget.cpp
-        )
-source_group(uibase FILES ${QC_UIBASE_SOURCES})
 
 
 # ui
-set(QC_UI_SOURCES
-        ui/videoform.h
-        ui/videoform.cpp
-        ui/videoform.ui
-        ui/dialog.cpp
-        ui/dialog.h
-        ui/dialog.ui
+set(QC_RENDER_SOURCES
         render/qyuvopenglwidget.h
         render/qyuvopenglwidget.cpp
         )
-source_group(ui FILES ${QC_UI_SOURCES})
+source_group(ui FILES ${QC_RENDER_SOURCES})
 
 # group controller
 set(QC_GROUP_CONTROLLER
@@ -124,13 +110,9 @@ endif ()
 
 source_group(util FILES ${QC_UTIL_SOURCES})
 
-# qrc
-set(QC_QRC_SOURCES "res/res.qrc")
-
 # main
 set(QC_MAIN_SOURCES
         main.cpp
-        ${QC_QRC_SOURCES}
         )
 
 # render
@@ -140,7 +122,6 @@ set(QC_RENDER_SOURCES
         render/TriangleWindow.cpp
         render/TriangleWindow.h
         )
-
 
 # QtWs2022
 set(QC_QTWS2022_SOURCES
@@ -158,6 +139,9 @@ set(QC_QTWS2022_SOURCES
         QtWs2022/service/ServiceManager.cpp
         QtWs2022/service/ResourceService.h
         QtWs2022/service/ResourceService.cpp
+
+        QtWs2022/service/websocket/websocket.cpp
+        QtWs2022/service/websocket/websocket.h
         )
 
 # QtWs2022
@@ -177,8 +161,7 @@ source_group(LogoRenderer FILES ${QC_LOGORENDER_SOURCES})
 
 # all sources
 set(QC_PROJECT_SOURCES
-        ${QC_UIBASE_SOURCES}
-        ${QC_UI_SOURCES}
+        ${QC_RENDER_SOURCES}
         ${QC_UTIL_SOURCES}
         ${QC_MAIN_SOURCES}
         ${QC_GROUP_CONTROLLER}

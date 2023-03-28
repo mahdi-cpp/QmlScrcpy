@@ -1,7 +1,6 @@
 #include <QPointer>
 
 #include "groupcontroller.h"
-#include "videoform.h"
 
 GroupController::GroupController(QObject *parent) : QObject(parent)
 {
@@ -27,7 +26,9 @@ QSize GroupController::getFrameSize(const QString &serial)
         return QSize();
     }
 
-    return static_cast<VideoForm*>(data)->frameSize();
+    return QSize();
+
+    //return static_cast<VideoForm*>(data)->frameSize();
 }
 
 GroupController &GroupController::instance()
