@@ -97,15 +97,10 @@ source_group(groupcontroller FILES ${QC_GROUP_CONTROLLER})
 set(QC_UTIL_SOURCES
         util/config.h
         util/config.cpp
-        util/mousetap/mousetap.h
-        util/mousetap/mousetap.cpp
         )
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    set(QC_UTIL_SOURCES ${QC_UTIL_SOURCES}
-            util/mousetap/xmousetap.h
-            util/mousetap/xmousetap.cpp
-            )
+    set(QC_UTIL_SOURCES ${QC_UTIL_SOURCES})
 endif ()
 
 source_group(util FILES ${QC_UTIL_SOURCES})

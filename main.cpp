@@ -5,7 +5,6 @@
 #include <QTranslator>
 
 #include "config.h"
-#include "mousetap/mousetap.h"
 
 #include "QQmlContext"
 
