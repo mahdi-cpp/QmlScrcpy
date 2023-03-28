@@ -86,7 +86,7 @@ void SceneProviderRenderer::init(QQuickWindow *window, const QSize &resolution) 
     m_resourceService = ServiceManager::getInstance().resourceService();
 
     //setupRendering();
-    m_texture_photo = new QOpenGLTexture(QImage("/home/mahdi/CLionProjects/QtWs2022/opengl/watermelon.jpg"));
+    m_texture_photo = new QOpenGLTexture(QImage("/home/mahdi/CLionProjects/res/opengl/watermelon.jpg"));
 
     if (m_scene) {
         if (m_scene->isBound()) {
@@ -217,11 +217,11 @@ void SceneProviderRenderer::updateTexture(GLuint texture, quint32 textureType, q
 void SceneProviderRenderer::initShader() {
     m_program = new QOpenGLShaderProgram(this);
 
-    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, Config::getInstance().getProjectPath() + "/QtWs2022/opengl/squircle.vsh")) {
+    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, Config::getInstance().getProjectPath() + "/res/opengl/squircle.vsh")) {
         qDebug() << "Error: " << typeid(this).name() << "Vertex shader compilation failed";
         return;
     }
-    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, Config::getInstance().getProjectPath() + "/QtWs2022/opengl/squircle.fsh")) {
+    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, Config::getInstance().getProjectPath() + "/res/opengl/squircle.fsh")) {
         qDebug() << "Error: " << typeid(this).name() << "Fragment shader compilation failed";
         return;
     }

@@ -12,6 +12,16 @@
 
 MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
 
+    qDebug() << "QCoreApplication::applicationDirPath():" << QCoreApplication::applicationDirPath();
+    QString str = QCoreApplication::applicationDirPath();
+    int index = str.indexOf("/.output");
+    QString leftSide = str.left(index);
+
+    Config::getInstance().setProjectPath(leftSide);
+    qDebug() << "getProjectPath():" << Config::getInstance().getProjectPath();
+
+    qsc::AdbProcess::setAdbPath(Config::getInstance().getAdbPath());
+
     m_resourceService = new ResourceService(this);
     ServiceManager::getInstance().setResourceService(m_resourceService); // Register service to our C++ singleton
 
@@ -31,7 +41,7 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
     rootContext->setContextProperty("resourceService", m_resourceService); // Also set it to QML root context
 
     setKeyboardGrabEnabled(true);
-    setSource(QUrl("/home/mahdi/CLionProjects/QtScrcpy/QtWs2022/qml/main.qml"));
+    setSource(QUrl("/home/mahdi/CLionProjects/QtScrcpy/res/qml/main.qml"));
     setResizeMode(QQuickView::SizeRootObjectToView);
 
     connect(&m_adb, &qsc::AdbProcess::adbProcessResult, this, [this](qsc::AdbProcess::ADB_EXEC_RESULT processResult) {

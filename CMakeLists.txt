@@ -14,8 +14,8 @@ file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/version QC_FILE_VERSION)
 set(QC_PROJECT_VERSION ${QC_FILE_VERSION})
 
 configure_file(
-        QtWs2022/opengl/squircle.vsh
-        QtWs2022/opengl/squircle.fsh
+        res/opengl/squircle.vsh
+        res/opengl/squircle.fsh
 )
 
 # Project declare
@@ -79,19 +79,10 @@ message(STATUS "[${PROJECT_NAME}] Qt version is: ${QT_VERSION_MAJOR}.${QT_VERSIO
 #source_group(ui/toolform/fontawesome FILES ${QC_FONTAWESOME_SOURCES})
 
 
-# ui
-set(QC_RENDER_SOURCES
-        render/qyuvopenglwidget.h
-        render/qyuvopenglwidget.cpp
+# main
+set(QC_MAIN_SOURCES
+        main.cpp
         )
-source_group(ui FILES ${QC_RENDER_SOURCES})
-
-# group controller
-set(QC_GROUP_CONTROLLER
-        groupcontroller/groupcontroller.h
-        groupcontroller/groupcontroller.cpp
-        )
-source_group(groupcontroller FILES ${QC_GROUP_CONTROLLER})
 
 # util
 set(QC_UTIL_SOURCES
@@ -105,17 +96,14 @@ endif ()
 
 source_group(util FILES ${QC_UTIL_SOURCES})
 
-# main
-set(QC_MAIN_SOURCES
-        main.cpp
-        )
-
 # render
 set(QC_RENDER_SOURCES
         render/OpenGLWindow.cpp
         render/OpenGLWindow.h
         render/TriangleWindow.cpp
         render/TriangleWindow.h
+        render/qyuvopenglwidget.h
+        render/qyuvopenglwidget.cpp
         )
 
 # QtWs2022
@@ -141,15 +129,15 @@ set(QC_QTWS2022_SOURCES
 
 # QtWs2022
 set(QC_LOGORENDER_SOURCES
-        LogoRenderer/logorenderer.h
-        LogoRenderer/logorenderer.cpp
-        LogoRenderer/fboinsgrenderer.h
-        LogoRenderer/fboinsgrenderer.cpp
+        render/LogoRenderer/logorenderer.h
+        render/LogoRenderer/logorenderer.cpp
+        render/LogoRenderer/fboinsgrenderer.h
+        render/LogoRenderer/fboinsgrenderer.cpp
         )
 
 source_group(render FILES ${QC_RENDER_SOURCES})
 source_group(QtWs2022 FILES ${QC_QTWS2022_SOURCES})
-source_group(LogoRenderer FILES ${QC_LOGORENDER_SOURCES})
+source_group(render/LogoRenderer FILES ${QC_LOGORENDER_SOURCES})
 
 # Translation related (use shell script instead of cmake to handle translation)
 # add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/res/i18n)
@@ -159,7 +147,6 @@ set(QC_PROJECT_SOURCES
         ${QC_RENDER_SOURCES}
         ${QC_UTIL_SOURCES}
         ${QC_MAIN_SOURCES}
-        ${QC_GROUP_CONTROLLER}
         ${QC_PLANTFORM_SOURCES}
         ${QC_RENDER_SOURCES}
         ${QC_QTWS2022_SOURCES}
