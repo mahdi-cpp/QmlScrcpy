@@ -3,8 +3,8 @@
 #include <QQmlContext>
 #include <QFileInfo>
 
-#include "QtWs2022/sceneprovider/SceneProvider.h"
-#include "QtWs2022/service/ServiceManager.h"
+#include "ui/sceneprovider/SceneProvider.h"
+#include "ui/service/ServiceManager.h"
 #include "Scene.h"
 
 #include "MainWindow.h"

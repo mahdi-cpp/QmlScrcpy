@@ -2,7 +2,7 @@
 #include <QSurfaceFormat>
 
 #include "config.h"
-#include "QtWs2022/scene/MainWindow.h"
+#include "ui/scene/MainWindow.h"
 
 static QPointer<MainWindow> m_MainWindow;
 

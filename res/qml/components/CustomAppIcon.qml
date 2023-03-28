@@ -21,7 +21,7 @@ Rectangle {
 
     Image {
         anchors.centerIn: parent
-        source: "/home/mahdi/photos/icon/baseline-cast.svg"
+        source: "../../icons/baseline-cast.svg"
         width: 80
         height: 80
     }

@@ -72,85 +72,59 @@ endif ()
 
 message(STATUS "[${PROJECT_NAME}] Qt version is: ${QT_VERSION_MAJOR}.${QT_VERSION_MINOR}")
 
-#
+
 # Sources
-#
-
-#source_group(ui/toolform/fontawesome FILES ${QC_FONTAWESOME_SOURCES})
-
-
 # main
-set(QC_MAIN_SOURCES
-        main.cpp
+set(QC_MAIN_SOURCES main.cpp)
+
+# ui
+set(QC_UI_SOURCES
+        ui/scene/Scene.h
+        ui/scene/Scene.cpp
+        ui/scene/SceneRenderer.h
+        ui/scene/SceneRenderer.cpp
+
+        ui/sceneprovider/SceneProvider.h
+        ui/sceneprovider/SceneProvider.cpp
+        ui/sceneprovider/SceneProviderRenderer.h
+        ui/sceneprovider/SceneProviderRenderer.cpp
+
+        ui/service/ServiceManager.h
+        ui/service/ServiceManager.cpp
+        ui/service/ResourceService.h
+        ui/service/ResourceService.cpp
+
+        ui/service/websocket/websocket.cpp
+        ui/service/websocket/websocket.h
+
+        ui/scene/MainWindow.cpp
+        ui/scene/MainWindow.h
+        ui/scene/PieChart.cpp
+        ui/scene/PieChart.h
+
+        ui/util/config.h
+        ui/util/config.cpp
+
+        ui/render/OpenGLWindow.cpp
+        ui/render/OpenGLWindow.h
+        ui/render/TriangleWindow.cpp
+        ui/render/TriangleWindow.h
+        ui/render/qyuvopenglwidget.h
+        ui/render/qyuvopenglwidget.cpp
+
+        ui/render/LogoRenderer/logorenderer.h
+        ui/render/LogoRenderer/logorenderer.cpp
+        ui/render/LogoRenderer/fboinsgrenderer.h
+        ui/render/LogoRenderer/fboinsgrenderer.cpp
         )
-
-# util
-set(QC_UTIL_SOURCES
-        util/config.h
-        util/config.cpp
-        )
-
-if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    set(QC_UTIL_SOURCES ${QC_UTIL_SOURCES})
-endif ()
-
-source_group(util FILES ${QC_UTIL_SOURCES})
-
-# render
-set(QC_RENDER_SOURCES
-        render/OpenGLWindow.cpp
-        render/OpenGLWindow.h
-        render/TriangleWindow.cpp
-        render/TriangleWindow.h
-        render/qyuvopenglwidget.h
-        render/qyuvopenglwidget.cpp
-        )
-
-# QtWs2022
-set(QC_QTWS2022_SOURCES
-        QtWs2022/scene/Scene.h
-        QtWs2022/scene/Scene.cpp
-        QtWs2022/scene/SceneRenderer.h
-        QtWs2022/scene/SceneRenderer.cpp
-
-        QtWs2022/sceneprovider/SceneProvider.h
-        QtWs2022/sceneprovider/SceneProvider.cpp
-        QtWs2022/sceneprovider/SceneProviderRenderer.h
-        QtWs2022/sceneprovider/SceneProviderRenderer.cpp
-
-        QtWs2022/service/ServiceManager.h
-        QtWs2022/service/ServiceManager.cpp
-        QtWs2022/service/ResourceService.h
-        QtWs2022/service/ResourceService.cpp
-
-        QtWs2022/service/websocket/websocket.cpp
-        QtWs2022/service/websocket/websocket.h
-        )
-
-# QtWs2022
-set(QC_LOGORENDER_SOURCES
-        render/LogoRenderer/logorenderer.h
-        render/LogoRenderer/logorenderer.cpp
-        render/LogoRenderer/fboinsgrenderer.h
-        render/LogoRenderer/fboinsgrenderer.cpp
-        )
-
-source_group(render FILES ${QC_RENDER_SOURCES})
-source_group(QtWs2022 FILES ${QC_QTWS2022_SOURCES})
-source_group(render/LogoRenderer FILES ${QC_LOGORENDER_SOURCES})
 
 # Translation related (use shell script instead of cmake to handle translation)
 # add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/res/i18n)
 
 # all sources
 set(QC_PROJECT_SOURCES
-        ${QC_RENDER_SOURCES}
-        ${QC_UTIL_SOURCES}
         ${QC_MAIN_SOURCES}
-        ${QC_PLANTFORM_SOURCES}
-        ${QC_RENDER_SOURCES}
-        ${QC_QTWS2022_SOURCES}
-        ${QC_LOGORENDER_SOURCES} QtWs2022/scene/MainWindow.cpp QtWs2022/scene/MainWindow.h QtWs2022/scene/PieChart.cpp QtWs2022/scene/PieChart.h)
+        ${QC_UI_SOURCES})
 
 
 add_executable(${PROJECT_NAME} ${QC_RUNTIME_TYPE} ${QC_PROJECT_SOURCES})
@@ -160,10 +134,10 @@ add_executable(${PROJECT_NAME} ${QC_RUNTIME_TYPE} ${QC_PROJECT_SOURCES})
 #
 
 target_include_directories(${PROJECT_NAME} PRIVATE ui/toolform/fontawesome)
-target_include_directories(${PROJECT_NAME} PRIVATE util)
+target_include_directories(${PROJECT_NAME} PRIVATE ui/util)
 target_include_directories(${PROJECT_NAME} PRIVATE uibase)
 target_include_directories(${PROJECT_NAME} PRIVATE ui)
-target_include_directories(${PROJECT_NAME} PRIVATE render)
+target_include_directories(${PROJECT_NAME} PRIVATE ui/render)
 
 # output dir
 # https://cmake.org/cmake/help/latest/prop_gbl/GENERATOR_IS_MULTI_CONFIG.html
@@ -188,10 +162,10 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     get_target_property(QSC_BIN_OUTPUT_PATH ${PROJECT_NAME} RUNTIME_OUTPUT_DIRECTORY)
     set(QSC_DEPLOY_PATH ${QSC_BIN_OUTPUT_PATH})
 
-#    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-#            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/sndcpy/sndcpy.sh" "${QSC_BIN_OUTPUT_PATH}"
-#            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/sndcpy/sndcpy.apk" "${QSC_BIN_OUTPUT_PATH}"
-#            )
+    #    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    #            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/sndcpy/sndcpy.sh" "${QSC_BIN_OUTPUT_PATH}"
+    #            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/sndcpy/sndcpy.apk" "${QSC_BIN_OUTPUT_PATH}"
+    #            )
 
     set(THREADS_PREFER_PTHREAD_FLAG ON)
     find_package(Threads REQUIRED)

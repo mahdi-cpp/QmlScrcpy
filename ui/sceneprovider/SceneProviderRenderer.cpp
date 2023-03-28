@@ -1,6 +1,6 @@
 #include "SceneProviderRenderer.h"
 
-#include "QtWs2022/service/ServiceManager.h"
+#include "ui/service/ServiceManager.h"
 #include "config.h"
 
 #include <QDebug>

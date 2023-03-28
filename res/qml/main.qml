@@ -67,10 +67,17 @@ Item {
 
     Image {
         id: car
-        source: "/home/mahdi/photos/wall2.png"
+        source: "../images/wall2.png"
         anchors.fill: parent
         x: 20
         y: 20
+    }
+    Image {
+        source: "../images/parsa.jpg"
+        width: 118
+        height: 118
+        x: 200
+        y: 200
     }
 
     Music {
@@ -190,18 +197,16 @@ Item {
 
     ToolBar {
         id: toolbar
-        x: 220
+        x: 320
         onSelect: resourceService.processClick(icon)
     }
-
-
 
     ToolBarApps {
         id: toolbarApps
         onSelect: {
             switch (icon) {
             case "mirror":
-            resourceService.qmlCommands("REQUEST_MIRROR_START")
+                resourceService.qmlCommands("REQUEST_MIRROR_START")
                 break
             case "calculator":
                 break

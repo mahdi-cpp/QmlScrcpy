@@ -11,7 +11,7 @@ Item {
 
     Image {
         anchors.centerIn: parent
-        source: "/home/mahdi/photos/icon/" + icon + ".png"
+        source: "../../icons/" + icon + ".png"
         width: 118
         height: 118
     }

@@ -17,7 +17,7 @@ Item {
     }
     Image {
         anchors.centerIn: parent
-        source: "/home/mahdi/photos/icon/" + icon + ".svg"
+        source: "../../icons/" + icon + ".svg"
         width: size - 10
         height: size - 10
     }

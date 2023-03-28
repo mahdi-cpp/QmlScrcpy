@@ -10,8 +10,8 @@
 #include "QtScrcpyCore.h"
 #include "adbprocess.h"
 
-#include "QtWs2022/service/ResourceService.h"
-#include "QtWs2022/service/ServiceManager.h"
+#include "ui/service/ResourceService.h"
+#include "ui/service/ServiceManager.h"
 
 class MainWindow : public QQuickView{
 

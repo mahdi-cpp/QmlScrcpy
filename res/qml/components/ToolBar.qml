@@ -6,7 +6,7 @@ Item {
     width: 600
     height: 74
     x: 310
-    y: 100
+    y: 10
     signal select(string icon)
 
     function setPortrait(){

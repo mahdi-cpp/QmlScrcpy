@@ -132,11 +132,11 @@ void TriangleWindow::render()
 
 void TriangleWindow::initShader() {
 
-    if (!m_program.addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, Config::getInstance().getProjectPath() + "/QtWs2022/qml/squircle.vsh")) {
+    if (!m_program.addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, Config::getInstance().getProjectPath() + "/ui/qml/squircle.vsh")) {
         qDebug() << "Error: " << typeid(this).name() << "Vertex shader compilation failed";
         return;
     }
-    if (!m_program.addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, Config::getInstance().getProjectPath() + "/QtWs2022/qml/squircle.fsh"))  {
+    if (!m_program.addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, Config::getInstance().getProjectPath() + "/ui/qml/squircle.fsh"))  {
         qDebug()  << "Error: " << typeid(this).name() <<  "Fragment shader compilation failed";
         return;
     }

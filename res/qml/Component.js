@@ -44,7 +44,7 @@ function createAppObjects() {
     //    if(component)
     //    component.destroy()
 
-    component = Qt.createComponent("/home/mahdi/CLionProjects/QtScrcpy/QtWs2022/qml/app2.qml")
+    component = Qt.createComponent("/home/mahdi/CLionProjects/QtScrcpy/ui/qml/app2.qml")
     //    console.log(component.errorString())
     //    console.log(component.status)
 

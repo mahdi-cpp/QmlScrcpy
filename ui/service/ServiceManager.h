@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ResourceService.h"
-#include "QtWs2022/sceneprovider/SceneProviderRenderer.h"
+#include "ui/sceneprovider/SceneProviderRenderer.h"
 
 //!
 //! \brief The ServiceManager class

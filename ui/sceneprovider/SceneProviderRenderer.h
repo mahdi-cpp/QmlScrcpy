@@ -1,6 +1,6 @@
 #pragma once
 
-#include "QtWs2022/service/ResourceService.h"
+#include "ui/service/ResourceService.h"
 #include "QtScrcpyCore.h"
 
 #include <QMatrix4x4>

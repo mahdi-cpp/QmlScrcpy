@@ -15,7 +15,7 @@ Item {
 
     Image {
         id: car
-        source: "/home/mahdi/photos/music-cover.jpg"
+        source: "../../images/music-cover.jpg"
         width: parent.width
         height: parent.width
     }
@@ -45,24 +45,24 @@ Item {
         }
     }
 
-        Rectangle {
-            anchors.bottom: buttons.top
-            width: parent.width - 80
-            height: 4
-            x: 40
-            radius: 50
-            color: "#fff"
-            opacity: 0.5
-        }
-                Rectangle {
-                    anchors.bottom: buttons.top
-                    width: 150
-                    height: 4
-                    x: 40
-                    radius: 50
-                    color: "#fff"
-                    opacity: 1
-                }
+    Rectangle {
+        anchors.bottom: buttons.top
+        width: parent.width - 80
+        height: 4
+        x: 40
+        radius: 50
+        color: "#fff"
+        opacity: 0.5
+    }
+    Rectangle {
+        anchors.bottom: buttons.top
+        width: 150
+        height: 4
+        x: 40
+        radius: 50
+        color: "#fff"
+        opacity: 1
+    }
 
     Item {
         id: buttons
@@ -72,25 +72,25 @@ Item {
         x: 20
 
         Image {
-            source: "/home/mahdi/photos/icon/skip-previous.svg"
+            source: "../../icons/skip-previous.svg"
             width: 50
             height: 50
             x: 45
-            y:20
+            y: 20
         }
         Image {
-            source: "/home/mahdi/photos/icon/pause.svg"
+            source: "../../icons/pause.svg"
             width: 50
             height: 50
             x: 170
-             y:20
+            y: 20
         }
         Image {
-            source: "/home/mahdi/photos/icon/skip-next.svg"
+            source: "../../icons/skip-next.svg"
             width: 50
             height: 50
             x: 300
-             y:20
+            y: 20
         }
     }
 }

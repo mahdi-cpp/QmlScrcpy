@@ -4,8 +4,8 @@
 #include <QTimer>
 
 #include <QPointer>
-#include "QtWs2022/service/ResourceService.h"
-#include "QtWs2022/service/ServiceManager.h"
+#include "ui/service/ResourceService.h"
+#include "ui/service/ServiceManager.h"
 
 //!
 //! \brief The Scene class

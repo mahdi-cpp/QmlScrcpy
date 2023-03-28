@@ -1,15 +1,15 @@
 
 #pragma once
 
-#include "QtWs2022/sceneprovider/SceneProviderRenderer.h"
+#include "ui/sceneprovider/SceneProviderRenderer.h"
 
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
 #include <QQuickFramebufferObject>
 #include <QQuickWindow>
 
-#include "QtWs2022/service/ResourceService.h"
-#include "QtWs2022/service/ServiceManager.h"
+#include "ui/service/ResourceService.h"
+#include "ui/service/ServiceManager.h"
 
 //!
 //! \brief The SceneRenderer class
