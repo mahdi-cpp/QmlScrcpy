@@ -5,7 +5,7 @@ Item {
     id: root
     width: 600
     height: 74
-    x: 900
+    x: 600
     y: 40
     signal select(string icon)
 
@@ -44,9 +44,9 @@ Item {
             icon: "note"
             onClick: select(icon)
         }
-        IconApp {
-            icon: "photo"
-            onClick: select(icon)
-        }
+//        IconApp {
+//            icon: "photo"
+//            onClick: select(icon)
+//        }
     }
 }

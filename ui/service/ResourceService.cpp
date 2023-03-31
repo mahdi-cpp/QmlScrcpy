@@ -37,7 +37,6 @@ int ResourceService::orientation() const {
     return m_orientation;
 }
 
-
 void ResourceService::setSerial(const QString &serial) {
     m_serial = serial;
 }
@@ -137,7 +136,6 @@ void ResourceService::stateInit() {
     state->Music.title = "music title";
     state->Music.urlPath = "http://arvancloude/music.mp3";
     state->Music.coverPath = "http://arvancloude/cover/14562.jpg";
-
 }
 
 //webSocket

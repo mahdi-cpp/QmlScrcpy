@@ -10,7 +10,7 @@ namespace qsc {
         QString serverLocalPath = "";     // Local Android server path
 
         // optional
-        QString serverRemotePath = "/data/local/tmp/scrcpy-server.jar";    // The server path to be pushed to the remote device
+        QString serverRemotePath =        "/data/local/tmp/scrcpy-server.jar";    // The server path to be pushed to the remote device
         quint16 localPort = 27183;        // Local listening port in reverse
         quint16 maxSize = 720;            // video resolution
         quint32 bitRate = 2000000;        // video bitrate

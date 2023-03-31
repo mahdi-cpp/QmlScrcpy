@@ -112,6 +112,7 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
 }
 
 MainWindow::~MainWindow() {
+    qsc::IDeviceManage::getInstance().disconnectAllDevice();
     this->destroy();
 }
 
@@ -147,7 +148,6 @@ void MainWindow::webSocketProcess(QString json) {
     m_webSocket->send(json);
 }
 
-
 void MainWindow::qmlGenerateEventsProcess(QString name) {
 
     if (name == "REQUEST_MIRROR_START") {
@@ -178,7 +178,7 @@ void MainWindow::requestStartMirrir() {
     params.recordFile = false;
     params.recordPath = "";
     params.recordFileFormat = "mp4";
-    params.serverLocalPath = getServerPath();
+    params.serverLocalPath = Config::getInstance().getProjectPath() + "/res/scrcpy-server";
     params.serverRemotePath = Config::getInstance().getServerPath();
     params.pushFilePath = Config::getInstance().getPushFilePath();
     params.gameScript = "";
@@ -279,18 +279,6 @@ void MainWindow::outLog(const QString &log, bool newLine) {
 //            //ui->outEdit->append("<br/>");
 //        }
 //    });
-}
-
-const QString &MainWindow::getServerPath() {
-    static QString serverPath;
-    if (serverPath.isEmpty()) {
-        serverPath = QString::fromLocal8Bit(qgetenv("QTSCRCPY_SERVER_PATH"));
-        QFileInfo fileInfo(serverPath);
-        if (serverPath.isEmpty() || !fileInfo.isFile()) {
-            serverPath = QCoreApplication::applicationDirPath() + "/scrcpy-server";
-        }
-    }
-    return serverPath;
 }
 
 void MainWindow::delayMs(int ms) {

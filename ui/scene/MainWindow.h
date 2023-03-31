@@ -33,7 +33,6 @@ private:
     bool checkAdbRun();
     void delayMs(int ms);
     void outLog(const QString &log, bool newLine = true);
-    const QString &getServerPath();
 
     void requestStartMirrir();
     void wifiConnect();
