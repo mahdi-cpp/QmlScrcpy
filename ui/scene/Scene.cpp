@@ -74,6 +74,7 @@ void Scene::mouseDoubleClickEvent(QMouseEvent *event) {
     mouseProcess(event);
 }
 
+
 void Scene::wheelEvent(QWheelEvent *event) {
 
     QWheelEvent wheelEvent(
