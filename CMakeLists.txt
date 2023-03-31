@@ -96,6 +96,8 @@ set(QC_UI_SOURCES
 
         ui/service/websocket/websocket.cpp
         ui/service/websocket/websocket.h
+        ui/service/websocket/State.cpp
+        ui/service/websocket/State.h
 
         ui/service/udp/Broadcast.h
         ui/service/udp/Broadcast.cpp

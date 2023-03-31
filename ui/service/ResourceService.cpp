@@ -1,4 +1,6 @@
 #include <QQmlEngine>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 #include "QtScrcpyCore.h"
 
@@ -7,6 +9,8 @@
 ResourceService::ResourceService(QObject *parent) : QObject{parent} {
     m_portraitSize.setWidth(375);
     m_portraitSize.setHeight(830);
+    state = new State();
+    stateInit();
 }
 
 void ResourceService::declareQml() {
@@ -90,7 +94,7 @@ void ResourceService::setMirror(bool value) {
 void ResourceService::setFrameSize(QSize size) {
     m_frameSize = size;
 
-    if  (size.height() > size.width()) {
+    if (size.height() > size.width()) {
         m_portraitSize.setWidth(375);
         m_portraitSize.setHeight(830);
         m_orientation = DisplayOrientation::portrait;
@@ -119,7 +123,45 @@ void ResourceService::setPortraitSize(QSize size) {
     emit portraitSizeChanged(m_portraitSize);
 }
 
-void ResourceService::setLandscapeSize(QSize size){
+void ResourceService::setLandscapeSize(QSize size) {
     m_landscapeSize = size;
     emit landscapeSizeChanged(m_landscapeSize);
+}
+
+void ResourceService::stateInit() {
+
+    state->Mirror.username = "mahdi.cpp";
+    state->Mirror.phoneId = "0935";
+
+    state->Music.artistName = "Mohsen chavoshi";
+    state->Music.title = "music title";
+    state->Music.urlPath = "http://arvancloude/music.mp3";
+    state->Music.coverPath = "http://arvancloude/cover/14562.jpg";
+
+}
+
+//webSocket
+QString ResourceService::getStateJsonString() {
+
+    QJsonObject rootObj;
+
+    QJsonObject mirrorObj;
+    mirrorObj["username"] = state->Mirror.username;
+    mirrorObj["phoneId"] = state->Mirror.phoneId;
+
+    QJsonObject musicObj;
+    musicObj["artistName"] = state->Music.artistName;
+    musicObj["coverPath"] = state->Music.coverPath;
+    musicObj["title"] = state->Music.title;
+    musicObj["urlPath"] = state->Music.urlPath;
+
+    rootObj["Type"] = "state";
+    rootObj["mirror"] = mirrorObj;
+    rootObj["music"] = musicObj;
+
+    QJsonDocument doc(rootObj);
+    QString strJson(doc.toJson(QJsonDocument::Compact));
+
+    return strJson;
+
 }

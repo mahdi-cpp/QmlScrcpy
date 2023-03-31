@@ -15,7 +15,7 @@
 #include "service/websocket/websocket.h"
 #include "service/udp/Broadcast.h"
 
-class MainWindow : public QQuickView{
+class MainWindow : public QQuickView {
 
 public:
     MainWindow(QQuickView *parent = nullptr);
@@ -38,6 +38,9 @@ private:
     void requestStartMirrir();
     void wifiConnect();
 
+    void sendStatusToClients();
+
+
     QPointer<WebSocket> m_webSocket;
     QPointer<Broadcast> m_broadcast;
 
@@ -45,6 +48,7 @@ private slots:
     void onDeviceConnected(bool success, const QString& serial, const QString& deviceName, const QSize& size);
     void onDeviceDisconnected(QString serial);
     void qmlGenerateEventsProcess(QString name);
+    void webSocketProcess(QString json);
 
 private:
     ResourceService* m_resourceService = nullptr;

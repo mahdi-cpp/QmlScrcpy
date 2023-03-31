@@ -21,40 +21,62 @@ WebSocket::~WebSocket() {
 }
 
 void WebSocket::onNewConnection() {
+
     QWebSocket *pSocket = m_pWebSocketServer->nextPendingConnection();
 
-    connect(pSocket, &QWebSocket::textMessageReceived, this, &WebSocket::processTextMessage);
-    connect(pSocket, &QWebSocket::binaryMessageReceived, this, &WebSocket::processBinaryMessage);
     connect(pSocket, &QWebSocket::disconnected, this, &WebSocket::socketDisconnected);
+    connect(pSocket, &QWebSocket::textMessageReceived, this, &WebSocket::processTextMessage);
+    qDebug() << "WebSocket: onNewConnection:" << pSocket->peerAddress();
 
     m_clients << pSocket;
-}
 
-void WebSocket::processTextMessage(QString message) {
-    QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-    if (m_debug)
-        qDebug() << "Message received:" << message;
-    if (pClient) {
-        pClient->sendTextMessage("ok : " + message);
-        emit m_resourceService->webSocket("MUSIC", message);
-    }
-}
+    //m_resourceService->state->Mirror.;
+    // Send Current Status
+    pSocket->sendTextMessage(m_resourceService->getStateJsonString());
 
-void WebSocket::processBinaryMessage(QByteArray message) {
-    QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-    if (m_debug)
-        qDebug() << "Binary Message received:" << message;
-    if (pClient) {
-        pClient->sendBinaryMessage(message);
-    }
 }
 
 void WebSocket::socketDisconnected() {
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
+
     if (m_debug)
-        qDebug() << "WebSocket: Socket Disconnected:" << pClient;
+        qDebug() << "WebSocket: Socket Disconnected:" << pClient->peerAddress();
+
     if (pClient) {
         m_clients.removeAll(pClient);
         pClient->deleteLater();
     }
 }
+
+void WebSocket::processTextMessage(QString message) {
+    QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
+    if (m_debug)
+        qDebug() << "Message received:" << pClient->peerAddress();
+
+    if (pClient) {
+        pClient->sendTextMessage("ok : " + message);
+    }
+
+    emit m_resourceService->webSocket(message);
+}
+
+void WebSocket::send(QString message) {
+
+//    QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
+//
+//    qDebug() << message;
+//
+//    if (pClient) {
+//        pClient->sendTextMessage(message);
+//    }
+
+    QWebSocket *pSender = qobject_cast<QWebSocket *>(sender());
+    Q_UNUSED(pSender);
+
+    for (QWebSocket *pClient : qAsConst(m_clients)) {
+        //if (pClient != pSender) //don't echo message back to sender
+            pClient->sendTextMessage(message);
+    }
+}
+
+

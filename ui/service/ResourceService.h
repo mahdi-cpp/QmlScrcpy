@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QPointer>
 #include <QSize>
+#include "service/websocket/State.h"
 
 //!
 //! \brief The ResourceService class
@@ -16,26 +17,20 @@ class ResourceService : public QObject {
 Q_OBJECT
 
     Q_PROPERTY(double mirror READ mirror WRITE setMirror NOTIFY mirrorChanged)
-
-//    Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
-//    Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged)
-
     Q_PROPERTY(QSize frameSize READ frameSize WRITE setFrameSize NOTIFY frameSizeChanged)
-
     Q_PROPERTY(QSize portraitSize READ portraitSize WRITE setPortraitSize NOTIFY portraitSizeChanged)
     Q_PROPERTY(QSize landscapeSize READ landscapeSize WRITE setLandscapeSize NOTIFY landscapeSizeChanged)
-
     Q_PROPERTY(int orientation READ orientation WRITE setOrientation NOTIFY orientationChanged)
-
-    enum DisplayOrientation {
-        portrait,    // Portrait orientation is vertical
-        landscape,   // Landscape orientation is horizontal
-    };
 
 public:
     explicit ResourceService(QObject *parent = nullptr);
 
     static void declareQml();
+
+    enum DisplayOrientation {
+        portrait,    // Portrait orientation is vertical
+        landscape,   // Landscape orientation is horizontal
+    };
 
     void setSerial(const QString &serial);
     QString serial();
@@ -50,6 +45,11 @@ public:
 
     QSize portraitSize() const;
     QSize landscapeSize() const;
+
+    void stateInit();
+    QString getStateJsonString();
+
+    State *state = nullptr;
 
 public slots:
 
@@ -68,7 +68,7 @@ signals:
 
     void qmlGenerateEvents(QString name);
     void cppGenerateEvents(QString name);
-    void webSocket(QString type, QString data);
+    void webSocket(QString json);
 
 private:
     QSize m_frameSize;

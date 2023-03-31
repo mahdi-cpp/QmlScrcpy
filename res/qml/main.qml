@@ -238,7 +238,7 @@ Item {
     Scene {
         id: mirror
         anchors.centerIn: center
-        visible: false
+        visible: true
         width: resourceService.portraitSize.width
         height: resourceService.portraitSize.height
     }

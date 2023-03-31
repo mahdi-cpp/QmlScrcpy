@@ -20,18 +20,21 @@ public:
     explicit WebSocket(quint16 port, bool debug = true, QObject *parent = Q_NULLPTR);
     ~WebSocket();
 
+    void send(QString message);
+
 signals:
     void closed();
 
 private slots:
     void onNewConnection();
-    void processTextMessage(QString message);
-    void processBinaryMessage(QByteArray message);
     void socketDisconnected();
+
+    void processTextMessage(QString message);
 
 private:
     QWebSocketServer *m_pWebSocketServer;
     QList<QWebSocket *> m_clients;
+
     ResourceService* m_resourceService = nullptr;
 
 private:

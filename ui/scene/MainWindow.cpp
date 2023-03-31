@@ -26,14 +26,14 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
     ServiceManager::getInstance().setResourceService(m_resourceService); // Register service to our C++ singleton
 
     m_resourceService->setSerial("192.168.1.171:5555");
-    m_resourceService = ServiceManager::getInstance().resourceService();
 
-    new WebSocket(8095);
+    m_webSocket = new WebSocket(8097, true);
 
     m_broadcast = new Broadcast(); // UDP broadcast to clients can find server data
     m_broadcast->start();
 
     connect(m_resourceService, &ResourceService::qmlGenerateEvents, this, &MainWindow::qmlGenerateEventsProcess); //Interacting Qml to C++
+    connect(m_resourceService, &ResourceService::webSocket, this, &MainWindow::webSocketProcess); //process receive json string
 
     // Declare/Register all used custom QML elements
     SceneProvider::declareQml();
@@ -115,23 +115,55 @@ MainWindow::~MainWindow() {
     this->destroy();
 }
 
+void MainWindow::webSocketProcess(QString json) {
+    //qDebug() << json;
 
-void MainWindow::qmlGenerateEventsProcess(QString name){
+    QByteArray byteArray;
+    byteArray.append(json);
 
-    if(name == "REQUEST_MIRROR_START"){
+    //2. Format the content of the byteArray as QJsonDocument
+    //and check on parse Errors
+    QJsonParseError parseError;
+    QJsonDocument jsonDoc;
+    jsonDoc = QJsonDocument::fromJson(byteArray, &parseError);
+    if (parseError.error != QJsonParseError::NoError) {
+        qWarning() << "Parse error at " << parseError.offset << ":" << parseError.errorString();
+        return;
+    }
+
+    //3. Create a jsonObject and fill it with the byteArray content, formatted
+    //and holding by the jsonDocument Class
+    QJsonObject jsonObj;
+    jsonObj = jsonDoc.object();
+
+    qDebug() << "nothing:" << jsonObj.value("nothing").toString();
+    qDebug() << "id:" << jsonObj.value("id").toString();
+    qDebug() << "name:" << jsonObj.value("name").toString();
+    qDebug() << "phone:" << jsonObj.value("phone").toString();
+    qDebug() << "age:" << jsonObj.value("age").toInt(0);
+
+    m_resourceService->state->Mirror.username = jsonObj.value("name").toString();
+
+    m_webSocket->send(json);
+}
+
+
+void MainWindow::qmlGenerateEventsProcess(QString name) {
+
+    if (name == "REQUEST_MIRROR_START") {
         requestStartMirrir();
-    } else if(name == "REQUEST_MIRROR_FINISH"){
+    } else if (name == "REQUEST_MIRROR_FINISH") {
         qsc::IDeviceManage::getInstance().disconnectDevice(m_resourceService->serial());
     }
 }
 
-void MainWindow::requestStartMirrir(){
+void MainWindow::requestStartMirrir() {
     outLog("start server...", false);
 
     // this is ok that "original" toUshort is 0
     quint16 videoSize = 1080;
     qsc::DeviceParams params;
-    params.serial = "192.168.1.171:5555";
+    params.serial = m_resourceService->serial();
     params.maxSize = videoSize;
     params.bitRate = 2000000;
 
@@ -141,7 +173,7 @@ void MainWindow::requestStartMirrir(){
     params.useReverse = true;
     params.display = true;
     params.renderExpiredFrames = false;
-    params.lockVideoOrientation = - 1;
+    params.lockVideoOrientation = -1;
     params.stayAwake = false;
     params.recordFile = false;
     params.recordPath = "";
@@ -156,21 +188,22 @@ void MainWindow::requestStartMirrir(){
     params.codecName = Config::getInstance().getCodecName();
 
     connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceConnected, this, &MainWindow::onDeviceConnected);
-    connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceDisconnected, this,&MainWindow::onDeviceDisconnected);
+    connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceDisconnected, this, &MainWindow::onDeviceDisconnected);
 
     qsc::IDeviceManage::getInstance().connectDevice(params);
 
 }
-void MainWindow::onDeviceConnected(bool success, const QString& serial, const QString& deviceName, const QSize& size){
+
+void MainWindow::onDeviceConnected(bool success, const QString &serial, const QString &deviceName, const QSize &size) {
 
     qDebug() << serial << deviceName << size.width();
 
-    if(success){
+    if (success) {
         emit m_resourceService->cppGenerateEvents("MIRROR_START");
     }
 }
 
-void MainWindow::onDeviceDisconnected(QString serial){
+void MainWindow::onDeviceDisconnected(QString serial) {
     emit m_resourceService->cppGenerateEvents("MIRROR_FINISHED");
     qDebug() << "MainWindow::onDeviceDisconnected:" << serial;
 }
@@ -194,7 +227,7 @@ bool MainWindow::checkAdbRun() {
     return m_adb.isRuning();
 }
 
-void MainWindow::wifiConnect(){
+void MainWindow::wifiConnect() {
 
 //    on_stopAllServerBtn_clicked();
 //    delayMs(200);
@@ -230,6 +263,7 @@ void MainWindow::wifiConnect(){
 
     //on_startServerBtn_clicked();
 }
+
 void MainWindow::test(QString name) {
     qDebug() << "MainWindow:" << name;
 }
@@ -275,7 +309,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     if (!device) {
         return;
     }
-    emit device->keyEvent(event, m_resourceService->frameSize(), m_resourceService->portraitSize());
+
+    if (m_resourceService->orientation() == 0)
+            emit device->keyEvent(event, m_resourceService->frameSize(), m_resourceService->portraitSize());
+    else
+            emit device->keyEvent(event, m_resourceService->frameSize(), m_resourceService->landscapeSize());
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event) {
@@ -284,6 +322,10 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
     if (!device) {
         return;
     }
-    emit device->keyEvent(event, m_resourceService->frameSize(), m_resourceService->portraitSize());
+
+    if (m_resourceService->orientation() == 0)
+            emit device->keyEvent(event, m_resourceService->frameSize(), m_resourceService->portraitSize());
+    else
+            emit device->keyEvent(event, m_resourceService->frameSize(), m_resourceService->landscapeSize());
 }
 

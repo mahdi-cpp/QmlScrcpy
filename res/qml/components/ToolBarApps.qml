@@ -5,7 +5,7 @@ Item {
     id: root
     width: 600
     height: 74
-    x: 30
+    x: 900
     y: 40
     signal select(string icon)
 

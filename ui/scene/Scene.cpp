@@ -52,7 +52,10 @@ void Scene::mouseProcess(QMouseEvent *event) {
     if (!device) {
         return;
     }
-    emit device->mouseEvent(event, m_resourceService->frameSize(), m_resourceService->portraitSize());
+    if (m_resourceService->orientation() == 0)
+            emit device->mouseEvent(event, m_resourceService->frameSize(), m_resourceService->portraitSize());
+    else
+            emit device->mouseEvent(event, m_resourceService->frameSize(), m_resourceService->landscapeSize());
 }
 
 void Scene::mousePressEvent(QMouseEvent *event) {
@@ -82,5 +85,8 @@ void Scene::wheelEvent(QWheelEvent *event) {
     if (!device) {
         return;
     }
-    emit device->wheelEvent(&wheelEvent, m_resourceService->frameSize(), m_resourceService->portraitSize());
+    if (m_resourceService->orientation() == 0)
+            emit device->wheelEvent(&wheelEvent, m_resourceService->frameSize(), m_resourceService->portraitSize());
+    else
+            emit device->wheelEvent(&wheelEvent, m_resourceService->frameSize(), m_resourceService->landscapeSize());
 }

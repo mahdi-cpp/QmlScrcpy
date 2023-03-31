@@ -61,7 +61,7 @@ static QString s_fragShader = R"(
         vec3 rgb;
 
         // SDL2 BT709_SHADER_CONSTANTS
-        // https://github.com/spurious/SDL-mirror/blob/4ddd4c445aa059bb127e101b74a8c5b59257fbe2/src/render/opengl/SDL_shaders_gl.c#L102
+        // https://github.com/spurious/SDL-Mirror/blob/4ddd4c445aa059bb127e101b74a8c5b59257fbe2/src/render/opengl/SDL_shaders_gl.c#L102
         const vec3 Rcoeff = vec3(1.1644,  0.000,  1.7927);
         const vec3 Gcoeff = vec3(1.1644, -0.2132, -0.5329);
         const vec3 Bcoeff = vec3(1.1644,  2.1124,  0.000);
