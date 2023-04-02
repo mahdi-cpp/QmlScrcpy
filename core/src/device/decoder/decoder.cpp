@@ -72,7 +72,7 @@ bool Decoder::push(const AVPacket *packet)
     if ((ret = avcodec_send_packet(m_codecCtx, packet)) < 0) {
         char errorbuf[255] = { 0 };
         av_strerror(ret, errorbuf, 254);
-        qCritical("Could not send video packet: %s", errorbuf);
+        qCritical("Could not setClients video packet: %s", errorbuf);
         return false;
     }
     if (decodingFrame) {

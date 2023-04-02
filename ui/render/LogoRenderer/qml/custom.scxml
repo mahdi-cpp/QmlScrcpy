@@ -6,13 +6,13 @@
          <data id="short_expr" />
          <data id="res" />
     </datamodel>
-    <state id="wrapper" initial="on">
-        <state id="on" initial="ready">
+    <mirror id="wrapper" initial="on">
+        <mirror id="on" initial="ready">
             <onentry>
                 <send event="DISPLAY.UPDATE" />
             </onentry>
-            <state id="ready" initial="begin">
-                <state id="begin">
+            <mirror id="ready" initial="begin">
+                <mirror id="begin">
                     <transition event="OPER.MINUS" target="negated1" />
                     <onentry>
                         <assign location="long_expr" expr="''" />
@@ -20,9 +20,9 @@
                         <assign location="res" expr="0" />
                         <send event="DISPLAY.UPDATE" />
                     </onentry>
-                </state>
-                <state id="result">
-                </state>
+                </mirror>
+                <mirror id="result">
+                </mirror>
                 <transition event="OPER" target="opEntered" />
                 <transition event="DIGIT.0" target="zero1">
                     <assign location="short_expr" expr="''" />
@@ -33,8 +33,8 @@
                 <transition event="POINT" target="frac1">
                     <assign location="short_expr" expr="''" />
                 </transition>
-            </state>
-            <state id="negated1">
+            </mirror>
+            <mirror id="negated1">
                 <onentry>
                     <assign location="short_expr" expr="'-'" />
                     <send event="DISPLAY.UPDATE" />
@@ -42,13 +42,13 @@
                 <transition event="DIGIT.0" target="zero1" />
                 <transition event="DIGIT" target="int1" />
                 <transition event="POINT" target="frac1" />
-            </state>
-            <state id="operand1">
-                <state id="zero1">
+            </mirror>
+            <mirror id="operand1">
+                <mirror id="zero1">
                     <transition event="DIGIT" cond="_event.name != 'DIGIT.0'" target="int1" />
                     <transition event="POINT" target="frac1" />
-                </state>
-                <state id="int1">
+                </mirror>
+                <mirror id="int1">
                     <transition event="POINT" target="frac1" />
                     <transition event="DIGIT">
                         <assign location="short_expr" expr="short_expr+_event.name.substr(_event.name.lastIndexOf('.')+1)" />
@@ -58,8 +58,8 @@
                         <assign location="short_expr" expr="short_expr+_event.name.substr(_event.name.lastIndexOf('.')+1)" />
                         <send event="DISPLAY.UPDATE" />
                     </onentry>
-                </state>
-                <state id="frac1">
+                </mirror>
+                <mirror id="frac1">
                     <onentry>
                         <assign location="short_expr" expr="short_expr+'.'" />
                         <send event="DISPLAY.UPDATE" />
@@ -68,10 +68,10 @@
                         <assign location="short_expr" expr="short_expr+_event.name.substr(_event.name.lastIndexOf('.')+1)" />
                         <send event="DISPLAY.UPDATE" />
                     </transition>
-                </state>
+                </mirror>
                 <transition event="OPER" target="opEntered" />
-            </state>
-            <state id="opEntered">
+            </mirror>
+            <mirror id="opEntered">
                 <transition event="OPER.MINUS" target="negated2" />
                 <transition event="POINT" target="frac2" />
                 <transition event="DIGIT.0" target="zero2" />
@@ -82,22 +82,22 @@
                         <param name="operator" expr="_event.name" />
                     </send>
                 </onentry>
-            </state>
-            <state id="negated2">
+            </mirror>
+            <mirror id="negated2">
                 <onentry>
                     <assign location="short_expr" expr="'-'" />
-                    <send event="DISPLAY.UPDATE" />
+                    <setClients event="DISPLAY.UPDATE" />
                 </onentry>
                 <transition event="DIGIT.0" target="zero2" />
                 <transition event="DIGIT" target="int2" />
                 <transition event="POINT" target="frac2" />
-            </state>
-            <state id="operand2">
-                <state id="zero2">
+            </mirror>
+            <mirror id="operand2">
+                <mirror id="zero2">
                     <transition event="DIGIT" cond="_event.name != 'DIGIT.0'" target="int2" />
                     <transition event="POINT" target="frac2" />
-                </state>
-                <state id="int2">
+                </mirror>
+                <mirror id="int2">
                     <transition event="DIGIT">
                         <assign location="short_expr" expr="short_expr+_event.name.substr(_event.name.lastIndexOf('.')+1)" />
                         <send event="DISPLAY.UPDATE" />
@@ -107,8 +107,8 @@
                         <send event="DISPLAY.UPDATE" />
                     </onentry>
                     <transition event="POINT" target="frac2" />
-                </state>
-                <state id="frac2">
+                </mirror>
+                <mirror id="frac2">
                     <onentry>
                         <assign location="short_expr" expr="short_expr +'.'" />
                         <send event="DISPLAY.UPDATE" />
@@ -117,7 +117,7 @@
                         <assign location="short_expr" expr="short_expr +_event.name.substr(_event.name.lastIndexOf('.')+1)" />
                         <send event="DISPLAY.UPDATE" />
                     </transition>
-                </state>
+                </mirror>
                 <transition event="OPER" target="opEntered">
                     <raise event="CALC.SUB" />
                     <raise event="OP.INSERT" />
@@ -126,9 +126,9 @@
                     <raise event="CALC.SUB" />
                     <raise event="CALC.DO" />
                 </transition>
-            </state>
+            </mirror>
             <transition event="C" target="on" />
-        </state>
+        </mirror>
         <transition event="CALC.DO">
             <assign location="short_expr" expr="''+ res" />
             <assign location="long_expr" expr="''" />
@@ -160,5 +160,5 @@
                 <assign location="long_expr" expr="long_expr+'/'" />
             </if>
         </transition>
-    </state>
+    </mirror>
 </scxml>

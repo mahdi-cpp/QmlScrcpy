@@ -54,12 +54,17 @@ Item {
                 break
             }
         }
+        onUsbDeviceName: {
+            console.log("usb name:" + name)
+            mirrorApp.setUsbDevice(name)
+        }
     }
 
     function prepareShowAndroidScreen() {
         resourceService.mirror = true
         mirror.visible = true
 
+        mirrorApp.opacity = 0
         car.opacity = 0
         toolbar.opacity = 0
         toolbarApps.opacity = 0
@@ -67,6 +72,7 @@ Item {
     }
 
     function prepareHideAndroidScreen() {
+        mirrorApp.opacity = 1
         car.opacity = 1
         toolbar.opacity = 1
         toolbarApps.opacity = 1
@@ -102,6 +108,12 @@ Item {
             duration: 300
         }
     }
+
+           MirrorApp{
+                id: mirrorApp
+            }
+
+
     ToolBar {
         id: toolbar
         onSelect: {
@@ -121,7 +133,8 @@ Item {
         onSelect: {
             switch (icon) {
             case "mirror":
-                resourceService.qmlCommands("REQUEST_MIRROR_START")
+                resourceService.qmlCommands("REQUEST_DEVICES_LIST")
+                mirrorApp.show();
                 break
             case "calculator":
                 break
@@ -140,6 +153,7 @@ Item {
             }
         }
     }
+
 
     Rectangle {
         id: cover
@@ -250,4 +264,5 @@ Item {
         height: 0
         color: "#ff9800"
     }
+
 }

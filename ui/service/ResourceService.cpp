@@ -9,15 +9,14 @@
 ResourceService::ResourceService(QObject *parent) : QObject{parent} {
     m_portraitSize.setWidth(375);
     m_portraitSize.setHeight(830);
-    state = new State();
-    stateInit();
+    mirror = new Mirror();
 }
 
 void ResourceService::declareQml() {
     qmlRegisterType<ResourceService>("App", 1, 0, "ResourceService");
 }
 
-bool ResourceService::mirror() const {
+bool ResourceService::getMirror() const {
     return m_mirror;
 }
 
@@ -127,37 +126,78 @@ void ResourceService::setLandscapeSize(QSize size) {
     emit landscapeSizeChanged(m_landscapeSize);
 }
 
-void ResourceService::stateInit() {
 
-    state->Mirror.username = "mahdi.cpp";
-    state->Mirror.phoneId = "0935";
+void ResourceService::setMirrorParametre(QString jsonString){
 
-    state->Music.artistName = "Mohsen chavoshi";
-    state->Music.title = "music title";
-    state->Music.urlPath = "http://arvancloude/music.mp3";
-    state->Music.coverPath = "http://arvancloude/cover/14562.jpg";
+    QByteArray byteArray;
+    byteArray.append(jsonString);
+
+    //2. Format the content of the byteArray as QJsonDocument
+    //and check on parse Errors
+    QJsonParseError parseError;
+    QJsonDocument jsonDoc;
+    jsonDoc = QJsonDocument::fromJson(byteArray, &parseError);
+    if (parseError.error != QJsonParseError::NoError) {
+        qWarning() << "Parse error at " << parseError.offset << ":" << parseError.errorString();
+        return;
+    }
+
+    //3. Create a jsonObject and fill it with the byteArray content, formatted
+    //and holding by the jsonDocument Class
+    QJsonObject jsonObj;
+    jsonObj = jsonDoc.object();
+
+    mirror->androidId = jsonObj.value("androidId").toString();
+    mirror->connectionType = jsonObj.value("connectionType").toString();
+    mirror->username = jsonObj.value("username").toString();
+    mirror->title = jsonObj.value("title").toString();
+    mirror->bitrate = jsonObj.value("bitrate").toString();
+    mirror->resolution = jsonObj.value("resolution").toString();
+
+    qDebug() << "";
+    qDebug() << "androidId:" << mirror->androidId;
+    qDebug() << "connectionType:" << mirror->connectionType;
+    qDebug() << "username:" << mirror->username;
+    qDebug() << "title:" << mirror->title;
+    qDebug() << "bitrate:" << mirror->bitrate;
+    qDebug() << "resolution:" << mirror->resolution;
+    qDebug() << "";
+
+}
+
+void ResourceService::stopMirror() {
+
+    mirror->androidId = "";
+    mirror->username = "";
+    mirror->title = "";
+    mirror->bitrate = "";
+    mirror->resolution = "";
 }
 
 //webSocket
-QString ResourceService::getStateJsonString() {
+QString ResourceService::getStateJson() {
 
     QJsonObject rootObj;
 
     QJsonObject mirrorObj;
-    mirrorObj["username"] = state->Mirror.username;
-    mirrorObj["phoneId"] = state->Mirror.phoneId;
+    mirrorObj["connectionType"] = mirror->connectionType;
+    mirrorObj["androidId"] = mirror->androidId;
+    mirrorObj["username"] = mirror->username;
+    mirrorObj["title"] = mirror->title;
+    mirrorObj["bitrate"] = mirror->bitrate;
+    mirrorObj["resolution"] = mirror->resolution;
 
-    QJsonObject musicObj;
-    musicObj["artistName"] = state->Music.artistName;
-    musicObj["coverPath"] = state->Music.coverPath;
-    musicObj["title"] = state->Music.title;
-    musicObj["urlPath"] = state->Music.urlPath;
+//    QJsonObject musicObj;
+//    musicObj["artistName"] = mirror->Music.artistName;
+//    musicObj["coverPath"] = mirror->Music.coverPath;
+//    musicObj["title"] = mirror->Music.title;
+//    musicObj["urlPath"] = mirror->Music.urlPath;
 
-    rootObj["Type"] = "state";
-    rootObj["mirror"] = mirrorObj;
-    rootObj["music"] = musicObj;
+    //rootObj["Type"] = "mirror";
+    //rootObj["Mirror"] = mirrorObj;
+    //rootObj["music"] = musicObj;
 
-    QJsonDocument doc(rootObj);
+    QJsonDocument doc(mirrorObj);
     QString strJson(doc.toJson(QJsonDocument::Compact));
 
     return strJson;

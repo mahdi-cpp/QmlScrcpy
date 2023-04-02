@@ -16,7 +16,6 @@ Scene::Scene(QQuickItem *parent) : QQuickFramebufferObject(parent) {
 
     connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceConnected, this, &Scene::onDeviceConnected);
     connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceDisconnected, this, &Scene::onDeviceDisconnected);
-
 }
 
 void Scene::declareQml() {

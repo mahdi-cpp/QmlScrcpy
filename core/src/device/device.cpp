@@ -233,17 +233,17 @@ void Device::initSignals()
 
         connect(m_demuxer, &Demuxer::getFrame, this, [this](AVPacket *packet) {
             if (m_decoder && !m_decoder->push(packet)) {
-                qCritical("Could not send packet to decoder");
+                qCritical("Could not setClients packet to decoder");
             }
 
             if (m_recorder && !m_recorder->push(packet)) {
-                qCritical("Could not send packet to recorder");
+                qCritical("Could not setClients packet to recorder");
             }
         }, Qt::DirectConnection);
 
         connect(m_demuxer, &Demuxer::getConfigFrame, this, [this](AVPacket *packet) {
             if (m_recorder && !m_recorder->push(packet)) {
-                qCritical("Could not send config packet to recorder");
+                qCritical("Could not setClients config packet to recorder");
             }
         }, Qt::DirectConnection);
     }

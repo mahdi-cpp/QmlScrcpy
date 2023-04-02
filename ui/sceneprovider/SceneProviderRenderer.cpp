@@ -114,7 +114,7 @@ void SceneProviderRenderer::synchronize() {
 
 void SceneProviderRenderer::render() {
 
-    if (m_resourceService->mirror() == false) {
+    if (m_resourceService->getMirror() == false) {
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         return;
@@ -179,7 +179,7 @@ void SceneProviderRenderer::setFrameSize(const QSize &frameSize) {
 }
 
 void SceneProviderRenderer::onFrame(int width, int height, uint8_t *dataY, uint8_t *dataU, uint8_t *dataV, int linesizeY, int linesizeU, int linesizeV) {
-    if (m_resourceService->mirror() == false) {
+    if (m_resourceService->getMirror() == false) {
         return;
     }
     //qDebug() << width;

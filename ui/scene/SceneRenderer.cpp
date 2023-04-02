@@ -28,7 +28,7 @@ void SceneRenderer::render() {
         QOpenGLVertexArrayObject::Binder binder(m_vao);
         m_program->bind();
 
-        if(!m_resourceService->mirror()) {
+        if(!m_resourceService->getMirror()) {
             glActiveTexture(GL_TEXTURE0);
         }
         //glActiveTexture(GL_TEXTURE0);

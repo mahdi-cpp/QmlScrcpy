@@ -12,15 +12,15 @@
 #include "service/ResourceService.h"
 #include "service/ServiceManager.h"
 
-class WebSocket : public QObject
+class WebSocketService : public QObject
 {
 Q_OBJECT
 
 public:
-    explicit WebSocket(quint16 port, bool debug = true, QObject *parent = Q_NULLPTR);
-    ~WebSocket();
+    explicit WebSocketService(quint16 port, bool debug = true, QObject *parent = Q_NULLPTR);
+    ~WebSocketService();
 
-    void send(QString message);
+    void setClients(QString jsonString);
 
 signals:
     void closed();
@@ -28,8 +28,7 @@ signals:
 private slots:
     void onNewConnection();
     void socketDisconnected();
-
-    void processTextMessage(QString message);
+    void textMessageReceived(QString jsonString);
 
 private:
     QWebSocketServer *m_pWebSocketServer;

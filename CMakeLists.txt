@@ -52,7 +52,7 @@ message(STATUS "[${PROJECT_NAME}] Set warnings as error")
 add_compile_options(-Wall -Wextra -pedantic -Werror)
 
 # disable some warning
-add_compile_options(-Wno-nested-anon-types -Wno-c++17-extensions -Wno-overloaded-virtual)
+#add_compile_options(-Wno-nested-anon-types -Wno-c++17-extensions -Wno-overloaded-virtual)
 
 
 #
@@ -91,21 +91,18 @@ set(QC_UI_SOURCES
 
         ui/service/ServiceManager.h
         ui/service/ServiceManager.cpp
+        ui/service/WebSocketService.h
+        ui/service/WebSocketService.cpp
         ui/service/ResourceService.h
         ui/service/ResourceService.cpp
 
-        ui/service/websocket/websocket.cpp
-        ui/service/websocket/websocket.h
-        ui/service/websocket/State.cpp
-        ui/service/websocket/State.h
+        ui/service/models/Mirror.h
 
         ui/service/udp/Broadcast.h
         ui/service/udp/Broadcast.cpp
 
         ui/scene/MainWindow.cpp
         ui/scene/MainWindow.h
-        ui/scene/PieChart.cpp
-        ui/scene/PieChart.h
 
         ui/util/config.h
         ui/util/config.cpp

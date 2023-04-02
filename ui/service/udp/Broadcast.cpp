@@ -6,7 +6,7 @@ Broadcast::Broadcast(QObject *parent): QObject(parent) {
 }
 
 void Broadcast::start() {
-    timer.start(1500);
+    timer.start(500);
 }
 void Broadcast::stop() {
     timer.stop();

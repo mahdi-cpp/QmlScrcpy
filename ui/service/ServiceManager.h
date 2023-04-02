@@ -1,7 +1,8 @@
 #pragma once
 
-#include "ResourceService.h"
 #include "ui/sceneprovider/SceneProviderRenderer.h"
+
+#include "ResourceService.h"
 
 //!
 //! \brief The ServiceManager class
@@ -21,8 +22,9 @@ public:
     ResourceService* resourceService() const;
     SceneProviderRenderer* renderer() const;
 
-    void setResourceService(ResourceService* resourceService);
+
     void addRenderer(SceneProviderRenderer* renderer);
+    void setResourceService(ResourceService* resourceService);
 
 private:
     ServiceManager()                                  = default;

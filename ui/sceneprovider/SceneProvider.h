@@ -28,6 +28,7 @@ private slots:
 signals:
     void cppGenerateEvents(QString name);
     void webSocket(QString type, QString data);
+    void usbDeviceName(QString name);
 
 private:
     SceneProviderRenderer* m_sceneProviderRenderer = nullptr;

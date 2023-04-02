@@ -26,11 +26,12 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
     ServiceManager::getInstance().setResourceService(m_resourceService); // Register service to our C++ singleton
 
     m_resourceService->setSerial("192.168.1.171:5555");
-
-    m_webSocket = new WebSocket(8097, true);
+    m_resourceService->setSerial("4793be90");
 
     m_broadcast = new Broadcast(); // UDP broadcast to clients can find server data
     m_broadcast->start();
+
+    m_webSocketService = new WebSocketService(8097, true, this);
 
     connect(m_resourceService, &ResourceService::qmlGenerateEvents, this, &MainWindow::qmlGenerateEventsProcess); //Interacting Qml to C++
     connect(m_resourceService, &ResourceService::webSocket, this, &MainWindow::webSocketProcess); //process receive json string
@@ -49,6 +50,7 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
     setResizeMode(QQuickView::SizeRootObjectToView);
 
     connect(&m_adb, &qsc::AdbProcess::adbProcessResult, this, [this](qsc::AdbProcess::ADB_EXEC_RESULT processResult) {
+
         QString log = "";
         bool newLine = true;
         QStringList args = m_adb.arguments();
@@ -73,12 +75,16 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
                 //log = m_adb.getStdOut();
                 if (args.contains("devices")) {
                     QStringList devices = m_adb.getDevicesSerialFromStdOut();
-                    //ui->serialBox->clear();
-                    //ui->connectedPhoneList->clear();
-//                    for (auto &item: devices) {
-//                        //ui->serialBox->addItem(item);
-//                        //ui->connectedPhoneList->addItem(Config::getInstance().getNickName(item) + "-" + item);
-//                    }
+
+                    for (auto &item: devices) {
+                        if (item.contains(":") || item.contains(".")) { //Ignore if device is Wi-Fi
+                            continue;
+                        }
+                        emit m_resourceService->usbDeviceName(item);
+                        return;
+                    }
+                    emit m_resourceService->usbDeviceName("");
+
                 } else if (args.contains("show") && args.contains("wlan0")) {
                     QString ip = m_adb.getDeviceIPFromStdOut();
                     if (ip.isEmpty()) {
@@ -116,36 +122,9 @@ MainWindow::~MainWindow() {
     this->destroy();
 }
 
-void MainWindow::webSocketProcess(QString json) {
-    //qDebug() << json;
-
-    QByteArray byteArray;
-    byteArray.append(json);
-
-    //2. Format the content of the byteArray as QJsonDocument
-    //and check on parse Errors
-    QJsonParseError parseError;
-    QJsonDocument jsonDoc;
-    jsonDoc = QJsonDocument::fromJson(byteArray, &parseError);
-    if (parseError.error != QJsonParseError::NoError) {
-        qWarning() << "Parse error at " << parseError.offset << ":" << parseError.errorString();
-        return;
-    }
-
-    //3. Create a jsonObject and fill it with the byteArray content, formatted
-    //and holding by the jsonDocument Class
-    QJsonObject jsonObj;
-    jsonObj = jsonDoc.object();
-
-    qDebug() << "nothing:" << jsonObj.value("nothing").toString();
-    qDebug() << "id:" << jsonObj.value("id").toString();
-    qDebug() << "name:" << jsonObj.value("name").toString();
-    qDebug() << "phone:" << jsonObj.value("phone").toString();
-    qDebug() << "age:" << jsonObj.value("age").toInt(0);
-
-    m_resourceService->state->Mirror.username = jsonObj.value("name").toString();
-
-    m_webSocket->send(json);
+void MainWindow::webSocketProcess(QString jsonString) {
+    m_resourceService->setMirrorParametre(jsonString);
+    requestStartMirrir();
 }
 
 void MainWindow::qmlGenerateEventsProcess(QString name) {
@@ -154,11 +133,25 @@ void MainWindow::qmlGenerateEventsProcess(QString name) {
         requestStartMirrir();
     } else if (name == "REQUEST_MIRROR_FINISH") {
         qsc::IDeviceManage::getInstance().disconnectDevice(m_resourceService->serial());
+
+        m_resourceService->stopMirror();
+        m_webSocketService->setClients(m_resourceService->getStateJson());
+    } else if (name == "REQUEST_DEVICES_LIST") {
+        if (checkAdbRun()) {
+            return;
+        }
+        qDebug() << "command:adb devices";
+        m_adb.execute("", QStringList() << "devices");
     }
+
+
 }
 
 void MainWindow::requestStartMirrir() {
-    outLog("start server...", false);
+
+    qDebug() << "Request Start Server For Mirror";
+
+    qsc::IDeviceManage::getInstance().disconnectAllDevice();
 
     // this is ok that "original" toUshort is 0
     quint16 videoSize = 1080;
@@ -173,7 +166,7 @@ void MainWindow::requestStartMirrir() {
     params.useReverse = true;
     params.display = true;
     params.renderExpiredFrames = false;
-    params.lockVideoOrientation = -1;
+    params.lockVideoOrientation = 180;
     params.stayAwake = false;
     params.recordFile = false;
     params.recordPath = "";
@@ -199,6 +192,10 @@ void MainWindow::onDeviceConnected(bool success, const QString &serial, const QS
     qDebug() << serial << deviceName << size.width();
 
     if (success) {
+
+        //notification to users for start mirroring
+        m_webSocketService->setClients(m_resourceService->getStateJson());
+
         emit m_resourceService->cppGenerateEvents("MIRROR_START");
     }
 }
@@ -269,7 +266,8 @@ void MainWindow::test(QString name) {
 }
 
 void MainWindow::outLog(const QString &log, bool newLine) {
-    qDebug() << "MainWindow:" << log << newLine;
+    Q_UNUSED(newLine);
+    qDebug() << "MainWindow:" << log;
 
     // avoid sub thread update ui
 //    QString backLog = log;

@@ -27,7 +27,7 @@ Rectangle {
     }
     Text {
         width: 118
-        text: "Mirror"
+        text: "USB Mirror"
         font.pointSize: 16
         color: "#fff"
         y: 125

@@ -269,7 +269,7 @@ bool Demuxer::pushPacket(AVPacket *packet)
         memcpy(m_pending->data + offset, packet->data, static_cast<unsigned int>(packet->size));
 
         if (!isConfig) {
-            // prepare the concat packet to send to the decoder
+            // prepare the concat packet to setClients to the decoder
             m_pending->pts = packet->pts;
             m_pending->dts = packet->dts;
             m_pending->flags = packet->flags;

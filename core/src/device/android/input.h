@@ -21,7 +21,7 @@
 #define _ANDROID_INPUT_H
 
 /**
- * Meta key / modifer state.
+ * Meta key / modifer mirror.
  */
 enum AndroidMetastate
 {

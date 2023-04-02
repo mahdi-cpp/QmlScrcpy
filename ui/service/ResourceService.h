@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QPointer>
 #include <QSize>
-#include "service/websocket/State.h"
+#include "service/models/Mirror.h"
 
 //!
 //! \brief The ResourceService class
@@ -13,10 +13,11 @@
 //! that should enter the simulation and prepare either states, or update object
 //! for SceneProvider to gather
 //!
-class ResourceService : public QObject {
+class ResourceService : public QObject
+{
 Q_OBJECT
 
-    Q_PROPERTY(double mirror READ mirror WRITE setMirror NOTIFY mirrorChanged)
+    Q_PROPERTY(double mirror READ getMirror WRITE setMirror NOTIFY mirrorChanged)
     Q_PROPERTY(QSize frameSize READ frameSize WRITE setFrameSize NOTIFY frameSizeChanged)
     Q_PROPERTY(QSize portraitSize READ portraitSize WRITE setPortraitSize NOTIFY portraitSizeChanged)
     Q_PROPERTY(QSize landscapeSize READ landscapeSize WRITE setLandscapeSize NOTIFY landscapeSizeChanged)
@@ -38,7 +39,7 @@ public:
     Q_INVOKABLE void processClick(QString type);
     Q_INVOKABLE void qmlCommands(QString type);
 
-    bool mirror() const;
+    bool getMirror() const;
 
     int orientation() const;
     QSize frameSize() const;
@@ -46,10 +47,11 @@ public:
     QSize portraitSize() const;
     QSize landscapeSize() const;
 
-    void stateInit();
-    QString getStateJsonString();
+    QString getStateJson();
+    void stopMirror();
+    void setMirrorParametre(QString json);
 
-    State *state = nullptr;
+    Mirror *mirror = nullptr;
 
 public slots:
 
@@ -69,6 +71,7 @@ signals:
     void qmlGenerateEvents(QString name);
     void cppGenerateEvents(QString name);
     void webSocket(QString json);
+    void usbDeviceName(QString name);
 
 private:
     QSize m_frameSize;

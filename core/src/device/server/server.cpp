@@ -377,7 +377,7 @@ void Server::onConnectTimer() {
         // connect will success even if devices offline, recv data is real connect success
         // because connect is to pc adb server
         videoSocket->waitForReadyRead(1000);
-        // devices will send 1 byte first on tunnel forward mode
+        // devices will setClients 1 byte first on tunnel forward mode
         QByteArray data = videoSocket->read(1);
         if (!data.isEmpty() && readInfo(videoSocket, deviceName, deviceSize)) {
             success = true;

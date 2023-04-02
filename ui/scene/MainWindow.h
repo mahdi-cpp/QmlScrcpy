@@ -12,7 +12,7 @@
 
 #include "ui/service/ResourceService.h"
 #include "ui/service/ServiceManager.h"
-#include "service/websocket/websocket.h"
+#include "ui/service/WebSocketService.h"
 #include "service/udp/Broadcast.h"
 
 class MainWindow : public QQuickView {
@@ -36,21 +36,18 @@ private:
 
     void requestStartMirrir();
     void wifiConnect();
-
     void sendStatusToClients();
-
-
-    QPointer<WebSocket> m_webSocket;
-    QPointer<Broadcast> m_broadcast;
 
 private slots:
     void onDeviceConnected(bool success, const QString& serial, const QString& deviceName, const QSize& size);
     void onDeviceDisconnected(QString serial);
     void qmlGenerateEventsProcess(QString name);
-    void webSocketProcess(QString json);
+    void webSocketProcess(QString jsonString);
 
 private:
-    ResourceService* m_resourceService = nullptr;
+    WebSocketService *m_webSocketService = nullptr;
+    ResourceService *m_resourceService = nullptr;
+    Broadcast *m_broadcast = nullptr;
 
     qsc::AdbProcess m_adb;
     QTimer m_autoUpdatetimer;
