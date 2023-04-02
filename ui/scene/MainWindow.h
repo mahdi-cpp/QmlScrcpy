@@ -34,15 +34,16 @@ private:
     void delayMs(int ms);
     void outLog(const QString &log, bool newLine = true);
 
-    void requestStartMirrir();
+    void requestMirrorStart();
     void wifiConnect();
     void sendStatusToClients();
 
 private slots:
     void onDeviceConnected(bool success, const QString& serial, const QString& deviceName, const QSize& size);
     void onDeviceDisconnected(QString serial);
-    void qmlGenerateEventsProcess(QString name);
-    void webSocketProcess(QString jsonString);
+    void qmlEvents(QString command, QString data);
+    void androidEvents(QString command, QString data);
+    //void webSocketMessageReceived(QString jsonString);
 
 private:
     WebSocketService *m_webSocketService = nullptr;

@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
 # https://www.kdab.com/wp-content/uploads/stories/QTVTC20-Using-Modern-CMake-Kevin-Funk.pdf
 
 # QC Custom config
-set(QC_PROJECT_NAME "QtScrcpy")
+set(QC_PROJECT_NAME "QmlScrcpy")
 # Read version numbers from file
 file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/version QC_FILE_VERSION)
 set(QC_PROJECT_VERSION ${QC_FILE_VERSION})

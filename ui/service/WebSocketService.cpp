@@ -64,7 +64,9 @@ void WebSocketService::textMessageReceived(QString jsonString) {
 //        pClient->sendTextMessage(m_resourceService->getStateJson());
 //    }
 
-    emit m_resourceService->webSocket(jsonString);
+    //emit m_resourceService->webSocketMessageReceived(jsonString);
+
+    m_resourceService->webSocketMessageReceived(jsonString);
 }
 
 void WebSocketService::setClients(QString( jsonString)) {

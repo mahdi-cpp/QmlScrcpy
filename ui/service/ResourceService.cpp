@@ -10,6 +10,25 @@ ResourceService::ResourceService(QObject *parent) : QObject{parent} {
     m_portraitSize.setWidth(375);
     m_portraitSize.setHeight(830);
     mirror = new Mirror();
+
+    connect(&m_adb, &qsc::AdbProcess::adbProcessResult, this, [this](qsc::AdbProcess::ADB_EXEC_RESULT processResult) {
+
+        QStringList args = m_adb.arguments();
+
+        switch (processResult) {
+            case qsc::AdbProcess::AER_ERROR_START:
+                break;
+            case qsc::AdbProcess::AER_SUCCESS_START:
+                break;
+            case qsc::AdbProcess::AER_ERROR_EXEC:
+                break;
+            case qsc::AdbProcess::AER_SUCCESS_EXEC:
+                break;
+            case qsc::AdbProcess::AER_ERROR_MISSING_BINARY:
+                break;
+        }
+
+    });
 }
 
 void ResourceService::declareQml() {
@@ -44,8 +63,8 @@ QString ResourceService::serial() {
     return m_serial;
 }
 
-void ResourceService::qmlCommands(QString name) {
-    emit qmlGenerateEvents(name);
+void ResourceService::qmlCommands(QString command, QString data) {
+    emit qmlEvents(command, data);
 }
 
 void ResourceService::processClick(QString type) {
@@ -90,6 +109,9 @@ void ResourceService::setMirror(bool value) {
 }
 
 void ResourceService::setFrameSize(QSize size) {
+
+    qDebug() << "ResourceService::setFrameSize";
+
     m_frameSize = size;
 
     if (size.height() > size.width()) {
@@ -127,7 +149,7 @@ void ResourceService::setLandscapeSize(QSize size) {
 }
 
 
-void ResourceService::setMirrorParametre(QString jsonString){
+void ResourceService::webSocketMessageReceived(QString jsonString) {
 
     QByteArray byteArray;
     byteArray.append(jsonString);
@@ -147,23 +169,53 @@ void ResourceService::setMirrorParametre(QString jsonString){
     QJsonObject jsonObj;
     jsonObj = jsonDoc.object();
 
-    mirror->androidId = jsonObj.value("androidId").toString();
-    mirror->connectionType = jsonObj.value("connectionType").toString();
-    mirror->username = jsonObj.value("username").toString();
-    mirror->title = jsonObj.value("title").toString();
-    mirror->bitrate = jsonObj.value("bitrate").toString();
-    mirror->resolution = jsonObj.value("resolution").toString();
+    QString command = jsonObj.value("command").toString();
 
-    qDebug() << "";
-    qDebug() << "androidId:" << mirror->androidId;
-    qDebug() << "connectionType:" << mirror->connectionType;
-    qDebug() << "username:" << mirror->username;
-    qDebug() << "title:" << mirror->title;
-    qDebug() << "bitrate:" << mirror->bitrate;
-    qDebug() << "resolution:" << mirror->resolution;
-    qDebug() << "";
+    if (command == "WIFI_IP") {//open connection
+        QString data = jsonObj.value("data").toString();
+        qDebug() << "command data:" << data;
 
+        QStringList adbArgs;
+        adbArgs << "connect";
+        adbArgs << data;
+        m_adb.execute("", adbArgs);
+        return;
+
+    } else if (command == "REQUEST_MIRROR_START") {
+
+        mirror->wifIp = jsonObj.value("wifIp").toString();
+        mirror->androidId = jsonObj.value("androidId").toString();
+        mirror->connectionType = jsonObj.value("connectionType").toString();
+        mirror->username = jsonObj.value("username").toString();
+        mirror->title = jsonObj.value("title").toString();
+        mirror->bitrate = jsonObj.value("bitrate").toString();
+        mirror->resolution = jsonObj.value("resolution").toString();
+
+        setSerial(mirror->wifIp);
+
+        qDebug() << "";
+        qDebug() << "androidId:" << mirror->androidId;
+        qDebug() << "wifIp:" << mirror->wifIp;
+        qDebug() << "connectionType:" << mirror->connectionType;
+        qDebug() << "username:" << mirror->username;
+        qDebug() << "title:" << mirror->title;
+        qDebug() << "bitrate:" << mirror->bitrate;
+        qDebug() << "resolution:" << mirror->resolution;
+        qDebug() << "";
+
+        emit androidEvents("REQUEST_MIRROR_START", "");
+    }
 }
+
+void ResourceService::setUsbMirrorParametre(QString device) {
+    mirror->androidId = device;
+    mirror->connectionType = "USB";
+    mirror->username = "USB Mirror";
+    mirror->title = "screen mirror by usb connection";
+    mirror->bitrate = "2 Mbit/s";
+    mirror->resolution = "480 x 1080";
+}
+
 
 void ResourceService::stopMirror() {
 
@@ -174,14 +226,15 @@ void ResourceService::stopMirror() {
     mirror->resolution = "";
 }
 
-//webSocket
+//webSocketMessageReceived
 QString ResourceService::getStateJson() {
 
     QJsonObject rootObj;
 
     QJsonObject mirrorObj;
-    mirrorObj["connectionType"] = mirror->connectionType;
     mirrorObj["androidId"] = mirror->androidId;
+    mirrorObj["wifiIp"] = mirror->wifIp;
+    mirrorObj["connectionType"] = mirror->connectionType;
     mirrorObj["username"] = mirror->username;
     mirrorObj["title"] = mirror->title;
     mirrorObj["bitrate"] = mirror->bitrate;

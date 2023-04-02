@@ -11,13 +11,28 @@ Item {
     width: 1450
     height: 850
 
+    property bool firstMirror: false // prevention of repeat animation in first mirror
+
+    Timer {
+        id: timer
+        interval: 2000
+        running: false
+        repeat: false
+        onTriggered: {
+            firstMirror = true
+            console.log("timer event")
+        }
+    }
+
     SceneProvider {
+
         onCppGenerateEvents: {
 
             console.log(name)
 
             switch (name) {
             case "MIRROR_START":
+                timer.start()
                 cover_animation_show.start()
                 break
             case "MIRROR_FINISHED":
@@ -27,8 +42,13 @@ Item {
             case "FRAME_SIZE_CHANGED":
                 break
             case "DISPLAY_ORIENTATION_CHANGED":
-                // Portrait orientation is vertical
+
+                if (firstMirror === false) {
+                    return
+                }
+
                 if (resourceService.orientation == 0) {
+                    // Portrait orientation is vertical
                     center.x = 185 + 5
                     center.y = 413 + 5
                     prepareHideAndroidScreen()
@@ -79,7 +99,6 @@ Item {
         music.opacity = 1
 
         resourceService.mirror = false
-        mirror.visible = false
     }
 
     Image {
@@ -89,6 +108,7 @@ Item {
         x: 20
         y: 20
     }
+
     Music {
         id: music
         x: 950
@@ -109,10 +129,9 @@ Item {
         }
     }
 
-           MirrorApp{
-                id: mirrorApp
-            }
-
+    MirrorApp {
+        id: mirrorApp
+    }
 
     ToolBar {
         id: toolbar
@@ -120,7 +139,7 @@ Item {
 
             switch (icon) {
             case "close":
-                resourceService.qmlCommands("REQUEST_MIRROR_FINISH")
+                resourceService.qmlCommands("REQUEST_MIRROR_FINISH", "")
                 break
             default:
                 resourceService.processClick(icon)
@@ -133,8 +152,8 @@ Item {
         onSelect: {
             switch (icon) {
             case "mirror":
-                resourceService.qmlCommands("REQUEST_DEVICES_LIST")
-                mirrorApp.show();
+                resourceService.qmlCommands("REQUEST_DEVICES_LIST", "")
+                mirrorApp.show()
                 break
             case "calculator":
                 break
@@ -153,7 +172,6 @@ Item {
             }
         }
     }
-
 
     Rectangle {
         id: cover
@@ -264,5 +282,4 @@ Item {
         height: 0
         color: "#ff9800"
     }
-
 }

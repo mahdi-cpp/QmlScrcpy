@@ -25,16 +25,18 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
     m_resourceService = new ResourceService(this);
     ServiceManager::getInstance().setResourceService(m_resourceService); // Register service to our C++ singleton
 
-    m_resourceService->setSerial("192.168.1.171:5555");
-    m_resourceService->setSerial("4793be90");
+    //m_resourceService->setSerial("192.168.1.171:5555");
+    //m_resourceService->setSerial("4793be90");
 
     m_broadcast = new Broadcast(); // UDP broadcast to clients can find server data
     m_broadcast->start();
 
     m_webSocketService = new WebSocketService(8097, true, this);
 
-    connect(m_resourceService, &ResourceService::qmlGenerateEvents, this, &MainWindow::qmlGenerateEventsProcess); //Interacting Qml to C++
-    connect(m_resourceService, &ResourceService::webSocket, this, &MainWindow::webSocketProcess); //process receive json string
+    connect(m_resourceService, &ResourceService::qmlEvents, this, &MainWindow::qmlEvents); //Interacting Qml to C++
+    connect(m_resourceService, &ResourceService::androidEvents, this, &MainWindow::androidEvents); //Reacive command of Android
+
+    //connect(m_resourceService, &ResourceService::webSocketMessageReceived, this, &MainWindow::webSocketMessageReceived); //process receive json string
 
     // Declare/Register all used custom QML elements
     SceneProvider::declareQml();
@@ -46,13 +48,13 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
     rootContext->setContextProperty("resourceService", m_resourceService); // Also set it to QML root context
 
     setKeyboardGrabEnabled(true);
-    setSource(QUrl("/home/mahdi/CLionProjects/QtScrcpy/res/qml/main.qml"));
+    setSource(QUrl("/home/mahdi/CLionProjects/QmlScrcpy/res/qml/main.qml"));
     setResizeMode(QQuickView::SizeRootObjectToView);
 
     connect(&m_adb, &qsc::AdbProcess::adbProcessResult, this, [this](qsc::AdbProcess::ADB_EXEC_RESULT processResult) {
 
         QString log = "";
-        bool newLine = true;
+        //bool newLine = true;
         QStringList args = m_adb.arguments();
 
         switch (processResult) {
@@ -60,7 +62,6 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
                 break;
             case qsc::AdbProcess::AER_SUCCESS_START:
                 log = "adb run";
-                newLine = false;
                 break;
             case qsc::AdbProcess::AER_ERROR_EXEC:
                 //log = m_adb.getErrorOut();
@@ -84,33 +85,8 @@ MainWindow::MainWindow(QQuickView *parent) : QQuickView(parent = nullptr) {
                         return;
                     }
                     emit m_resourceService->usbDeviceName("");
-
-                } else if (args.contains("show") && args.contains("wlan0")) {
-                    QString ip = m_adb.getDeviceIPFromStdOut();
-                    if (ip.isEmpty()) {
-                        log = "ip not find, connect to wifi?";
-                        break;
-                    }
-                    //ui->deviceIpEdt->setText(ip);
-                } else if (args.contains("ifconfig") && args.contains("wlan0")) {
-                    QString ip = m_adb.getDeviceIPFromStdOut();
-                    if (ip.isEmpty()) {
-                        log = "ip not find, connect to wifi?";
-                        break;
-                    }
-                    //ui->deviceIpEdt->setText(ip);
-                } else if (args.contains("ip -o a")) {
-                    QString ip = m_adb.getDeviceIPByIpFromStdOut();
-                    if (ip.isEmpty()) {
-                        log = "ip not find, connect to wifi?";
-                        break;
-                    }
-                    //ui->deviceIpEdt->setText(ip);
                 }
                 break;
-        }
-        if (!log.isEmpty()) {
-            outLog(log, newLine);
         }
     });
 
@@ -122,34 +98,36 @@ MainWindow::~MainWindow() {
     this->destroy();
 }
 
-void MainWindow::webSocketProcess(QString jsonString) {
-    m_resourceService->setMirrorParametre(jsonString);
-    requestStartMirrir();
+void MainWindow::androidEvents(QString command, QString data) {
+    Q_UNUSED(data);
+
+    if (command == "REQUEST_MIRROR_START") {
+        m_resourceService->setSerial(m_resourceService->mirror->wifIp);
+        requestMirrorStart();
+    }
 }
 
-void MainWindow::qmlGenerateEventsProcess(QString name) {
+void MainWindow::qmlEvents(QString command, QString data) {
 
-    if (name == "REQUEST_MIRROR_START") {
-        requestStartMirrir();
-    } else if (name == "REQUEST_MIRROR_FINISH") {
+    if (command == "REQUEST_MIRROR_START") {
+        m_resourceService->setSerial(data);
+        m_resourceService->setUsbMirrorParametre(data);
+        requestMirrorStart();
+    } else if (command == "REQUEST_MIRROR_FINISH") {
         qsc::IDeviceManage::getInstance().disconnectDevice(m_resourceService->serial());
-
         m_resourceService->stopMirror();
-        m_webSocketService->setClients(m_resourceService->getStateJson());
-    } else if (name == "REQUEST_DEVICES_LIST") {
+    } else if (command == "REQUEST_DEVICES_LIST") {
         if (checkAdbRun()) {
             return;
         }
         qDebug() << "command:adb devices";
         m_adb.execute("", QStringList() << "devices");
     }
-
-
 }
 
-void MainWindow::requestStartMirrir() {
+void MainWindow::requestMirrorStart() {
 
-    qDebug() << "Request Start Server For Mirror";
+    qDebug() << "MainWindow::requestMirrorStart()";
 
     qsc::IDeviceManage::getInstance().disconnectAllDevice();
 
@@ -166,7 +144,7 @@ void MainWindow::requestStartMirrir() {
     params.useReverse = true;
     params.display = true;
     params.renderExpiredFrames = false;
-    params.lockVideoOrientation = 180;
+    params.lockVideoOrientation = -1;
     params.stayAwake = false;
     params.recordFile = false;
     params.recordPath = "";
@@ -201,7 +179,11 @@ void MainWindow::onDeviceConnected(bool success, const QString &serial, const QS
 }
 
 void MainWindow::onDeviceDisconnected(QString serial) {
+
+    m_resourceService->stopMirror();
+    m_webSocketService->setClients(m_resourceService->getStateJson());
     emit m_resourceService->cppGenerateEvents("MIRROR_FINISHED");
+
     qDebug() << "MainWindow::onDeviceDisconnected:" << serial;
 }
 

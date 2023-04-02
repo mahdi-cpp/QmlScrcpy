@@ -41,7 +41,7 @@ Rectangle {
         running: false
         repeat: true
         onTriggered: {
-            resourceService.qmlCommands("REQUEST_DEVICES_LIST")
+            resourceService.qmlCommands("REQUEST_DEVICES_LIST" , "")
         }
     }
 
@@ -132,7 +132,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                resourceService.qmlCommands("REQUEST_MIRROR_START")
+                resourceService.qmlCommands("REQUEST_MIRROR_START" , deviceName)
             }
             onPressed: {
                 button_start_mirror.color = "#0288d1"

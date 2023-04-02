@@ -95,10 +95,10 @@ void SceneRenderer::setupRendering() {
     if (!m_program->create()) {
         qFatal("Couldn't create Shader Program");
     }
-    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, "/home/mahdi/CLionProjects/QtScrcpy/res/opengl/quad.vsh")) {
+    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Vertex, "/home/mahdi/CLionProjects/QmlScrcpy/res/opengl/quad.vsh")) {
         qFatal("Vertex shader compilation failed");
     }
-    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, "/home/mahdi/CLionProjects/QtScrcpy/res/opengl/quad.fsh")) {
+    if (!m_program->addCacheableShaderFromSourceFile(QOpenGLShader::Fragment, "/home/mahdi/CLionProjects/QmlScrcpy/res/opengl/quad.fsh")) {
         qFatal("Fragment shader compilation failed");
     }
 

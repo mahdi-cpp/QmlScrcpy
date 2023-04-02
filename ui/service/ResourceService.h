@@ -5,6 +5,7 @@
 #include <QPointer>
 #include <QSize>
 #include "service/models/Mirror.h"
+#include "adbprocess.h"
 
 //!
 //! \brief The ResourceService class
@@ -37,7 +38,7 @@ public:
     QString serial();
 
     Q_INVOKABLE void processClick(QString type);
-    Q_INVOKABLE void qmlCommands(QString type);
+    Q_INVOKABLE void qmlCommands(QString command, QString data);
 
     bool getMirror() const;
 
@@ -49,7 +50,8 @@ public:
 
     QString getStateJson();
     void stopMirror();
-    void setMirrorParametre(QString json);
+    void webSocketMessageReceived(QString json);
+    void setUsbMirrorParametre(QString device);
 
     Mirror *mirror = nullptr;
 
@@ -68,10 +70,13 @@ signals:
     void landscapeSizeChanged(QSize size);
     void orientationChanged(int orientation);
 
-    void qmlGenerateEvents(QString name);
+    void qmlEvents(QString command, QString data);
+    void androidEvents(QString command, QString data);
     void cppGenerateEvents(QString name);
-    void webSocket(QString json);
     void usbDeviceName(QString name);
+
+    //void webSocketMessageReceived(QString json);
+    void webSocketNewConnection(QString ip);
 
 private:
     QSize m_frameSize;
@@ -80,6 +85,7 @@ private:
 
     bool m_mirror = false;
 
+    qsc::AdbProcess m_adb;
     QString m_serial;
 
     int m_orientation = DisplayOrientation::portrait;

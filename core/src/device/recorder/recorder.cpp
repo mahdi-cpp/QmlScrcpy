@@ -78,7 +78,7 @@ bool Recorder::open()
 
     m_formatCtx->oformat = (AVOutputFormat *)format;
 
-    QString comment = "Recorded by QtScrcpy " + QCoreApplication::applicationVersion();
+    QString comment = "Recorded by QmlScrcpy " + QCoreApplication::applicationVersion();
     av_dict_set(&m_formatCtx->metadata, "comment", comment.toUtf8(), 0);
 
     AVStream *outStream = avformat_new_stream(m_formatCtx, inputCodec);

@@ -10,6 +10,7 @@ public:
     Mirror() {};
 
     QString androidId = "";
+    QString wifIp = "";
     QString connectionType = "";
     QString username = "";
     QString title = "";

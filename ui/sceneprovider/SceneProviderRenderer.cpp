@@ -189,7 +189,6 @@ void SceneProviderRenderer::onFrame(int width, int height, uint8_t *dataY, uint8
         m_resourceService->setFrameSize(QSize(width, height));
     }
 
-
     updateTextures(dataY, dataU, dataV, linesizeY, linesizeU, linesizeV);
 }
 
