@@ -1,6 +1,3 @@
-#ifndef QTSCRCPY_OPENGLWINDOW_H
-#define QTSCRCPY_OPENGLWINDOW_H
-
 #include <QWindow>
 #include <QOpenGLFunctions>
 #include <QQuickView>
@@ -37,5 +34,3 @@ private:
     QOpenGLPaintDevice *m_device;
 };
 
-
-#endif //QTSCRCPY_OPENGLWINDOW_H

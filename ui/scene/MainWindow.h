@@ -1,6 +1,3 @@
-#ifndef QTSCRCPY_MAINWINDOW_H
-#define QTSCRCPY_MAINWINDOW_H
-
 #include <QPointer>
 #include <QPointer>
 #include <QTimer>
@@ -55,5 +52,3 @@ private:
 
 };
 
-
-#endif //QTSCRCPY_MAINWINDOW_H

@@ -1,5 +1,3 @@
-#ifndef QTSCRCPY_TRIANGLEWINDOW_H
-#define QTSCRCPY_TRIANGLEWINDOW_H
 
 #include <QOpenGLBuffer>
 
@@ -47,5 +45,3 @@ private:
     GLuint m_texture[3] = { 0 };
 };
 
-
-#endif //QTSCRCPY_TRIANGLEWINDOW_H

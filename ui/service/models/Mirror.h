@@ -1,7 +1,3 @@
-
-#ifndef QTSCRCPY_MIRROR_H
-#define QTSCRCPY_MIRROR_H
-
 #include <QString>
 
 class Mirror {
@@ -17,5 +13,3 @@ public:
     QString bitrate = "";
     QString resolution = "";
 };
-
-#endif //QTSCRCPY_MIRROR_H
