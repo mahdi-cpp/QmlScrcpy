@@ -7,6 +7,7 @@
 #include "service/models/Mirror.h"
 #include "adbprocess.h"
 
+
 //!
 //! \brief The ResourceService class
 //! This class will act as a MainThread data cullmination point
@@ -34,6 +35,8 @@ public:
         landscape,   // Landscape orientation is horizontal
     };
 
+
+
     void setSerial(const QString &serial);
     QString serial();
 
@@ -48,10 +51,9 @@ public:
     QSize portraitSize() const;
     QSize landscapeSize() const;
 
-    QString getStateJson();
-    void stopMirror();
-    void webSocketMessageReceived(QString json);
-    void setUsbMirrorParametre(QString device);
+
+    void clearMirrorCash();
+    void setUsbMirrorParametre();
 
     Mirror *mirror = nullptr;
 
@@ -75,7 +77,7 @@ signals:
     void cppGenerateEvents(QString name);
     void usbDeviceName(QString name);
 
-    //void webSocketMessageReceived(QString json);
+    //void clientRequest(QString json);
     void webSocketNewConnection(QString ip);
 
 private:
@@ -84,8 +86,6 @@ private:
     QSize m_landscapeSize;
 
     bool m_mirror = false;
-
-    qsc::AdbProcess m_adb;
     QString m_serial;
 
     int m_orientation = DisplayOrientation::portrait;

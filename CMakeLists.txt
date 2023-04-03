@@ -120,7 +120,7 @@ set(QC_UI_SOURCES
 # all sources
 set(QC_PROJECT_SOURCES
         ${QC_MAIN_SOURCES}
-        ${QC_UI_SOURCES})
+        ${QC_UI_SOURCES} ui/service/include/server.h)
 
 
 add_executable(${PROJECT_NAME} ${QC_RUNTIME_TYPE} ${QC_PROJECT_SOURCES})

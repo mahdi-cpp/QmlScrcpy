@@ -2,14 +2,14 @@
 
 class Mirror {
 
+
 public:
     Mirror() {};
 
-    QString androidId = "";
-    QString wifIp = "";
-    QString connectionType = "";
+    QString wifiIp = "";
     QString username = "";
     QString title = "";
     QString bitrate = "";
     QString resolution = "";
+    QString connectionType = "";
 };

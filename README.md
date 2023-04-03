@@ -1,8 +1,7 @@
 # QmlScrcpy
 
-you can embed [scrcpy](https://github.com/Genymobile/scrcpy) inside your qml project
-
-This application mirrors Android devices (video and audio) connected via USB or over TCP/IP, and allows to control the device with the keyboard and the mouse of the computer. It does not require any root access. It works on Linux, Windows and macOS.
+This application show content android screen (video) connected via USB or over Wi-Fi.
+and allows to control the device with the keyboard and the mouse of the computer. It does not require any root access. It works on Linux, Windows and macOS.
 
 It focuses on:
 
@@ -44,12 +43,13 @@ Qt Application
 * freedom: free and open source software
 
 #### Qml Benefits
-* Screen Buffers are render by native OpenGl, No requirement to external library similar GStreamer or LibVlc
+* You can embed [scrcpy](https://github.com/Genymobile/scrcpy) inside your qml project
+* Screen buffers are render by native OpenGl inside Qml, No requirement to external library similar GStreamer or LibVlc 
 * You Can Use Animation, Scale, Rotation
 
 
+## Requirements
 
-## Requirement
 My Ubuntu Version
 ```
 lsb_release -a
@@ -68,7 +68,7 @@ Version 31.0.3-7562133
 Installed as /usr/lib/android-sdk/platform-tools/adb
 ```
 
-### Download & Install Qt 5.10.1
+Download & Install Qt 5.10.1
 ```
 cd ~/
 wget https://download.qt.io/new_archive/qt/5.10/5.10.1/qt-opensource-linux-x64-5.10.1.run
@@ -76,12 +76,12 @@ sudo chmod 755 qt-opensource-linux-x64-5.10.1.run
 ./qt-opensource-linux-x64-5.10.1.run
 ```
 
-### [Clion IDE](https://www.jetbrains.com/clion/)
+[Clion IDE](https://www.jetbrains.com/clion/)
 ``` 
 My Clion version is 2022.3.3
 ```
 
-Add qt path to cmake
+Add Qt5.10.1 path to cmake
 ```
  Clion --> File --> Settings --> Build, Execution, Deployment --> CMake
  
