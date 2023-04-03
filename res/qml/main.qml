@@ -20,7 +20,6 @@ Item {
         repeat: false
         onTriggered: {
             firstMirror = true
-            console.log("timer event")
         }
     }
 
@@ -70,12 +69,10 @@ Item {
                 music.message(data)
                 break
             case "VIDEO":
-                console.log("video")
                 break
             }
         }
         onUsbDeviceName: {
-            console.log("usb name:" + name)
             mirrorApp.setUsbDevice(name)
         }
     }
