@@ -84,7 +84,7 @@ sudo chmod 755 qt-opensource-linux-x64-5.10.1.run
 
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="./res/images/cmake.png"  width="1450" height="768" alt="">
+    <img src="./res/images/cmake.png"  width="906" height="450" alt="">
   </a>
 </div>
 
