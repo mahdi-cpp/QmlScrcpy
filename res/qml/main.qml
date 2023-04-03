@@ -103,7 +103,7 @@ Item {
 
     Image {
         id: car
-        source: "../images/wall2.png"
+        source: "../images/wallpaper.png"
         anchors.fill: parent
         x: 20
         y: 20

@@ -62,7 +62,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Network Multimedia WebSockets Quick Qml REQUIRED)
+find_package(QT NAMES Qt5 COMPONENTS Widgets Network Multimedia WebSockets Quick Qml REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network Multimedia WebSockets Quick Qml REQUIRED)
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     find_package(QT NAMES Qt6 Qt5 COMPONENTS X11Extras REQUIRED)
@@ -112,11 +112,6 @@ set(QC_UI_SOURCES
         ui/render/TriangleWindow.h
         ui/render/qyuvopenglwidget.h
         ui/render/qyuvopenglwidget.cpp
-
-        ui/render/LogoRenderer/logorenderer.h
-        ui/render/LogoRenderer/logorenderer.cpp
-        ui/render/LogoRenderer/fboinsgrenderer.h
-        ui/render/LogoRenderer/fboinsgrenderer.cpp
         )
 
 # Translation related (use shell script instead of cmake to handle translation)
