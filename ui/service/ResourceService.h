@@ -57,6 +57,12 @@ public:
 
     Mirror *mirror = nullptr;
 
+    /**   save serial for restart tcpip 5555 for first time. this cause we can access by Wi-Fi connection
+    *     #adb -s RZ8NC0KA54H tcpip 5555
+    *     #adb connect 192.168.1.161
+    **/
+    QList<QString> m_usb_serials;
+
 public slots:
 
     void setMirror(bool vlaue);
