@@ -73,42 +73,7 @@ void WebSocketService::onNewConnection() {
     qDebug() << "WebSocket: onNewConnection:" << pSocket->peerAddress();
 
     m_clients << pSocket;
-
-    // Send Current Status
-    //pSocket->sendTextMessage(resourceService->getStateJson());
-
 }
-
-//void WebSocketService::textMessageReceived(QString jsonString) {
-
-//    QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-//    if (m_debug)
-//        qDebug() << "Message received:" << pClient->peerAddress();
-
-///    clientRequest(jsonString);
-
-//    if (pClient) {
-//        pClient->sendTextMessage(jsonString);
-//    }
-
-//    for (QWebSocket *pClient : qAsConst(m_clients)) {
-//        pClient->sendTextMessage(resourceService->getStateJson());
-//    }
-
-//emit resourceService->clientRequest(jsonString);
-
-//resourceService->clientRequest(jsonString);
-//}
-
-//void WebSocketService::setClients(QString( jsonString)) {
-//
-////    QWebSocket *pSender = qobject_cast<QWebSocket *>(sender());
-////    Q_UNUSED(pSender);
-//
-//    for (QWebSocket *pClient: qAsConst(m_clients)) {
-//        pClient->sendTextMessage(jsonString);
-//    }
-//}
 
 void WebSocketService::clientRequest(QString jsonString) { //receive requests of android clients
 
@@ -129,6 +94,11 @@ void WebSocketService::clientRequest(QString jsonString) { //receive requests of
         response(Server::SERVER_RESPONSE::UPDATE_MIRROR_DATA);
 
     } else if (clientRequest == Server::CLIENT_REQUEST::CLIENT_REQUEST_MIRROR) {
+
+//        if (resourceService->mirror->username.length() > 3) { // request is reject if if screen mirro is Active. clients must be wait
+//            qDebug() << "request mirror rejected";
+//            return;
+//        }
 
         resourceService->mirror->wifiIp = jsonObject.value("wifiIp").toString();
         resourceService->mirror->username = jsonObject.value("username").toString();
@@ -175,7 +145,7 @@ void WebSocketService::response(int result) {
             rootObject["bitrate"] = resourceService->mirror->bitrate;
             rootObject["resolution"] = resourceService->mirror->resolution;
             rootObject["connectionType"] = resourceService->mirror->connectionType;
-        } else{
+        } else {
             rootObject["username"] = "nothing";
         }
     }
@@ -221,7 +191,6 @@ void WebSocketService::onDeviceDisconnected(QString serial) {
 
     resourceService->clearMirrorCash();
     emit resourceService->cppGenerateEvents("MIRROR_FINISHED");
-    //m_webSocketService->setClients(resourceService->sendCommandToClients(ResourceService::SERVER_RESPONSE::MIRROR_FINISHED));
 
     qDebug() << "onDeviceDisconnected:" << serial;
 }

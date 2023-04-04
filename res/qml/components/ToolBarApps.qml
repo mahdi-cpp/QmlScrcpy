@@ -5,8 +5,8 @@ Item {
     id: root
     width: 600
     height: 74
-    x: 600
-    y: 40
+    x: 700
+    y: 670
     signal select(string icon)
 
     GridLayout {

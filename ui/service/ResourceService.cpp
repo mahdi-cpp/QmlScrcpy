@@ -134,7 +134,7 @@ void ResourceService::setLandscapeSize(QSize size) {
 
 void ResourceService::setUsbMirrorParametre() {
     mirror->username = "USB Mirror";
-    mirror->title = "screen mirror by usb connection";
+    mirror->title = "screen is mirroring by USB";
     mirror->bitrate = "2 Mbit";
     mirror->resolution = "Full HD";
     mirror->connectionType = "USB";

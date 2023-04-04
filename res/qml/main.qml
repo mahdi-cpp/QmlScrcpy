@@ -108,8 +108,8 @@ Item {
 
     Music {
         id: music
-        x: 950
-        y: 10
+        x: 1030
+        y: 20
         ScaleAnimator {
             id: animation_show
             target: music

@@ -1,26 +1,11 @@
-# QmlScrcpy
+## QmlScrcpy
 
 This application show content android screen (video) connected via USB or over Wi-Fi.
-and allows to control the device with the keyboard and the mouse of the computer. It does not require any root access. It works on Linux, Windows and macOS.
+and allows to control the device with the keyboard and the mouse of the computer. It does not require any root access. 
+It works on Linux.
 
-It focuses on:
+[Here is a video show how qmlscrcpy work](https://qmlscrcpy.s3.ir-thr-at1.arvanstorage.ir/QmlScrcpy-V0.0.1-alpha.mp4)
 
-### lightness: native, displays only the device screen
-* performance: 30~120fps, depending on the device
-* quality: 1920×1080 or above
-* low latency: 35~70ms
-* low startup time: ~1 second to display the first image
-* non-intrusiveness: nothing is left installed on the Android device
-* user benefits: no account, no ads, no internet required
-* freedom: free and open source software
-
-## Qmlscrcpy Project:
-
-This application mirrors Android devices (video) connected via USB or Wi-Fi, and allows to control the device with the keyboard and the mouse of the computer. It does not require any root access. It works on Linux
-
-Android Application
-
-Qt Application
 
 ### scrcpy vs QmlScrcpy
 
@@ -38,14 +23,12 @@ Qt Application
 * quality: 1920×1080 or above
 * low latency: 35~70ms
 * low startup time: ~1 second to display the first image
-* non-intrusiveness: nothing is left installed on the Android device
-* user benefits: no account, no ads, no internet required
-* freedom: free and open source software
 
-#### Qml Benefits
+
+### Qml Benefits
 * You can embed [scrcpy](https://github.com/Genymobile/scrcpy) inside your qml project
 * Screen buffers are render by native OpenGl inside Qml, No requirement to external library similar GStreamer or LibVlc 
-* You Can Use Animation, Scale, Rotation
+* You can use Animation, Scale, Rotation , ReSize and ... similar other qml componnets.
 
 
 ## Requirements
@@ -95,9 +78,3 @@ Add Qt5.10.1 path to cmake
   </a>
 </div>
 
-
-
-
-
-## Test
-* Test

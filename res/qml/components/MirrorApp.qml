@@ -3,10 +3,10 @@ import QtQuick.Layouts 1.0
 
 Rectangle {
     id: root
-    x: 80
-    y: 200
-    width: 800
-    height: 400
+    x: 550
+    y: 20
+    width: 400
+    height: 600
     color: "#fff"
     visible: false
     radius: 7
@@ -45,17 +45,25 @@ Rectangle {
         }
     }
 
+            Image {
+                x: 10
+                y: 10
+                source: "../../icons/usb_plug.svg"
+                width: 30
+                height: 30
+            }
+
     Text {
         width: 200
         text: "Mirror Application"
         font.pointSize: 12
         color: "#444"
-        x: 20
+        x: 50
         y: 15
     }
 
     Image {
-        x: parent.width - 40
+        x: root.width - 40
         y: 10
         source: "../../icons/close_black.svg"
         width: 30
@@ -80,10 +88,10 @@ Rectangle {
     Rectangle {
         //no device view
         id: no_device_view
-        width: 400
-        x: 200
+        width: 360
+        x: 20
         y: 100
-        height: 100
+        height: 200
         color: "#eee"
         radius: 10
         Text {
@@ -94,20 +102,29 @@ Rectangle {
             y: 20
             horizontalAlignment: Text.AlignHCenter
         }
+
         Text {
             width: parent.width
-            text: "Please connect android phone by USB cable"
+            text: "Please connect android phone "
             font.pointSize: 12
             color: "#000"
-            y: 60
+            y: 75
             horizontalAlignment: Text.AlignHCenter
         }
+                Text {
+                    width: parent.width
+                    text: "by USB cable"
+                    font.pointSize: 12
+                    color: "#000"
+                    y: 105
+                    horizontalAlignment: Text.AlignHCenter
+                }
     }
 
     Rectangle {
         //button
         id: button_start_mirror
-        x: 325
+        x: 125
         y: 100
         width: 150
         height: 200
