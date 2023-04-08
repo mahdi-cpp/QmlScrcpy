@@ -69,18 +69,23 @@ bool Decoder::push(const AVPacket *packet)
 #ifdef QTSCRCPY_LAVF_HAS_NEW_ENCODING_DECODING_API
 
     int ret = -1;
+
     if ((ret = avcodec_send_packet(m_codecCtx, packet)) < 0) {
         char errorbuf[255] = { 0 };
         av_strerror(ret, errorbuf, 254);
         qCritical("Could not setClients video packet: %s", errorbuf);
         return false;
     }
+
     if (decodingFrame) {
         ret = avcodec_receive_frame(m_codecCtx, decodingFrame);
     }
     if (!ret) {
         // a frame was received
+        //image = new QImage((uchar *)decodingFrame, m_codecCtx->width, m_codecCtx->height, QImage::Format_RGB32);
+
         pushFrame();
+
 
         //emit getOneFrame(yuvDecoderFrame->data[0], yuvDecoderFrame->data[1], yuvDecoderFrame->data[2],
         //        yuvDecoderFrame->linesize[0], yuvDecoderFrame->linesize[1], yuvDecoderFrame->linesize[2]);

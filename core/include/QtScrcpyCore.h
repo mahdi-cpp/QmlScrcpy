@@ -1,7 +1,30 @@
 #pragma once
+
 #include <QMouseEvent>
+#include <QMetaType>
 
 #include "QtScrcpyCoreDef.h"
+
+const static int cBufferSize = 1920 * 768;
+
+struct YUVData
+{
+    YUVData()
+    {
+        Y.reserve(cBufferSize);
+        U.reserve(cBufferSize);
+        V.reserve(cBufferSize);
+    }
+    QByteArray Y;
+    QByteArray U;
+    QByteArray V;
+    int yLineSize;
+    int uLineSize;
+    int vLineSize;
+    int height;
+};
+Q_DECLARE_METATYPE(YUVData)
+
 
 namespace qsc {
 

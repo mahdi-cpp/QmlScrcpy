@@ -6,151 +6,31 @@ import App 1.0
 
 import "./components"
 
-Item {
-    id: root
+Rectangle {
+    id: window
     width: 1450
-    height: 850
+    height: 900
+    color: "#000"
 
-    property bool firstMirror: false // prevention of repeat animation in first mirror
+    property int enum_WINDOW_HOME: 0
+    property int enum_WINDOW_MIRROR_PORTRATE: 1
+    property int enum_WINDOW_MIRROR_LANDSCAPE: 2
+    property int enum_WINDOW_MIRROR_FULLSCREEN: 3
+    property int enum_WINDOW_MIRROR_MUSIC: 4
+    property int enum_WINDOW_MIRROR_SMALL: 5
 
-    Timer {
-        id: timer
-        interval: 2000
-        running: false
-        repeat: false
-        onTriggered: {
-            firstMirror = true
-        }
+    Component.onCompleted: {
+        //resource.scene = resource.WINDOW_HOME;
     }
 
-    SceneProvider {
-
-        onCppGenerateEvents: {
-
-            console.log(name)
-
-            switch (name) {
-            case "MIRROR_START":
-                timer.start()
-                cover_animation_show.start()
-                break
-            case "MIRROR_FINISHED":
-                prepareHideAndroidScreen()
-                cover_animation_hide.start()
-                break
-            case "FRAME_SIZE_CHANGED":
-                break
-            case "DISPLAY_ORIENTATION_CHANGED":
-
-                if (firstMirror === false) {
-                    return
-                }
-
-                if (resourceService.orientation == 0) {
-                    // Portrait orientation is vertical
-                    center.x = 185 + 5
-                    center.y = 413 + 5
-                    prepareHideAndroidScreen()
-                    cover_animation_portrait.start()
-                } else {
-                    //Landscape orientation is horizontal
-                    center.x = 430 + 120 + 165
-                    center.y = 200 + 50 + 75
-                    prepareHideAndroidScreen()
-                    cover_animation_landscape.start()
-                }
-                break
-            }
-        }
-
-        onWebSocket: {
-            switch (type) {
-            case "MUSIC":
-                music.message(data)
-                break
-            case "VIDEO":
-                break
-            }
-        }
-        onUsbDeviceName: {
-            mirrorApp.setUsbDevice(name)
-        }
-    }
-
-    function prepareShowAndroidScreen() {
-        resourceService.mirror = true
-        mirror.visible = true
-
-        mirrorApp.opacity = 0
-        car.opacity = 0
-        toolbar.opacity = 0
-        toolbarApps.opacity = 0
-        music.opacity = 0
-    }
-
-    function prepareHideAndroidScreen() {
-        mirrorApp.opacity = 1
-        car.opacity = 1
-        toolbar.opacity = 1
-        toolbarApps.opacity = 1
-        music.opacity = 1
-
-        resourceService.mirror = false
-    }
-
-    Image {
-        id: car
-        source: "../images/wallpaper.png"
-        anchors.fill: parent
-        x: 20
-        y: 20
-    }
-
-    Music {
-        id: music
-        x: 1030
-        y: 20
-        ScaleAnimator {
-            id: animation_show
-            target: music
-            from: 0.2
-            to: 1.0
-            duration: 300
-        }
-        ScaleAnimator {
-            id: animation_hide
-            target: music
-            from: 1.0
-            to: 0.2
-            duration: 300
-        }
-    }
-
-    MirrorApp {
-        id: mirrorApp
-    }
-
-    ToolBar {
-        id: toolbar
-        onSelect: {
-
-            switch (icon) {
-            case "close":
-                resourceService.qmlCommands("REQUEST_MIRROR_FINISH", "")
-                break
-            default:
-                resourceService.processClick(icon)
-            }
-        }
-    }
 
     ToolBarApps {
         id: toolbarApps
         onSelect: {
             switch (icon) {
-            case "mirror":
-                resourceService.qmlCommands("REQUEST_DEVICES_LIST", "")
-                mirrorApp.show()
+            case "mirror.svg":
+                resource.qmlRequest("REQUEST_DEVICES_LIST", "")
+                mirrorApp.open()
                 break
             case "calculator":
                 break
@@ -161,122 +41,186 @@ Item {
                 animation_hide.restart()
                 break
             case "compass":
-
+                ali = 1
                 break
             case "photo":
+                ali = 2
+                break
+            }
+        }
+    }
+
+    MirrorApp {
+        id: mirrorApp
+    }
+
+    Music {
+        id: music
+    }
+
+    Rectangle {
+        id: mirror
+        //anchors.centerIn: center
+        x: -400
+        y: 2
+        width: 400
+        height: 900
+        color: "#ff9800"
+        opacity: 1
+        scale: 1
+        radius: 30
+        visible: true
+        transformOrigin: Item.Center
+
+        states: [
+            State {
+                name: "hide"
+                when: resource.mirror == 0
+                PropertyChanges {
+                    target: mirror
+                    x: -400
+                    width: 350
+                    height: 720
+                }
+            },
+            State {
+                name: "portrait"
+                when: resource.scene == enum_WINDOW_MIRROR_PORTRATE
+                PropertyChanges {
+                    target: mirror
+                    x: 82
+                    width: 330
+                    height: 710 + 4
+                }
+            },
+            State {
+                name: "landscape"
+                when: resource.orientation == 1
+                      && resource.scene == enum_WINDOW_MIRROR_LANDSCAPE
+                PropertyChanges {
+                    target: mirror
+                    x: 30
+                    width: 1450 + 200 + 35
+                    height: 712
+                }
+            },
+            State {
+                name: "share"
+                when: resource.orientation == 1
+                      && resource.scene == enum_WINDOW_MIRROR_MUSIC
+                PropertyChanges {
+                    target: mirror
+                    x: -355
+                    width: 1450 + 200 + 35
+                    height: 712
+                }
+            },
+            State {
+                name: "alone"
+                when: resource.orientation == 1
+                      && resource.scene == enum_WINDOW_MIRROR_FULLSCREEN
+                PropertyChanges {
+                    target: mirror
+                    x: 30
+                    width: 1450 + 200 +35
+                    height: 712
+                }
+            },
+            State {
+                name: "small"
+                when: resource.orientation == 1
+                      && resource.scene == enum_WINDOW_MIRROR_SMALL
+                PropertyChanges {
+                    target: mirror
+                    x: 800
+                    width: 1450 +200
+                    height: 712
+                }
+            }
+        ]
+
+        transitions: Transition {
+            NumberAnimation {
+                properties: "x,y,width,height"
+                duration: 200
+                easing.type: Easing.InOutQuad
+            }
+        }
+
+        MirrorScene {
+            id: video
+            width: 300
+            height: 600
+            anchors.fill: parent
+            onCppGenerateEvents: {
+
+                console.log(request)
+
+                switch (request) {
+                case "MIRROR_START":
+                    mirrorApp.close()
+                    resource.mirror = 1
+                    resource.scene = enum_WINDOW_MIRROR_PORTRATE
+                    break
+                case "MIRROR_FINISHED":
+                    resource.mirror = 0
+                    break
+                case "FRAME_SIZE_CHANGED":
+                    break
+                case "DISPLAY_ORIENTATION_CHANGED":
+
+                    if (resource.orientation == 0) {
+                        // Portrait orientation is vertical
+                        resource.scene = enum_WINDOW_MIRROR_PORTRATE
+                    } else if (resource.orientation == 1) {
+                        //Landscape orientation is horizontal
+                        console.log("enum_WINDOW_MIRROR_LANDSCAPE")
+                        resource.scene = enum_WINDOW_MIRROR_LANDSCAPE
+                    }
+                    break
+                case "USB_DEVICE_NAME":
+                    mirrorApp.setUsbDevice(data)
+                    break
+                }
+            }
+        }
+    }
+
+    ToolBarLeft {
+        onSelect: {
+            switch (icon) {
+            case "map":
+                if (resource.orientation == 1) {
+                    resource.scene = enum_WINDOW_MIRROR_FULLSCREEN
+                }
+                break
+            case "music":
+                if (resource.orientation == 1) {
+                    resource.scene = enum_WINDOW_MIRROR_MUSIC
+                }
+                break
+            case "menu":
+                if (resource.orientation == 1) {
+                    resource.scene = enum_WINDOW_MIRROR_SMALL
+                }
 
                 break
             }
         }
     }
 
-    Rectangle {
-        id: cover
-        anchors.centerIn: center
-        width: resourceService.portraitSize.width
-        height: resourceService.portraitSize.height
-        color: "#2979ff"
-        opacity: 0.8
-        scale: 0
-        radius: 25
-        ParallelAnimation {
-            id: cover_animation_show
-            ScaleAnimator {
-                target: cover
-                from: 0
-                to: 1.0
-                duration: 400
-                easing.type: Easing.InOutQuad
-            }
-            NumberAnimation {
-                target: toolbar
-                property: "y"
-                to: 200
-                duration: 300
-                easing.type: Easing.InOutQuad
-            }
-            onRunningChanged: {
-                if (!running) {
-                    prepareShowAndroidScreen()
-                }
-            }
-        }
-        ParallelAnimation {
-            id: cover_animation_hide
-            ScaleAnimator {
-                target: cover
-                from: 1.0
-                to: 0.0
-                duration: 400
-                easing.type: Easing.InOutQuad
-            }
-            NumberAnimation {
-                target: toolbar
-                property: "y"
-                to: -600
-                duration: 300
-                easing.type: Easing.InOutQuad
-            }
-            onRunningChanged: {
-                if (!running) {
+    ToolBarMirror {
+        id: toolbar
+        onSelect: {
 
-                }
-            }
-        }
-        ParallelAnimation {
-            id: cover_animation_portrait
-            ScaleAnimator {
-                target: cover
-                from: 1.0
-                to: 0.0
-                duration: 400
-                easing.type: Easing.InOutQuad
-            }
-            onRunningChanged: {
-                if (!running) {
-                    mirror.width = resourceService.portraitSize.width
-                    mirror.height = resourceService.portraitSize.height
+            switch (icon) {
 
-                    cover.width = resourceService.portraitSize.width
-                    cover.height = resourceService.portraitSize.height
-                    cover_animation_show.start()
-                }
+            case "close":
+                resource.qmlRequest("REQUEST_MIRROR_FINISH", "")
+                break
+            default:
+                resource.qmlToolbarClick(icon)
             }
         }
-        ParallelAnimation {
-            id: cover_animation_landscape
-            ScaleAnimator {
-                target: cover
-                from: 1.0
-                to: 0.0
-                duration: 400
-                easing.type: Easing.InOutQuad
-            }
-            onRunningChanged: {
-                if (!running) {
-                    mirror.width = resourceService.landscapeSize.width
-                    mirror.height = resourceService.landscapeSize.height
-
-                    cover.width = resourceService.landscapeSize.width
-                    cover.height = resourceService.landscapeSize.height
-                    cover_animation_show.start()
-                }
-            }
-        }
-    }
-    Scene {
-        id: mirror
-        anchors.centerIn: center
-        visible: true
-        width: resourceService.portraitSize.width
-        height: resourceService.portraitSize.height
-    }
-    Rectangle {
-        id: center
-        x: 185
-        y: 413
-        width: 0
-        height: 0
-        color: "#ff9800"
     }
 }

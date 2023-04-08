@@ -1,11 +1,11 @@
-﻿#ifndef CONFIG_H
-#define CONFIG_H
+﻿#pragma once
 
 #include <QObject>
 #include <QPointer>
 #include <QRect>
 
 struct UserBootConfig {
+
     QString recordPath = "";
 
     quint32 bitRate = 2000000;
@@ -27,9 +27,10 @@ struct UserBootConfig {
 class QSettings;
 
 class Config : public QObject {
-Q_OBJECT
-public:
 
+Q_OBJECT
+
+public:
     static Config &getInstance();
 
     // config
@@ -74,5 +75,3 @@ private:
     QPointer<QSettings> m_userData;
     QString projectPath;
 };
-
-#endif // CONFIG_H

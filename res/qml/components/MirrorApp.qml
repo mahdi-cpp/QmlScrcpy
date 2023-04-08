@@ -3,21 +3,35 @@ import QtQuick.Layouts 1.0
 
 Rectangle {
     id: root
-    x: 550
-    y: 20
-    width: 400
-    height: 600
-    color: "#fff"
+    x: 80 + 2
+    y: 2
+    width: 1250 - 2
+    height: 712
     visible: false
     radius: 7
 
+    gradient: Gradient {
+        GradientStop {
+            position: 0.0
+            color: "#00695c"
+        }
+        GradientStop {
+            position: 0.23
+            color: "#009688"
+        }
+        GradientStop {
+            position: 0.8
+            color: "#00796b"
+        }
+    }
+
     property string deviceName
 
-    function show() {
+    function open() {
         root.visible = true
         timer.start()
     }
-    function hide() {
+    function close() {
         root.visible = false
         timer.stop()
     }
@@ -28,10 +42,10 @@ Rectangle {
         if (deviceName.length > 3) {
             //connected
             no_device_view.visible = false
-            button_start_mirror.visible = true
+            view_connected.visible = true
         } else {
             no_device_view.visible = true
-            button_start_mirror.visible = false
+            view_connected.visible = false
         }
     }
 
@@ -41,121 +55,149 @@ Rectangle {
         running: false
         repeat: true
         onTriggered: {
-            resourceService.qmlCommands("REQUEST_DEVICES_LIST" , "")
+            resource.qmlRequest("REQUEST_DEVICES_LIST", "")
         }
     }
 
-            Image {
-                x: 10
-                y: 10
-                source: "../../icons/usb_plug.svg"
-                width: 30
-                height: 30
-            }
-
     Text {
-        width: 200
+        width: root.width
         text: "Mirror Application"
-        font.pointSize: 12
-        color: "#444"
-        x: 50
+        font.pointSize: 18
+        color: "#fff"
+        horizontalAlignment: Text.AlignHCenter
+        y: 25
+    }
+
+    Rectangle {
+        //back button
+        x: 15
         y: 15
+        width: 45
+        height: 45
+        color: "#80d8ff"
+        radius: 30
+        Image {
+            x: 8
+            y: 8
+            source: "../../icons/arrow-back.svg"
+            width: 28
+            height: 28
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                root.close()
+            }
+        }
     }
 
     Image {
-        x: root.width - 40
-        y: 10
-        source: "../../icons/close_black.svg"
-        width: 30
-        height: 30
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                root.hide()
-            }
-        }
+        x: -100
+        y: 150
+        source: "../../images/android.svg"
+        width: 400 * 1.777
+        height: 400
+    }
+    Image {
+        x: 220
+        y: 300
+        source: "../../icons/android.svg"
+        width: 70
+        height: 70
     }
 
     Rectangle {
-        //toolbar line
-        x: 0
-        y: 50
-        width: parent.width
-        height: 2
-        color: "#eee"
-    }
-
-    Rectangle {
-        //no device view
         id: no_device_view
-        width: 360
-        x: 20
-        y: 100
+        visible: false
+        width: 600
+        x: 410
+        y: 200
         height: 200
-        color: "#eee"
+        color: "transparent"
         radius: 10
+        Image {
+            x: -10
+            y: 15
+            source: "../../icons/usb_plug.svg"
+            width: 42
+            height: 42
+        }
         Text {
             width: parent.width
             text: "Cell phone not connected"
-            font.pointSize: 14
-            color: "#000"
+            font.pointSize: 20
+            color: "#fff"
+            x: 40
             y: 20
-            horizontalAlignment: Text.AlignHCenter
-        }
-
-        Text {
-            width: parent.width
-            text: "Please connect android phone "
-            font.pointSize: 12
-            color: "#000"
-            y: 75
-            horizontalAlignment: Text.AlignHCenter
-        }
-                Text {
-                    width: parent.width
-                    text: "by USB cable"
-                    font.pointSize: 12
-                    color: "#000"
-                    y: 105
-                    horizontalAlignment: Text.AlignHCenter
-                }
-    }
-
-    Rectangle {
-        //button
-        id: button_start_mirror
-        x: 125
-        y: 100
-        width: 150
-        height: 200
-        color: "#29b6f6"
-        radius: 20
-        visible: false
-        Image {
-            x: 50
-            y: 30
-            source: "../../icons/usb_plug.svg"
-            width: 50
-            height: 50
         }
         Text {
-            width: 150
-            text: "Start Mirror"
+            width: 200
+            text: "1. Enable adb debugging on your android phone."
             font.pointSize: 14
             color: "#fff"
             y: 100
-            horizontalAlignment: Text.AlignHCenter
         }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                resourceService.qmlCommands("REQUEST_MIRROR_START" , deviceName)
+        Text {
+            width: parent.width
+            text: "2. Connect android phone by USB cable"
+            font.pointSize: 14
+            color: "#fff"
+            y: 140
+        }
+    }
+
+    Item {
+        //connected
+        id: view_connected
+        x: 410
+        y: 200
+        width: 500
+        height: 500
+        visible: true
+
+        Image {
+            x: -10
+            y: 15
+            source: "../../icons/usb_plug.svg"
+            width: 42
+            height: 42
+        }
+        Text {
+            width: parent.width
+            text: "Connected ..."
+            font.pointSize: 20
+            color: "#fff"
+            x: 40
+            y: 20
+        }
+        Rectangle {
+            id: button_start
+            x: 0
+            y: 100
+            width: 200
+            height: 60
+            color: "#004d40"
+            radius: 10
+            Text {
+                width: 150
+                text: "Start Mirror"
+                font.pointSize: 16
+                color: "#fff"
+                x: 27
+                y: 15
+                horizontalAlignment: Text.AlignHCenter
             }
-            onPressed: {
-                button_start_mirror.color = "#0288d1"
-            }
-            onReleased: {
-                button_start_mirror.color = "#29b6f6"
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    resource.qmlRequest("REQUEST_MIRROR_START", deviceName)
+                }
+                onPressed: {
+                    button_start.color = "#00695c"
+                }
+                onReleased: {
+                    button_start.color = "#004d40"
+                }
             }
         }
     }

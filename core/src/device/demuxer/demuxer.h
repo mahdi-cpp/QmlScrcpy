@@ -11,6 +11,7 @@ extern "C"
 }
 
 class VideoSocket;
+
 class Demuxer : public QThread
 {
     Q_OBJECT

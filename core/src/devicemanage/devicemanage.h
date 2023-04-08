@@ -1,6 +1,6 @@
-#ifndef DEVICEMANAGE_H
-#define DEVICEMANAGE_H
+#pragma once
 
+#include <QImage>
 #include <QMap>
 #include <QPointer>
 
@@ -37,4 +37,3 @@ private:
 };
 
 }
-#endif // DEVICEMANAGE_H

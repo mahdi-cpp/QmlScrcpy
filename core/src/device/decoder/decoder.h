@@ -1,6 +1,8 @@
 #ifndef DECODER_H
 #define DECODER_H
+
 #include <QObject>
+#include <QImage>
 
 extern "C"
 {
@@ -40,6 +42,8 @@ private:
     AVCodecContext *m_codecCtx = Q_NULLPTR;
     bool m_isCodecCtxOpen = false;
     std::function<void(int, int, uint8_t*, uint8_t*, uint8_t*, int, int, int)> m_onFrame = Q_NULLPTR;
+
+    QImage *image;
 };
 
 #endif // DECODER_H

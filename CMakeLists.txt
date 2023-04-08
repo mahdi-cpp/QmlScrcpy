@@ -13,10 +13,6 @@ set(QC_PROJECT_NAME "QmlScrcpy")
 file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/version QC_FILE_VERSION)
 set(QC_PROJECT_VERSION ${QC_FILE_VERSION})
 
-configure_file(
-        res/opengl/squircle.vsh
-        res/opengl/squircle.fsh
-)
 
 # Project declare
 project(${QC_PROJECT_NAME} VERSION ${QC_PROJECT_VERSION} LANGUAGES CXX)
@@ -77,6 +73,21 @@ message(STATUS "[${PROJECT_NAME}] Qt version is: ${QT_VERSION_MAJOR}.${QT_VERSIO
 set(QC_MAIN_SOURCES main.cpp)
 
 # ui
+set(QC_SERVICE_SOURCES
+        service/ServiceManager.h
+        service/ServiceManager.cpp
+        service/WebSocketService.h
+        service/WebSocketService.cpp
+        service/ResourceService.h
+        service/ResourceService.cpp
+
+        service/models/Mirror.h
+
+        service/udp/Broadcast.h
+        service/udp/Broadcast.cpp
+        )
+
+# ui
 set(QC_UI_SOURCES
         ui/scene/Scene.h
         ui/scene/Scene.cpp
@@ -88,30 +99,16 @@ set(QC_UI_SOURCES
         ui/sceneprovider/SceneProviderRenderer.h
         ui/sceneprovider/SceneProviderRenderer.cpp
 
-        ui/service/ServiceManager.h
-        ui/service/ServiceManager.cpp
-        ui/service/WebSocketService.h
-        ui/service/WebSocketService.cpp
-        ui/service/ResourceService.h
-        ui/service/ResourceService.cpp
-
-        ui/service/models/Mirror.h
-
-        ui/service/udp/Broadcast.h
-        ui/service/udp/Broadcast.cpp
-
-        ui/scene/MainWindow.cpp
-        ui/scene/MainWindow.h
+        ui/main/MainWindow.cpp
+        ui/main/MainWindow.h
 
         ui/util/config.h
         ui/util/config.cpp
 
-        ui/render/OpenGLWindow.cpp
-        ui/render/OpenGLWindow.h
-        ui/render/TriangleWindow.cpp
-        ui/render/TriangleWindow.h
-        ui/render/qyuvopenglwidget.h
-        ui/render/qyuvopenglwidget.cpp
+        ui/mirror/MirrorScene.h
+        ui/mirror/MirrorScene.cpp
+        ui/mirror/MirrorRenderer.h
+        ui/mirror/MirrorRenderer.cpp
         )
 
 # Translation related (use shell script instead of cmake to handle translation)
@@ -120,7 +117,8 @@ set(QC_UI_SOURCES
 # all sources
 set(QC_PROJECT_SOURCES
         ${QC_MAIN_SOURCES}
-        ${QC_UI_SOURCES} ui/service/include/server.h)
+        ${QC_UI_SOURCES}
+        ${QC_SERVICE_SOURCES})
 
 
 add_executable(${PROJECT_NAME} ${QC_RUNTIME_TYPE} ${QC_PROJECT_SOURCES})

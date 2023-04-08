@@ -2,8 +2,10 @@ import QtQuick 2.10
 
 Item {
     id: root
-    width: 400
-    height: 400 + 200
+    x: 1450
+    y: 2
+    width: 350
+    height: 740
     signal select(string icon)
 
     function message(message) {
@@ -18,34 +20,56 @@ Item {
     }
 
     Image {
-        id: car
-        source: "../../images/music-cover.jpg"
+        source: "../../images/peaceful_blur.jpg"
         width: parent.width
-        height: parent.width
+        height: parent.height
+    }
+    Text {
+        text: "Music Player"
+        font.family: "Helvetica"
+        font.pointSize: 16
+        color: "#fff"
+        width: root.width
+        horizontalAlignment: Text.AlignHCenter
+        y: 40
+    }
+    Image {
+        x: 50
+        y: 110
+        source: "../../images/music_cover.jpg"
+        width: 250
+        height: 250
+    }
+    Rectangle {
+        width: root.width
+        height: 27
+        color: "#000"
+        anchors.bottom: parent.bottom
     }
 
-    Rectangle {
+    Item {
         width: parent.width
-        height: 200
+        height: 300
         anchors.bottom: parent.bottom
-        color: "#ff9800"
         opacity: 1
-        y: 450
+        y: 400
         Text {
             id: album
-            text: "You Got to listen ..."
+            text: "Nafas haye Bi hadaf"
             font.family: "Helvetica"
-            font.pointSize: 20
+            font.pointSize: 18
             color: "#fff"
-            x: 20
+            width: root.width
+            horizontalAlignment: Text.AlignHCenter
             y: 10
         }
         Text {
-            text: "Fryan Ay Divone..."
+            text: "Mohsen Yeganeh"
             font.family: "Helvetica"
             font.pointSize: 16
             color: "#fff"
-            x: 20
+            width: root.width
+            horizontalAlignment: Text.AlignHCenter
             y: 50
         }
     }
@@ -72,7 +96,7 @@ Item {
     Item {
         id: buttons
         width: parent.width
-        height: 100
+        height: 150
         anchors.bottom: parent.bottom
         x: 20
 
@@ -80,22 +104,49 @@ Item {
             source: "../../icons/skip-previous.svg"
             width: 50
             height: 50
-            x: 45
-            y: 20
+            x: 30
+            y: 40
         }
         Image {
             source: "../../icons/pause.svg"
             width: 50
             height: 50
-            x: 170
-            y: 20
+            x: 130
+            y: 40
         }
         Image {
             source: "../../icons/skip-next.svg"
             width: 50
             height: 50
-            x: 300
-            y: 20
+            x: 240
+            y: 40
+        }
+    }
+
+    states: [
+        State {
+            name: "hide"
+            when: !resource.scene == enum_WINDOW_MIRROR_MUSIC
+            PropertyChanges {
+                target: music
+                x: parent.width + 350
+            }
+        },
+        State {
+            name: "show"
+            when: resource.scene == enum_WINDOW_MIRROR_MUSIC
+                  || resource.scene == enum_WINDOW_MIRROR_PORTRATE
+            PropertyChanges {
+                target: music
+                x: parent.width - music.width - 2
+            }
+        }
+    ]
+    transitions: Transition {
+        NumberAnimation {
+            properties: "x"
+            duration: 200
+            easing.type: Easing.InOutQuad
         }
     }
 }

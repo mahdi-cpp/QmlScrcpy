@@ -1,37 +1,38 @@
 import QtQuick 2.10
 
-Rectangle {
+Item {
     id: root
-    width: 118
-    height: 118
-    radius: 20
+    width: 60
+    height: 70
+
 
     signal click
 
-    gradient: Gradient {
-        GradientStop {
-            position: 0.0
-            color: "#64ffda"
-        }
-        GradientStop {
-            position: 1.0
-            color: "#26a69a"
-        }
+    property color backgroun : "#ff9800"
+
+    property string icon : "map.svg"
+    property string icon2 : "map.svg"
+    property int iconX: 8
+    property int iconY: 8
+    property int iconWidth : 42
+    property int iconHeight: 42
+
+    property int index : 0;
+
+    Rectangle {
+    width: 60
+    height: 60
+    radius: 32
+    color: backgroun
+    Image {
+        id: image
+        width: iconWidth
+        height: iconHeight
+        x: iconX
+        y: iconY
+        source: "../../icons/" + icon
     }
 
-    Image {
-        anchors.centerIn: parent
-        source: "../../icons/baseline-cast.svg"
-        width: 80
-        height: 80
-    }
-    Text {
-        width: 118
-        text: "USB Mirror"
-        font.pointSize: 16
-        color: "#fff"
-        y: 125
-        horizontalAlignment: Text.AlignHCenter
     }
     MouseArea {
         anchors.fill: parent
@@ -40,6 +41,13 @@ Rectangle {
                 root.enabled = false
                 timer.start()
                 click()
+                if(index == 1){
+                index = 2;
+                    image.source = "../../icons/" + icon2
+                }else if(index == 2){
+                index = 1;
+                 image.source = "../../icons/" + icon
+                }
                 //console.log("click")
             }
         }

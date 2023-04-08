@@ -2,7 +2,8 @@
 #include <QSurfaceFormat>
 
 #include "config.h"
-#include "ui/scene/MainWindow.h"
+#include "ui/main/MainWindow.h"
+
 
 static QPointer<MainWindow> m_MainWindow;
 
@@ -33,8 +34,9 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     m_MainWindow = new MainWindow();
-    m_MainWindow->setGeometry(700,100, 1450, 850);
+    m_MainWindow->setGeometry(700,100, 1450 + 200 + 35, 710 + 8);
     m_MainWindow->show();
+
 
     return app.exec();
 }

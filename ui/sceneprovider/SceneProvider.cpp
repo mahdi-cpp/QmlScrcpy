@@ -1,5 +1,5 @@
 #include "SceneProvider.h"
-#include "ui/service/ServiceManager.h"
+#include "service/ServiceManager.h"
 
 #include <QDebug>
 #include <QQmlEngine>
@@ -7,8 +7,8 @@
 #include <QThread>
 
 namespace {
-    constexpr int SceneWidth  = 480;
-    constexpr int SceneHeight = 1080;
+    constexpr int SceneWidth  = 400;
+    constexpr int SceneHeight = 900;
 } // namespace
 
 
@@ -25,9 +25,7 @@ private:
 SceneProvider::SceneProvider(QQuickItem* parent) : QQuickItem(parent) {
 
     m_resourceService = ServiceManager::getInstance().resourceService();
-
     connect(m_resourceService, &ResourceService::cppGenerateEvents, this, &SceneProvider::cppGenerateEvents); //Interacting C++ to Qml
-    connect(m_resourceService, &ResourceService::usbDeviceName, this, &SceneProvider::usbDeviceName); //Interacting C++ to Qml
 
     connect(this, &QQuickItem::windowChanged, this, &SceneProvider::onWindowChanged);
 

@@ -1,5 +1,4 @@
-#ifndef SERVER_H
-#define SERVER_H
+#pragma once
 
 #include <QObject>
 #include <QPointer>
@@ -111,4 +110,3 @@ private:
     SERVER_START_STEP m_serverStartStep = SSS_NULL;
 };
 
-#endif // SERVER_H

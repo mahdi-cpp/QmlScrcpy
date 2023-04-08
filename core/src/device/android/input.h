@@ -294,7 +294,7 @@ enum AndroidMotioneventFlags
      * even if the event did not directly pass through the obscured area.
      * A security sensitive application can check this flag to identify situations in which
      * a malicious application may have covered up part of its content for the purpose
-     * of misleading the user or hijacking touches.  An appropriate response might be
+     * of misleading the user or hijacking touches.  An appropriate responseToClents might be
      * to drop the suspect touches or to take additional precautions to confirm the user's
      * actual intent.
      */

@@ -1,8 +1,7 @@
-#include "Scene.h"
-
-#include "SceneRenderer.h"
-
 #include <QQmlEngine>
+
+#include "Scene.h"
+#include "SceneRenderer.h"
 
 Scene::Scene(QQuickItem *parent) : QQuickFramebufferObject(parent) {
 
@@ -10,12 +9,13 @@ Scene::Scene(QQuickItem *parent) : QQuickFramebufferObject(parent) {
     connect(&m_timer, &QTimer::timeout, this, &Scene::update);
     m_timer.start();
 
+    setTextureFollowsItemSize(true);
+
     m_resourceService = ServiceManager::getInstance().resourceService();
+    setWidth(40);
+    setHeight(60);
 
     setAcceptedMouseButtons(Qt::AllButtons);
-
-    connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceConnected, this, &Scene::onDeviceConnected);
-    connect(&qsc::IDeviceManage::getInstance(), &qsc::IDeviceManage::deviceDisconnected, this, &Scene::onDeviceDisconnected);
 }
 
 void Scene::declareQml() {
@@ -24,26 +24,6 @@ void Scene::declareQml() {
 
 QQuickFramebufferObject::Renderer *Scene::createRenderer() const {
     return new SceneRenderer;
-}
-
-void Scene::onDeviceConnected(bool success, const QString &serial, const QString &deviceName, const QSize &size) {
-
-    Q_UNUSED(serial);
-    Q_UNUSED(size);
-    Q_UNUSED(deviceName);
-
-    qDebug() << "onDeviceConnected 1";
-
-    if (!success) {
-        return;
-    }
-
-    qDebug() << "onDeviceConnected success";
-}
-
-void Scene::onDeviceDisconnected(QString serial) {
-    Q_UNUSED(serial);
-
 }
 
 void Scene::mouseProcess(QMouseEvent *event) {

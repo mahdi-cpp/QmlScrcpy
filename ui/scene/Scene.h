@@ -4,11 +4,10 @@
 #include <QTimer>
 
 #include <QPointer>
-#include "ui/service/ResourceService.h"
-#include "ui/service/ServiceManager.h"
+#include "service/ResourceService.h"
+#include "service/ServiceManager.h"
 
 //!
-//! \brief The Scene class
 //! A simple Framebuffer object which will render the saved framebuffer from SceneProvider
 //! Scene will live on MainThread
 //!
@@ -30,11 +29,6 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
-
-
-private slots:
-    void onDeviceConnected(bool success, const QString& serial, const QString& deviceName, const QSize& size);
-    void onDeviceDisconnected(QString serial);
 
 private:
     void mouseProcess(QMouseEvent *event);

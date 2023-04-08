@@ -1,5 +1,4 @@
-﻿#ifndef DEVICE_H
-#define DEVICE_H
+﻿#pragma once
 
 #include <set>
 #include <QElapsedTimer>
@@ -97,4 +96,3 @@ private:
 
 }
 
-#endif // DEVICE_H

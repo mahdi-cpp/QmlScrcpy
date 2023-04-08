@@ -1,5 +1,5 @@
-#ifndef COMPAT_H
-#define COMPAT_H
+#pragma once
+
 #include "libavcodec/version.h"
 #include "libavformat/version.h"
 
@@ -31,5 +31,3 @@
 #if LIBAVCODEC_VERSION_INT >= AV_VERSION_INT(57, 37, 100)
 #define QTSCRCPY_LAVF_HAS_NEW_ENCODING_DECODING_API
 #endif
-
-#endif // COMPAT_H

@@ -9,13 +9,14 @@ It works on Linux.
 
 ### scrcpy vs QmlScrcpy
 
-| Item         |     Scrcpy     |     QmlScrcpy     |
-|:-------------|:--------------:|:-----------------:|
-| ui           |      SDL       |        QML        |
-| video encode |     ffmpeg     |      ffmpeg       |
-| video render |      SDL       | OpenGL inside Qml |
-| language     |       C        |        C++        |
-| build        | meson + gradle |       CMake       |
+| Item            |     Scrcpy     |     QmlScrcpy     |
+|:----------------|:--------------:|:-----------------:|
+| ui              |      SDL       |        QML        |
+| video encode    |     ffmpeg     |      ffmpeg       |
+| video render    |      SDL       | OpenGL inside Qml |
+| language        |       C        |        C++        |
+| build           | meson + gradle |       CMake       |
+| Android Manager |       -        |        Yes        |
 
 ### features:
 * lightness: native, displays only the device screen
@@ -32,6 +33,12 @@ It works on Linux.
 
 
 ## Requirements
+
+Install the required packages from your package manager.
+```
+sudo apt install ffmpeg
+```
+
 
 My Ubuntu Version
 ```
