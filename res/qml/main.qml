@@ -2,6 +2,7 @@ import QtQuick 2.10
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
 
+
 import App 1.0
 
 import "./components"
@@ -23,7 +24,6 @@ Rectangle {
         //resource.scene = resource.WINDOW_HOME;
     }
 
-
     ToolBarApps {
         id: toolbarApps
         onSelect: {
@@ -41,10 +41,8 @@ Rectangle {
                 animation_hide.restart()
                 break
             case "compass":
-                ali = 1
                 break
-            case "photo":
-                ali = 2
+            case "photo.png":
                 break
             }
         }

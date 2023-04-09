@@ -1,4 +1,5 @@
 import QtQuick 2.10
+import QtMultimedia 5.9
 
 Item {
     id: root
@@ -17,6 +18,10 @@ Item {
     }
     function setLandscape() {
         grid.flow = GridLayout.LeftToRight
+    }
+
+    Audio {
+        id: audio
     }
 
     Image {
@@ -113,6 +118,12 @@ Item {
             height: 50
             x: 130
             y: 40
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    audio.pause()
+                }
+            }
         }
         Image {
             source: "../../icons/skip-next.svg"

@@ -6,7 +6,6 @@
 #include "service/ServiceManager.h"
 #include "config.h"
 
-
 MirrorRenderer::MirrorRenderer(QObject *parent) {
     Q_UNUSED(parent);
     m_resourceService = ServiceManager::getInstance().resourceService();

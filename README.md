@@ -7,6 +7,18 @@ It works on Linux.
 [Here is a video show how qmlscrcpy work](https://qmlscrcpy.s3.ir-thr-at1.arvanstorage.ir/QmlScrcpy-V0.0.1-alpha.mp4)
 
 
+<div >
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="./res/images/screenshot.png"  width="843" height="375" alt="">
+  </a>
+</div>
+
+<div >
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="./res/images/screenshot2.png"  width="843" height="375" alt="">
+  </a>
+</div>
+
 ### scrcpy vs QmlScrcpy
 
 | Item            |     Scrcpy     |     QmlScrcpy     |
@@ -29,7 +41,7 @@ It works on Linux.
 ### Qml Benefits
 * You can embed [scrcpy](https://github.com/Genymobile/scrcpy) inside your qml project
 * Screen buffers are render by native OpenGl inside Qml, No requirement to external library similar GStreamer or LibVlc 
-* You can use Animation, Scale, Rotation , ReSize and ... similar other qml componnets.
+* You can use Animation, Scale, Rotation , Resize and ... similar other qml componnets.
 
 
 ## Requirements
